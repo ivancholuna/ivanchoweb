@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WordPress con Divi en 2026: ¿Sigue Valiendo la Pena? | IVANCHOWEB</title>
+  <meta name="description" content="Análisis honesto de WordPress con Divi en 2026: cuándo usarlo, cuándo no, cómo entregar un sitio profesional en menos de una semana, y los errores más comunes. Por Ivan Luna.">
+  <meta name="author" content="Ivan Luna">
+  <meta property="og:site_name" content="IVANCHOWEB">
+  <meta property="og:title" content="WordPress con Divi en 2026: ¿Sigue Valiendo la Pena? | IVANCHOWEB">
+  <meta property="og:description" content="Después de docenas de sitios con Divi, análisis honesto: cuándo usarlo, cuándo no, y cómo entregar en una semana.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ivanchoweb.com/blog/wordpress-desarrollo/">
+  <meta property="og:locale" content="es_ES">
+  <link rel="canonical" href="https://ivanchoweb.com/blog/wordpress-desarrollo/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "WordPress con Divi en 2026: ¿Sigue Valiendo la Pena?",
+        "description": "Análisis honesto de WordPress con Divi después de construir docenas de sitios: cuándo usarlo, cuándo no, flujo de trabajo para entregar en menos de una semana, y errores comunes.",
+        "url": "https://ivanchoweb.com/blog/wordpress-desarrollo/",
+        "datePublished": "2026-07-26",
+        "dateModified": "2026-07-26",
+        "inLanguage": "es",
+        "author": {
+          "@type": "Person",
+          "name": "Ivan Luna",
+          "jobTitle": "WordPress Developer & Full-Stack Developer",
+          "url": "https://ivanchoweb.com"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "IVANCHOWEB",
+          "url": "https://ivanchoweb.com"
+        },
+        "mainEntityOfPage": "https://ivanchoweb.com/blog/wordpress-desarrollo/"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "¿Sigue valiendo la pena WordPress con Divi en 2026?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sí, para los casos correctos. WordPress con Divi sigue siendo la opción más rápida para sitios corporativos, landing pages y blogs de empresas que necesitan que el cliente pueda editar el contenido sin ayuda técnica. El mercado de clientes que buscan 'un sitio en WordPress' es enorme y Divi permite entregar en una fracción del tiempo de un desarrollo custom."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Cuánto tiempo toma construir un sitio con Divi?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Un sitio de 5-8 páginas (home, servicios, sobre nosotros, portfolio, contacto) construido con Divi toma entre 3 y 6 días de trabajo real. Esto incluye diseño, desarrollo, integración de formularios, optimización básica de velocidad y entrega con capacitación. Los proyectos que se extienden suelen hacerlo por falta de contenido del cliente, no por limitaciones técnicas."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Divi o Elementor? ¿Cuál es mejor?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Ambos son capaces. Prefiero Divi por su licencia de pago único (sin suscripción por sitio), su Theme Builder más maduro y su generador de código de acceso estructurado. Elementor tiene más plugins del ecosistema y una comunidad más grande. Para clientes nuevos uso Divi; si el cliente ya tiene un sitio en Elementor, trabajo con Elementor sin problema."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Cuándo NO usar WordPress?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "WordPress no es la herramienta correcta para: aplicaciones web con lógica de negocio compleja (ahí necesitas una app custom), sitios con millones de páginas dinámicas generadas desde base de datos, proyectos donde la velocidad es crítica y no puedes usar CDN/caché agresivo, y cualquier cosa que requiera autenticación propia y control fino de roles. Para esos casos, un stack Node.js + React es la respuesta."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Cómo se optimiza la velocidad de un sitio WordPress con Divi?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Los cinco pasos que aplico en cada proyecto: (1) activar el sistema de CSS estático de Divi; (2) instalar WP Rocket o LiteSpeed Cache; (3) servir imágenes en formato WebP con conversión automática; (4) usar una CDN (Cloudflare en plan gratuito es suficiente para la mayoría); (5) revisar que no haya plugins innecesarios cargando scripts en todas las páginas. Con estos cinco pasos, la mayoría de sitios pasan de 4-6 segundos de carga a menos de 2."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', -apple-system, sans-serif; background: #fff; color: #0A0A0A; line-height: 1.7; }
+    a { color: #4F46E5; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid #E5E5E5; }
+    .nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .nav-logo { font-weight: 700; font-size: 18px; letter-spacing: -0.5px; color: #0A0A0A; text-decoration: none; }
+    .nav-logo span { color: #4F46E5; }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a { font-size: 14px; font-weight: 500; color: #525252; transition: color .2s; text-decoration: none; }
+    .nav-links a:hover { color: #0A0A0A; }
+    .nav-cta { background: #4F46E5; color: #fff !important; padding: 8px 18px; border-radius: 8px; font-weight: 600 !important; }
+    .nav-cta:hover { background: #4338CA !important; }
+
+    .article-wrap { max-width: 720px; margin: 0 auto; padding: 56px 24px 80px; }
+
+    .breadcrumb { font-size: 13px; color: #A3A3A3; margin-bottom: 32px; }
+    .breadcrumb a { color: #A3A3A3; text-decoration: none; }
+    .breadcrumb a:hover { color: #4F46E5; }
+    .breadcrumb span { margin: 0 6px; }
+
+    .article-tag { display: inline-block; background: #EEF0FF; color: #4F46E5; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 20px; letter-spacing: .5px; text-transform: uppercase; margin-bottom: 20px; }
+    .article-wrap h1 { font-size: clamp(28px, 4vw, 42px); font-weight: 700; line-height: 1.2; letter-spacing: -1px; margin-bottom: 20px; }
+    .article-meta { display: flex; align-items: center; gap: 16px; padding-bottom: 32px; border-bottom: 1px solid #E5E5E5; margin-bottom: 40px; flex-wrap: wrap; }
+    .meta-author { display: flex; align-items: center; gap: 10px; }
+    .meta-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg,#4F46E5,#7C3AED); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+    .meta-author-info { font-size: 14px; }
+    .meta-author-info strong { display: block; color: #0A0A0A; font-weight: 600; }
+    .meta-author-info span { color: #525252; }
+    .meta-divider { color: #E5E5E5; }
+    .meta-date { font-size: 13px; color: #525252; }
+    .meta-read { font-size: 13px; color: #525252; }
+
+    .article-body { font-size: 17px; color: #1a1a1a; }
+    .article-body p { margin-bottom: 24px; }
+    .article-body h2 { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.3; margin: 48px 0 16px; color: #0A0A0A; }
+    .article-body h3 { font-size: 19px; font-weight: 600; margin: 32px 0 12px; color: #0A0A0A; }
+    .article-body ul, .article-body ol { padding-left: 24px; margin-bottom: 24px; }
+    .article-body li { margin-bottom: 8px; }
+    .article-body strong { font-weight: 600; color: #0A0A0A; }
+    .article-body code { background: #F5F5F5; border: 1px solid #E5E5E5; border-radius: 4px; padding: 2px 7px; font-size: 14px; font-family: 'SF Mono', 'Fira Code', monospace; color: #4F46E5; }
+    .article-body blockquote { border-left: 3px solid #4F46E5; padding: 12px 20px; background: #F8F8FF; margin: 32px 0; border-radius: 0 8px 8px 0; }
+    .article-body blockquote p { margin: 0; color: #525252; font-style: italic; }
+
+    .verdict-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0 32px; }
+    .verdict-card { border-radius: 12px; padding: 20px; }
+    .verdict-yes { background: #F0FDF4; border: 1px solid #BBF7D0; }
+    .verdict-no { background: #FFF1F2; border: 1px solid #FECDD3; }
+    .verdict-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 12px; margin-top: 0; }
+    .verdict-yes h3 { color: #15803D; }
+    .verdict-no h3 { color: #BE123C; }
+    .verdict-card ul { padding-left: 18px; margin: 0; }
+    .verdict-card li { font-size: 14px; color: #374151; margin-bottom: 6px; }
+
+    .workflow-steps { counter-reset: wsteps; list-style: none; padding: 0; margin-bottom: 24px; }
+    .workflow-steps li { counter-increment: wsteps; padding: 16px 16px 16px 56px; position: relative; border: 1px solid #E5E5E5; border-radius: 10px; margin-bottom: 10px; }
+    .workflow-steps li::before { content: counter(wsteps); position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 28px; height: 28px; background: #EEF0FF; color: #4F46E5; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; }
+    .workflow-steps li strong { display: block; font-size: 15px; margin-bottom: 4px; }
+    .workflow-steps li span { font-size: 14px; color: #525252; }
+
+    .plugin-table { width: 100%; border-collapse: collapse; margin: 24px 0 32px; font-size: 15px; }
+    .plugin-table th { background: #F8F8F8; text-align: left; padding: 10px 14px; font-weight: 600; border-bottom: 2px solid #E5E5E5; }
+    .plugin-table td { padding: 10px 14px; border-bottom: 1px solid #E5E5E5; vertical-align: top; }
+    .plugin-table tr:last-child td { border-bottom: none; }
+    .badge { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; }
+    .badge-free { background: #F0FDF4; color: #15803D; }
+    .badge-paid { background: #FFF7ED; color: #C2410C; }
+
+    .faq { margin: 48px 0 0; }
+    .faq h2 { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 24px; }
+    .faq-item { border: 1px solid #E5E5E5; border-radius: 10px; margin-bottom: 12px; overflow: hidden; }
+    .faq-q { padding: 18px 20px; font-weight: 600; font-size: 16px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+    .faq-q::after { content: '+'; font-size: 20px; color: #4F46E5; font-weight: 300; }
+    .faq-a { padding: 0 20px 18px; font-size: 15px; color: #525252; line-height: 1.7; }
+
+    .cta-box { background: linear-gradient(135deg,#4F46E5,#7C3AED); border-radius: 20px; padding: 48px 40px; text-align: center; margin: 64px 0 0; color: #fff; }
+    .cta-box h2 { font-size: 28px; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.5px; }
+    .cta-box p { font-size: 16px; opacity: .85; margin-bottom: 28px; max-width: 460px; margin-left: auto; margin-right: auto; }
+    .cta-btn { display: inline-block; background: #fff; color: #4F46E5; font-weight: 700; font-size: 16px; padding: 14px 32px; border-radius: 10px; transition: transform .2s, box-shadow .2s; text-decoration: none; }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); text-decoration: none; }
+
+    .related { margin: 48px 0; padding: 24px; background: #F8F8F8; border-radius: 12px; }
+    .related p { font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: .5px; color: #525252; margin-bottom: 12px; }
+    .related a { display: inline-block; font-size: 15px; font-weight: 500; margin-right: 16px; }
+
+    footer { background: #0A0A0A; color: #A3A3A3; padding: 48px 24px; text-align: center; }
+    footer .footer-logo { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 12px; }
+    footer .footer-logo span { color: #6366F1; }
+    footer p { font-size: 14px; margin-bottom: 8px; }
+    footer a { color: #6366F1; text-decoration: none; }
+    footer a:hover { color: #818CF8; }
+
+    @media (max-width: 640px) {
+      .nav-links a:not(.nav-cta) { display: none; }
+      .cta-box { padding: 32px 20px; }
+      .verdict-grid { grid-template-columns: 1fr; }
+      .plugin-table { font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="https://ivanchoweb.com" class="nav-logo">IVANCHO<span>WEB</span></a>
+    <div class="nav-links">
+      <a href="https://ivanchoweb.com/#servicios">Services</a>
+      <a href="https://ivanchoweb.com/#portafolio">Work</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://ivanchoweb.com/#contacto" class="nav-cta">Let's Talk</a>
+    </div>
+  </div>
+</nav>
+
+<article class="article-wrap">
+
+  <div class="breadcrumb">
+    <a href="https://ivanchoweb.com">Home</a>
+    <span>›</span>
+    <a href="/blog/">Blog</a>
+    <span>›</span>
+    WordPress con Divi en 2026
+  </div>
+
+  <span class="article-tag">WordPress</span>
+  <h1>WordPress con Divi en 2026: ¿Sigue Valiendo la Pena?</h1>
+
+  <div class="article-meta">
+    <div class="meta-author">
+      <div class="meta-avatar">IL</div>
+      <div class="meta-author-info">
+        <strong>Ivan Luna</strong>
+        <span>WordPress Developer</span>
+      </div>
+    </div>
+    <span class="meta-divider">|</span>
+    <span class="meta-date">26 de julio, 2026</span>
+    <span class="meta-divider">|</span>
+    <span class="meta-read">9 min de lectura</span>
+  </div>
+
+  <div class="article-body">
+
+    <p>Cada año alguien predice la muerte de WordPress. Y cada año WordPress sigue siendo el 43% de la web. He construido docenas de sitios con Divi — desde landing pages para freelancers hasta portales corporativos con miles de páginas — y tengo una opinión formada sobre cuándo tiene sentido y cuándo es un error elegirlo.</p>
+
+    <p>La respuesta honesta: <strong>Divi en 2026 sigue siendo una herramienta excelente para los proyectos correctos, y una mala elección para los proyectos equivocados.</strong> En este artículo te explico la distinción.</p>
+
+    <h2>¿Cuándo usar WordPress + Divi? (y cuándo no)</h2>
+
+    <div class="verdict-grid">
+      <div class="verdict-card verdict-yes">
+        <h3>✓ Úsalo cuando...</h3>
+        <ul>
+          <li>El cliente necesita editar contenido sin ayuda técnica</li>
+          <li>Plazo de entrega de 3-7 días</li>
+          <li>Sitio informativo, landing page, blog corporativo</li>
+          <li>Presupuesto de $500-$2,000</li>
+          <li>El cliente ya tiene hosting WordPress</li>
+          <li>Necesitas WooCommerce integrado</li>
+        </ul>
+      </div>
+      <div class="verdict-card verdict-no">
+        <h3>✗ No lo uses cuando...</h3>
+        <ul>
+          <li>La app requiere autenticación propia con roles complejos</li>
+          <li>Hay lógica de negocio que no cabe en un plugin</li>
+          <li>Velocidad Page Speed 100 es un requisito</li>
+          <li>El sitio tiene millones de páginas dinámicas</li>
+          <li>El equipo developer es solo JavaScript/React</li>
+          <li>Necesitas control total sobre el stack</li>
+        </ul>
+      </div>
+    </div>
+
+    <p>La confusión ocurre cuando los clientes piden "una app en WordPress" cuando en realidad necesitan una aplicación web. WordPress es un CMS con capacidades extendidas — no es un framework de aplicaciones. Cuando el requerimiento cruza esa línea, lo digo claramente y propongo un stack Node.js + React.</p>
+
+    <h2>Mi flujo de trabajo para entregar un sitio Divi en menos de una semana</h2>
+
+    <p>Con los años desarrollé un proceso que me permite entregar sitios de 5-8 páginas en 3-5 días de trabajo real. La clave no es velocidad por velocidad — es eliminar las esperas y los ciclos de revisión innecesarios.</p>
+
+    <ol class="workflow-steps">
+      <li>
+        <strong>Día 1: Wireframe y aprobación de estructura</strong>
+        <span>Antes de abrir Divi, construyo un wireframe en Figma de baja fidelidad — solo cajas y texto. Lo comparto con el cliente y obtengo aprobación escrita. Esto elimina el 80% de los cambios de última hora.</span>
+      </li>
+      <li>
+        <strong>Día 1-2: Setup del servidor y homepage</strong>
+        <span>Instalo WordPress en el hosting del cliente, activo Divi, configuro el tema base (fuentes, colores, header/footer globales). Construyo la homepage completa y la muestro como punto de referencia visual.</span>
+      </li>
+      <li>
+        <strong>Día 2-3: Páginas internas</strong>
+        <span>Con el estilo de la homepage establecido, las páginas internas van mucho más rápido — reutilizo módulos y layouts. Servicios, portafolio, sobre nosotros y contacto típicamente toman medio día en total.</span>
+      </li>
+      <li>
+        <strong>Día 3-4: Formularios, integraciones y SEO on-page</strong>
+        <span>Integro el formulario de contacto (con notificación al email del cliente), conecto Google Analytics, instalo Yoast o Rank Math y configuro los meta títulos y descripciones básicos.</span>
+      </li>
+      <li>
+        <strong>Día 4-5: Velocidad, revisión mobile y entrega</strong>
+        <span>Optimización de imágenes, configuración de caché, prueba en 5 tamaños de pantalla, corrección de detalles. Entrego con video de capacitación de 15 minutos en Loom.</span>
+      </li>
+    </ol>
+
+    <blockquote>
+      <p>El mayor ladrón de tiempo en proyectos WordPress no es el desarrollo — es esperar el contenido del cliente. Solicito textos e imágenes antes de empezar, y si no llegan, trabajo con contenido placeholder marcado claramente para reemplazar.</p>
+    </blockquote>
+
+    <h2>El stack de plugins que uso en cada proyecto</h2>
+
+    <p>Menos plugins = sitio más rápido y más seguro. Esta es mi lista mínima — instalo otros solo si el proyecto lo requiere explícitamente:</p>
+
+    <table class="plugin-table">
+      <thead>
+        <tr>
+          <th>Plugin</th>
+          <th>Propósito</th>
+          <th>Costo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Divi Theme</strong></td>
+          <td>Constructor visual + tema</td>
+          <td><span class="badge badge-paid">$89/año o $249 lifetime</span></td>
+        </tr>
+        <tr>
+          <td><strong>WP Rocket</strong></td>
+          <td>Caché, minificación, lazy load</td>
+          <td><span class="badge badge-paid">$59/año por sitio</span></td>
+        </tr>
+        <tr>
+          <td><strong>ShortPixel</strong></td>
+          <td>Compresión y conversión a WebP</td>
+          <td><span class="badge badge-free">Gratis hasta 100 imágenes/mes</span></td>
+        </tr>
+        <tr>
+          <td><strong>Rank Math</strong></td>
+          <td>SEO on-page, schema, sitemaps</td>
+          <td><span class="badge badge-free">Gratis (plan Pro opcional)</span></td>
+        </tr>
+        <tr>
+          <td><strong>WPForms Lite</strong></td>
+          <td>Formularios de contacto</td>
+          <td><span class="badge badge-free">Gratis</span></td>
+        </tr>
+        <tr>
+          <td><strong>Wordfence</strong></td>
+          <td>Seguridad y firewall</td>
+          <td><span class="badge badge-free">Gratis</span></td>
+        </tr>
+        <tr>
+          <td><strong>UpdraftPlus</strong></td>
+          <td>Backups automáticos a Google Drive</td>
+          <td><span class="badge badge-free">Gratis</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Cómo optimizo la velocidad de un sitio Divi</h2>
+
+    <p>Divi tiene fama de ser lento. En un sitio sin optimizar, eso es verdad — puede cargar en 5-6 segundos con el theme por defecto. Después de optimización correcta, casi siempre llego a menos de 2 segundos. El proceso en orden de impacto:</p>
+
+    <ul>
+      <li><strong>CSS estático de Divi:</strong> Actívalo en Divi > Theme Options > Builder > Advanced. Genera un archivo CSS por página en lugar de calcularlo dinámicamente. Esto solo puede reducir el tiempo de servidor en un 50%.</li>
+      <li><strong>WP Rocket:</strong> Activa caché de páginas, minificación de CSS/JS, y carga diferida de imágenes. Configura correctamente los archivos a excluir de la minificación (el JS de Divi builder en páginas de edición).</li>
+      <li><strong>Imágenes en WebP:</strong> ShortPixel convierte automáticamente. Las imágenes suelen ser el 60-70% del peso de la página.</li>
+      <li><strong>Cloudflare gratuito:</strong> CDN global, compresión Brotli y caché de activos estáticos. Para la mayoría de sitios en LATAM que sirven a usuarios en múltiples países, esto mejora visiblemente los tiempos de carga.</li>
+      <li><strong>Auditoría de plugins:</strong> Cada plugin activo carga scripts. Reviso con Query Monitor cuáles plugins generan consultas lentas a la base de datos o cargan JS en páginas donde no hacen nada.</li>
+    </ul>
+
+    <h2>Divi vs Elementor vs Gutenberg en 2026</h2>
+
+    <p>La pregunta que me hacen constantemente. Mi perspectiva práctica:</p>
+
+    <p><strong>Divi</strong> tiene licencia de pago único (lifetime), su Theme Builder es maduro para headers/footers/templates globales, y su sistema de módulos es sólido. Lo uso para proyectos nuevos cuando tengo control total del proyecto desde el inicio.</p>
+
+    <p><strong>Elementor</strong> tiene más plugins del ecosistema, una comunidad más grande, y Elementor Pro es muy capaz. Su debilidad es el modelo de suscripción anual (~$59-$200/año) y que los sitios en Elementor suelen tener más overhead de CSS. Si el cliente ya tiene Elementor, trabajo con él sin problema.</p>
+
+    <p><strong>Gutenberg nativo</strong> ha mejorado enormemente con Full Site Editing. Para proyectos donde la velocidad es prioridad absoluta y el cliente tiene conocimiento técnico, un tema de bloques bien construido puede ser más rápido que cualquier page builder. Su limitación es la curva de aprendizaje para clientes no técnicos.</p>
+
+    <blockquote>
+      <p>Mi regla: uso Divi cuando empiezo el proyecto desde cero y tengo libertad de stack. Uso lo que el cliente ya tiene cuando entro a un proyecto existente. No peleo con el stack heredado.</p>
+    </blockquote>
+
+    <h2>Los errores más comunes que veo en sitios WordPress</h2>
+
+    <p>Después de auditar decenas de sitios de clientes que vienen con problemas, estos son los que aparecen siempre:</p>
+
+    <ul>
+      <li><strong>Demasiados plugins de seguridad activos al mismo tiempo:</strong> Wordfence + iThemes Security + Sucuri corriendo juntos se pisan entre sí y consumen recursos innecesariamente. Uno bien configurado es suficiente.</li>
+      <li><strong>Sin backups automáticos:</strong> El 30% de sitios que audito no tiene backup desde hace más de un mes. UpdraftPlus a Google Drive tarda 10 minutos en configurar.</li>
+      <li><strong>PHP desactualizado:</strong> Muchos hosts corren PHP 7.4 por defecto. PHP 8.2 o 8.3 puede mejorar el rendimiento hasta un 20% en WordPress.</li>
+      <li><strong>Imágenes de 3-5MB sin comprimir:</strong> La causa número uno de sitios lentos. Una imagen PNG de alta resolución de Canva puede ser 4MB; en WebP optimizado es 200KB con calidad idéntica visualmente.</li>
+      <li><strong>Editor Divi activo en producción:</strong> El builder de Divi carga scripts pesados. En producción el front-end es limpio, pero asegúrate de que el editor no esté activo por defecto para todos los usuarios con rol incorrecto.</li>
+    </ul>
+
+    <div class="faq">
+      <h2>Preguntas frecuentes</h2>
+
+      <div class="faq-item">
+        <div class="faq-q">¿Sigue valiendo la pena WordPress con Divi en 2026?</div>
+        <div class="faq-a">Sí, para los casos correctos. WordPress con Divi sigue siendo la opción más rápida para sitios corporativos, landing pages y blogs de empresas que necesitan que el cliente pueda editar el contenido sin ayuda técnica. El mercado de clientes que buscan "un sitio en WordPress" es enorme y Divi permite entregar en una fracción del tiempo de un desarrollo custom.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">¿Cuánto tiempo toma construir un sitio con Divi?</div>
+        <div class="faq-a">Un sitio de 5-8 páginas (home, servicios, sobre nosotros, portfolio, contacto) construido con Divi toma entre 3 y 6 días de trabajo real. Esto incluye diseño, desarrollo, integración de formularios, optimización básica de velocidad y entrega con capacitación. Los proyectos que se extienden suelen hacerlo por falta de contenido del cliente, no por limitaciones técnicas.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">¿Divi o Elementor? ¿Cuál es mejor?</div>
+        <div class="faq-a">Ambos son capaces. Prefiero Divi por su licencia de pago único (sin suscripción por sitio), su Theme Builder más maduro y su generador estructurado. Elementor tiene más plugins del ecosistema y una comunidad más grande. Para clientes nuevos uso Divi; si el cliente ya tiene un sitio en Elementor, trabajo con Elementor sin problema.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">¿Cuándo NO usar WordPress?</div>
+        <div class="faq-a">WordPress no es la herramienta correcta para aplicaciones web con lógica de negocio compleja, sitios con millones de páginas dinámicas generadas desde base de datos, proyectos donde la velocidad es crítica sin posibilidad de caché, y cualquier cosa que requiera autenticación propia con control fino de roles. Para esos casos, un stack Node.js + React es la respuesta correcta.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">¿Cómo se optimiza la velocidad de un sitio WordPress con Divi?</div>
+        <div class="faq-a">Los cinco pasos que aplico en cada proyecto: (1) activar el CSS estático de Divi; (2) instalar WP Rocket o LiteSpeed Cache; (3) servir imágenes en WebP con ShortPixel; (4) usar Cloudflare gratuito como CDN; (5) auditar plugins que cargan scripts innecesariamente. Con estos cinco pasos, la mayoría de sitios pasan de 4-6 segundos a menos de 2.</div>
+      </div>
+    </div>
+
+    <div class="related">
+      <p>Artículos relacionados</p>
+      <a href="/blog/saas-development/">Cómo construir un SaaS MVP en 8 semanas</a>
+      <a href="/blog/automatizacion-n8n/">Automatización de negocios con n8n</a>
+    </div>
+
+    <div class="cta-box">
+      <h2>¿Necesitas un sitio WordPress profesional?</h2>
+      <p>Diseño, desarrollo y entrega en menos de una semana. Sitios rápidos, optimizados para SEO y fáciles de editar para tu equipo.</p>
+      <a href="https://ivanchoweb.com/#contacto" class="cta-btn">Hablemos de tu proyecto</a>
+    </div>
+
+  </div>
+
+</article>
+
+<footer>
+  <div class="footer-logo">IVANCHO<span>WEB</span></div>
+  <p>WordPress Developer · Full-Stack SaaS · ivan@ivanchoweb.com</p>
+  <p><a href="https://ivanchoweb.com">ivanchoweb.com</a> · <a href="https://www.upwork.com/freelancers/ivanluna">Upwork</a> · <a href="https://www.linkedin.com/in/ivanchoweb">LinkedIn</a></p>
+  <p style="margin-top:16px;font-size:13px;">© 2026 IVANCHOWEB. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

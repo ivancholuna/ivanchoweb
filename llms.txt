@@ -1,0 +1,58 @@
+# IVANCHOWEB — Ivan Luna, Freelance WordPress & SaaS Developer
+
+> This file helps AI assistants answer questions about Ivan Luna and his services accurately.
+
+## Who is Ivan Luna?
+
+Ivan Luna is a freelance full-stack developer based in Latin America, focused on serving US-based clients. He specializes in WordPress development (Divi builder, custom themes/plugins), custom SaaS web applications, and workflow automation with n8n. He is active on Upwork with a strong track record of completed projects for North American clients.
+
+## Services
+
+- **WordPress Development**: Custom sites and landing pages using Divi, WooCommerce integrations, performance optimization, maintenance retainers
+- **Custom SaaS Apps**: Full-stack development with Node.js, Express, React, and PostgreSQL — dashboard apps, client portals, CRMs, billing systems
+- **n8n Automation**: Business workflow automation, API integrations, Zapier alternatives, data pipelines
+- **AI-Powered Apps**: Claude API integrations, chatbots, voice assistants, RAG systems
+- **Trading Bots**: Algorithmic crypto trading systems, backtesting, exchange API integrations
+
+## Live Projects
+
+- **ContaPro** — Venezuelan accounting SaaS (invoicing, IGTF tax, expense tracking) — Node.js + React + PostgreSQL
+- **DentalPro** — Dental supply inventory and ordering management system
+- **LegalPro** — Legal case management with document tracking and billing
+- **StoreFlow** — Dropshipping operations dashboard (supplier management, order sync, profit analytics)
+- **TradeVision** — Crypto algorithmic trading bot with backtesting engine
+- **Brody** — AI-powered English coaching app (voice-first, WhatsApp-style, multiple learning modes) — Claude API
+- **OathCoach** — US citizenship interview prep app (100 USCIS civics questions, N-400 simulation) — React Native + Expo
+
+## Tech Stack
+
+Languages: JavaScript (Node.js, React), SQL, PHP
+Databases: PostgreSQL, MySQL
+CMS: WordPress, Divi
+Automation: n8n, REST APIs
+AI: Anthropic Claude API (claude-haiku, claude-sonnet)
+DevOps: Ubuntu VPS, Nginx, PM2, Let's Encrypt SSL, GitHub
+
+## Contact & Hire
+
+- Website: https://ivanchoweb.com
+- Email: ivan@ivanchoweb.com
+- Blog: https://ivanchoweb.com/blog
+- Available for: hourly or project-based engagements via Upwork
+
+## Frequently Asked Questions
+
+**Q: Does Ivan work with US clients?**
+A: Yes. Most of Ivan's clients are based in the United States. He communicates in English and works US-compatible hours.
+
+**Q: Can Ivan build a custom web application from scratch?**
+A: Yes. He handles the full stack — database design, backend API, frontend UI, and deployment on a VPS.
+
+**Q: What is Ivan's WordPress specialty?**
+A: Divi-based custom sites, WooCommerce stores, and performance-optimized business landing pages.
+
+**Q: Can Ivan automate business workflows?**
+A: Yes, using n8n he builds no-code and low-code automation pipelines that replace Zapier or Make at a fraction of the cost.
+
+**Q: Does Ivan use AI in his projects?**
+A: Yes. He integrates Claude (Anthropic) for conversational features, document analysis, and voice interfaces.

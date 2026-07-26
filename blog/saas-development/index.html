@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How to Build a SaaS MVP in 8 Weeks | IVANCHOWEB</title>
+  <meta name="description" content="The exact 8-week process I used to ship ContaPro, DentalPro & LegalPro — stack selection, week-by-week plan, real costs in 2026, and 5 mistakes that kill MVPs.">
+  <meta name="author" content="Ivan Luna">
+  <meta property="og:site_name" content="IVANCHOWEB">
+  <meta property="og:title" content="How to Build a SaaS MVP in 8 Weeks | IVANCHOWEB">
+  <meta property="og:description" content="The exact 8-week process I used to ship ContaPro, DentalPro & LegalPro — stack selection, week-by-week plan, real costs in 2026.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ivanchoweb.com/blog/saas-development/">
+  <link rel="canonical" href="https://ivanchoweb.com/blog/saas-development/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "How to Build a SaaS MVP in 8 Weeks (From a Dev Who's Done It)",
+        "description": "The exact 8-week process Ivan Luna used to ship ContaPro, DentalPro and LegalPro — stack selection, week-by-week plan, real costs in 2026, and the 5 mistakes that kill MVPs.",
+        "url": "https://ivanchoweb.com/blog/saas-development/",
+        "datePublished": "2026-07-18",
+        "dateModified": "2026-07-18",
+        "author": {
+          "@type": "Person",
+          "name": "Ivan Luna",
+          "jobTitle": "Full-Stack SaaS Developer",
+          "url": "https://ivanchoweb.com"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "IVANCHOWEB",
+          "url": "https://ivanchoweb.com"
+        },
+        "mainEntityOfPage": "https://ivanchoweb.com/blog/saas-development/"
+      },
+      {
+        "@type": "Person",
+        "name": "Ivan Luna",
+        "jobTitle": "Full-Stack SaaS Developer",
+        "url": "https://ivanchoweb.com",
+        "sameAs": [
+          "https://www.upwork.com/freelancers/ivanluna",
+          "https://www.linkedin.com/in/ivanchoweb"
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How long does it really take to build a SaaS MVP?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A focused MVP with one core workflow takes 6–10 weeks. The 8-week mark hits the sweet spot: enough time to build something real users can test, short enough that you don't overbuild. Projects that take longer usually suffer from scope creep, not technical complexity."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the best tech stack for a SaaS MVP in 2026?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "For most SaaS MVPs I recommend Node.js + Express on the backend, React + Vite on the frontend, and PostgreSQL as the database. This stack is proven, has a massive hiring pool, and scales without architectural rewrites. Avoid over-engineering with microservices or exotic databases at MVP stage."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How much does it cost to build a SaaS MVP?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A production-ready SaaS MVP built by a senior freelancer typically runs $1,500–$4,000 depending on scope. This covers authentication, a core feature set, admin panel, and deployment. Add $50–$150/month for infrastructure (VPS, database, CDN, email)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Should I build or buy SaaS infrastructure?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Buy commodities (email via Resend, payments via Stripe, auth via a library like Passport.js), build your differentiation. The login screen is not your product — the core workflow is. Every hour you spend on OAuth edge cases is an hour not spent on your actual feature."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What's the biggest mistake when building a SaaS MVP?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Building features nobody asked for. I've seen founders spend weeks on multi-language support, dark mode, and export formats before a single user has tried the product. Talk to 5 real potential users first. Build the one thing they'd pay for today. Everything else is noise."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', -apple-system, sans-serif; background: #fff; color: #0A0A0A; line-height: 1.7; }
+    a { color: #4F46E5; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* NAV */
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid #E5E5E5; }
+    .nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .nav-logo { font-weight: 700; font-size: 18px; letter-spacing: -0.5px; color: #0A0A0A; text-decoration: none; }
+    .nav-logo span { color: #4F46E5; }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a { font-size: 14px; font-weight: 500; color: #525252; transition: color .2s; text-decoration: none; }
+    .nav-links a:hover { color: #0A0A0A; text-decoration: none; }
+    .nav-cta { background: #4F46E5; color: #fff !important; padding: 8px 18px; border-radius: 8px; font-weight: 600 !important; }
+    .nav-cta:hover { background: #4338CA !important; }
+
+    /* ARTICLE LAYOUT */
+    .article-wrap { max-width: 720px; margin: 0 auto; padding: 56px 24px 80px; }
+
+    /* BREADCRUMB */
+    .breadcrumb { font-size: 13px; color: #A3A3A3; margin-bottom: 32px; }
+    .breadcrumb a { color: #A3A3A3; text-decoration: none; }
+    .breadcrumb a:hover { color: #4F46E5; }
+    .breadcrumb span { margin: 0 6px; }
+
+    /* HEADER */
+    .article-tag { display: inline-block; background: #EEF0FF; color: #4F46E5; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 20px; letter-spacing: .5px; text-transform: uppercase; margin-bottom: 20px; }
+    .article-wrap h1 { font-size: clamp(28px, 4vw, 42px); font-weight: 700; line-height: 1.2; letter-spacing: -1px; margin-bottom: 20px; }
+    .article-meta { display: flex; align-items: center; gap: 16px; padding-bottom: 32px; border-bottom: 1px solid #E5E5E5; margin-bottom: 40px; flex-wrap: wrap; }
+    .meta-author { display: flex; align-items: center; gap: 10px; }
+    .meta-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg,#4F46E5,#7C3AED); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+    .meta-author-info { font-size: 14px; }
+    .meta-author-info strong { display: block; color: #0A0A0A; font-weight: 600; }
+    .meta-author-info span { color: #525252; }
+    .meta-divider { color: #E5E5E5; }
+    .meta-date { font-size: 13px; color: #525252; }
+    .meta-read { font-size: 13px; color: #525252; }
+
+    /* BODY */
+    .article-body { font-size: 17px; color: #1a1a1a; }
+    .article-body p { margin-bottom: 24px; }
+    .article-body h2 { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.3; margin: 48px 0 16px; color: #0A0A0A; }
+    .article-body h3 { font-size: 19px; font-weight: 600; margin: 32px 0 12px; color: #0A0A0A; }
+    .article-body ul, .article-body ol { padding-left: 24px; margin-bottom: 24px; }
+    .article-body li { margin-bottom: 8px; }
+    .article-body strong { font-weight: 600; color: #0A0A0A; }
+    .article-body code { background: #F5F5F5; border: 1px solid #E5E5E5; border-radius: 4px; padding: 2px 7px; font-size: 14px; font-family: 'SF Mono', 'Fira Code', monospace; color: #4F46E5; }
+    .article-body blockquote { border-left: 3px solid #4F46E5; padding: 12px 20px; background: #F8F8FF; margin: 32px 0; border-radius: 0 8px 8px 0; }
+    .article-body blockquote p { margin: 0; color: #525252; font-style: italic; }
+
+    /* WEEK TABLE */
+    .week-table { width: 100%; border-collapse: collapse; margin: 24px 0 32px; font-size: 15px; }
+    .week-table th { background: #F8F8F8; text-align: left; padding: 10px 14px; font-weight: 600; border-bottom: 2px solid #E5E5E5; }
+    .week-table td { padding: 10px 14px; border-bottom: 1px solid #E5E5E5; vertical-align: top; }
+    .week-table tr:last-child td { border-bottom: none; }
+    .week-num { font-weight: 700; color: #4F46E5; white-space: nowrap; }
+
+    /* PRICE CARDS */
+    .price-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin: 24px 0 32px; }
+    .price-card { border: 1px solid #E5E5E5; border-radius: 12px; padding: 20px; }
+    .price-card .label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; color: #525252; margin-bottom: 6px; }
+    .price-card .amount { font-size: 22px; font-weight: 700; color: #4F46E5; margin-bottom: 4px; }
+    .price-card .desc { font-size: 13px; color: #525252; }
+
+    /* MISTAKE LIST */
+    .mistake-list { counter-reset: mistakes; list-style: none; padding: 0; margin-bottom: 24px; }
+    .mistake-list li { counter-increment: mistakes; padding: 16px 16px 16px 52px; position: relative; border: 1px solid #E5E5E5; border-radius: 10px; margin-bottom: 12px; }
+    .mistake-list li::before { content: counter(mistakes); position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 28px; height: 28px; background: #FEE2E2; color: #DC2626; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; }
+    .mistake-list li strong { display: block; font-size: 15px; margin-bottom: 4px; }
+    .mistake-list li span { font-size: 14px; color: #525252; }
+
+    /* FAQ */
+    .faq { margin: 48px 0 0; }
+    .faq h2 { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 24px; }
+    .faq-item { border: 1px solid #E5E5E5; border-radius: 10px; margin-bottom: 12px; overflow: hidden; }
+    .faq-q { padding: 18px 20px; font-weight: 600; font-size: 16px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+    .faq-q::after { content: '+'; font-size: 20px; color: #4F46E5; font-weight: 300; }
+    .faq-a { padding: 0 20px 18px; font-size: 15px; color: #525252; line-height: 1.7; }
+
+    /* CTA */
+    .cta-box { background: linear-gradient(135deg,#4F46E5,#7C3AED); border-radius: 20px; padding: 48px 40px; text-align: center; margin: 64px 0 0; color: #fff; }
+    .cta-box h2 { font-size: 28px; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.5px; }
+    .cta-box p { font-size: 16px; opacity: .85; margin-bottom: 28px; max-width: 460px; margin-left: auto; margin-right: auto; }
+    .cta-btn { display: inline-block; background: #fff; color: #4F46E5; font-weight: 700; font-size: 16px; padding: 14px 32px; border-radius: 10px; transition: transform .2s, box-shadow .2s; }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); text-decoration: none; }
+
+    /* INTERNAL LINKS */
+    .related { margin: 48px 0; padding: 24px; background: #F8F8F8; border-radius: 12px; }
+    .related p { font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: .5px; color: #525252; margin-bottom: 12px; }
+    .related a { display: inline-block; font-size: 15px; font-weight: 500; margin-right: 16px; }
+
+    /* FOOTER */
+    footer { background: #0A0A0A; color: #A3A3A3; padding: 48px 24px; text-align: center; }
+    footer .footer-logo { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 12px; }
+    footer .footer-logo span { color: #6366F1; }
+    footer p { font-size: 14px; margin-bottom: 8px; }
+    footer a { color: #6366F1; text-decoration: none; }
+    footer a:hover { color: #818CF8; }
+
+    @media (max-width: 640px) {
+      .nav-links a:not(.nav-cta) { display: none; }
+      .cta-box { padding: 32px 20px; }
+      .week-table { font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="https://ivanchoweb.com" class="nav-logo">IVANCHO<span>WEB</span></a>
+    <div class="nav-links">
+      <a href="https://ivanchoweb.com/#servicios">Services</a>
+      <a href="https://ivanchoweb.com/#portafolio">Work</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://ivanchoweb.com/#contacto" class="nav-cta">Let's Talk</a>
+    </div>
+  </div>
+</nav>
+
+<article class="article-wrap">
+
+  <div class="breadcrumb">
+    <a href="https://ivanchoweb.com">Home</a>
+    <span>›</span>
+    <a href="/blog/">Blog</a>
+    <span>›</span>
+    How to Build a SaaS MVP in 8 Weeks
+  </div>
+
+  <span class="article-tag">SaaS Development</span>
+
+  <h1>How to Build a SaaS MVP in 8 Weeks (From a Dev Who's Done It)</h1>
+
+  <div class="article-meta">
+    <div class="meta-author">
+      <div class="meta-avatar">IL</div>
+      <div class="meta-author-info">
+        <strong>Ivan Luna</strong>
+        <span>Full-Stack Developer &amp; Accountant, IVANCHOWEB</span>
+      </div>
+    </div>
+    <span class="meta-divider">·</span>
+    <span class="meta-date">July 18, 2026</span>
+    <span class="meta-divider">·</span>
+    <span class="meta-read">12 min read</span>
+  </div>
+
+  <div class="article-body">
+
+    <p><strong>You can ship a working SaaS MVP in 8 weeks.</strong> I've done it multiple times — ContaPro, DentalPro, LegalPro — all went from idea to paying users in under two months. The secret isn't speed. It's knowing exactly what to build, what to skip, and what order to do things in. Here's the exact process.</p>
+
+    <h2>¿Qué es un MVP y por qué 8 semanas es el tiempo correcto?</h2>
+
+    <p>An MVP — Minimum Viable Product — is the smallest version of your software that delivers real value to a real user. Not a prototype. Not a mockup. Something they can actually log into, use, and hopefully pay for.</p>
+
+    <p>The "8 weeks" frame isn't arbitrary. I arrived at it after building six SaaS products across different industries. Here's what I found: projects shorter than 6 weeks almost always cut corners on authentication, data integrity, or deployment — which creates expensive technical debt. Projects longer than 10 weeks almost always succumb to scope creep: a feature becomes two features, a two-feature becomes a module, and suddenly you're 6 months in with nothing to show users.</p>
+
+    <p>Eight weeks is long enough to build something solid. Short enough to stay focused. That tension is exactly what you want.</p>
+
+    <blockquote>
+      <p>Your MVP should do one thing so well that users forgive everything it doesn't do yet.</p>
+    </blockquote>
+
+    <p>The biggest mistake I see founders make is confusing an MVP with a "simple" product. Simple isn't the goal — <em>focused</em> is. ContaPro, my accounting SaaS for Venezuelan businesses, handles a complex tax calculation logic that most generic accounting tools get wrong. That's not simple. But it does <strong>one thing</strong> better than anything else on the market. That's what made it viable.</p>
+
+    <h2>¿Qué stack técnico elegir para tu SaaS MVP?</h2>
+
+    <p>I've built SaaS products in Node.js, Django, Laravel, and a few other stacks. My honest answer in 2026: <strong>Node.js + React + PostgreSQL</strong> is still the best combination for most MVPs, and here's why I keep coming back to it.</p>
+
+    <h3>Backend: Node.js + Express</h3>
+    <p>Fast to write, massive npm ecosystem, easy to hire for, and trivial to deploy. The JavaScript-everywhere model means your backend and frontend developers share context — no mental context-switching between Python types and JS types when debugging a data pipeline. I've used Express for everything from simple REST APIs to complex multi-tenant architectures and it handles both gracefully.</p>
+
+    <h3>Frontend: React + Vite</h3>
+    <p>React is still king for SaaS dashboards. The component model maps perfectly to the UI patterns you'll build: data tables, modal flows, sidebar navigation. Vite replaced Create React App as my go-to starter — builds are instant, HMR is reliable, and the config is sane. If your MVP is relatively simple, plain React with <code>useContext</code> is enough. Don't reach for Redux until you actually need it.</p>
+
+    <h3>Database: PostgreSQL</h3>
+    <p>Every time I've seen a SaaS team choose MongoDB for "flexibility", they end up fighting their own schema within 3 months. PostgreSQL gives you relational integrity, JSON columns when you genuinely need flexibility, full-text search, and excellent cloud options (Neon, Supabase, RDS). The constraint that relational databases impose on your data model is a <em>feature</em>, not a bug — it forces you to think about your domain.</p>
+
+    <h3>What else goes in the stack?</h3>
+    <ul>
+      <li><strong>Auth:</strong> Passport.js with JWT — don't roll your own auth, don't over-engineer with Auth0 at MVP stage</li>
+      <li><strong>Email:</strong> Resend or Postmark — transactional email that actually lands in inboxes</li>
+      <li><strong>Payments:</strong> Stripe — there's no meaningful alternative worth considering</li>
+      <li><strong>Deployment:</strong> A single VPS (I use Oracle Cloud) + Nginx + PM2 — you don't need Kubernetes until you're past $50k MRR</li>
+      <li><strong>File storage:</strong> Cloudflare R2 or AWS S3 — cheap, reliable, and integrates in an afternoon</li>
+    </ul>
+
+    <h2>Las 8 fases de desarrollo — semana por semana</h2>
+
+    <p>This is the actual schedule I use. Not a theoretical framework — the literal week-by-week plan I sent to clients before starting ContaPro, DentalPro, and LegalPro.</p>
+
+    <table class="week-table">
+      <thead>
+        <tr>
+          <th>Week</th>
+          <th>Phase</th>
+          <th>Deliverables</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="week-num">Week 1</td>
+          <td><strong>Discovery &amp; Architecture</strong></td>
+          <td>DB schema, API contract, wireframes for 3 core screens, environment setup</td>
+        </tr>
+        <tr>
+          <td class="week-num">Week 2</td>
+          <td><strong>Auth &amp; Tenant Foundation</strong></td>
+          <td>User registration, login, JWT, password reset, multi-tenant data isolation</td>
+        </tr>
+        <tr>
+          <td class="week-num">Week 3</td>
+          <td><strong>Core Feature — Part 1</strong></td>
+          <td>The primary workflow your users will do every day — first half</td>
+        </tr>
+        <tr>
+          <td class="week-num">Week 4</td>
+          <td><strong>Core Feature — Part 2</strong></td>
+          <td>Complete the core workflow, add validation, error states, empty states</td>
+        </tr>
+        <tr>
+          <td class="week-num">Week 5</td>
+          <td><strong>Dashboard &amp; Data Layer</strong></td>
+          <td>Main dashboard with real data, filters, pagination, basic reporting</td>
+        </tr>
+        <tr>
+          <td class="week-num">Week 6</td>
+          <td><strong>Billing &amp; Onboarding</strong></td>
+          <td>Stripe integration, subscription plans, onboarding flow for new users</td>
+        </tr>
+        <tr>
+          <td class="week-num">Week 7</td>
+          <td><strong>Polish &amp; Edge Cases</strong></td>
+          <td>Mobile responsiveness, loading states, error handling, performance pass</td>
+        </tr>
+        <tr>
+          <td class="week-num">Week 8</td>
+          <td><strong>Deploy &amp; Launch</strong></td>
+          <td>Production deploy, SSL, monitoring (UptimeRobot), onboard first 5 users</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>A few things worth noting about this schedule: Week 1 looks light but it's actually the most important week. The decisions you make about your database schema in week 1 will haunt you or reward you for the rest of the project. I typically spend 2-3 days just on the schema before writing a single API route.</p>
+
+    <p>Week 7 gets underestimated constantly. "Polish" sounds cosmetic, but this is where you discover that your create form breaks on mobile, that an empty table with no data looks broken, and that your error messages say "Internal Server Error" instead of something helpful. These things matter enormously to early users.</p>
+
+    <h2>¿Cuánto cuesta construir un SaaS MVP en 2026?</h2>
+
+    <p>Let's talk numbers. I'll give you the real ranges based on what I charge and what I've seen in the market.</p>
+
+    <div class="price-grid">
+      <div class="price-card">
+        <div class="label">Simple MVP</div>
+        <div class="amount">$1,500–$2,500</div>
+        <div class="desc">Auth + 1 core workflow + basic dashboard. Single tenant.</div>
+      </div>
+      <div class="price-card">
+        <div class="label">Standard MVP</div>
+        <div class="amount">$2,500–$4,000</div>
+        <div class="desc">Multi-tenant, Stripe billing, reports, full onboarding flow.</div>
+      </div>
+      <div class="price-card">
+        <div class="label">Complex MVP</div>
+        <div class="amount">$4,000–$7,000</div>
+        <div class="desc">Integrations (ERP, accounting, external APIs), mobile-first, advanced roles.</div>
+      </div>
+    </div>
+
+    <p>Beyond development, budget for <strong>monthly infrastructure</strong>: a VPS runs $6–$25/month, a managed PostgreSQL instance on Neon starts at $0 (free tier is generous), Stripe takes 2.9% + $0.30 per transaction, and a transactional email service like Resend costs ~$0–$20/month depending on volume. You can run a real SaaS for under $50/month until you hit meaningful scale.</p>
+
+    <p>What should you <em>not</em> spend money on at MVP stage? A fancy UI kit when plain CSS works. A headless CMS when a markdown file will do. Kubernetes, CDNs, read replicas — all of that can wait until you have users who are actually experiencing the problems those solutions solve.</p>
+
+    <h2>Caso real: cómo construí ContaPro en semanas</h2>
+
+    <p>ContaPro started with a problem I understood viscerally: Venezuelan businesses deal with a dual-currency accounting system (bolívares and USD) that no off-the-shelf accounting software handles correctly. QuickBooks doesn't know what a "BCV rate" is. Excel spreadsheets break when you have 500 transactions a month.</p>
+
+    <p>The first conversation with the client took 45 minutes. I asked three questions: What do you do today that takes too long? What's the one number you need to know every morning? What would you stop doing forever if you could? The answers defined the MVP.</p>
+
+    <p><strong>Week 1:</strong> I designed a schema with two separate transaction ledgers (one per currency), a daily exchange rate table, and a period-closing mechanism that matches Venezuelan tax reporting requirements. This was the hard part. Everything else was implementation.</p>
+
+    <p><strong>Weeks 2–4:</strong> Auth, transaction entry form, and the reconciliation engine. The reconciliation logic — matching USD transactions to their bolívar equivalents at the historical rate — was 400 lines of well-tested business logic that became the product's unfair advantage.</p>
+
+    <p><strong>Weeks 5–6:</strong> Dashboard showing real-time currency-adjusted P&amp;L, balance sheet, and the daily cash position. Stripe billing with a 30-day trial. Onboarding flow that imported from their existing Excel files.</p>
+
+    <p><strong>Weeks 7–8:</strong> Mobile pass (most users check the dashboard on their phones), polish, production deploy to Oracle Cloud, onboarding of the first 3 paying clients.</p>
+
+    <p>The client had paying customers before week 8 ended. Not because we rushed — because we built exactly what they needed and nothing else.</p>
+
+    <h2>Los 5 errores más comunes al construir un MVP</h2>
+
+    <p>After building six SaaS products and consulting on dozens more, these are the mistakes I see kill MVPs before they reach users.</p>
+
+    <ul class="mistake-list">
+      <li>
+        <strong>Building features nobody asked for</strong>
+        <span>Dark mode, multi-language support, CSV export — all before a single user has tried the product. Validate first. Build second. Always.</span>
+      </li>
+      <li>
+        <strong>Choosing the wrong database model</strong>
+        <span>I've seen SaaS products choose MongoDB for "flexibility" and spend months fighting the lack of schema enforcement. Pick PostgreSQL and define your schema properly from day one.</span>
+      </li>
+      <li>
+        <strong>Not thinking about multi-tenancy early enough</strong>
+        <span>Adding a <code>tenant_id</code> column to 30 tables after launch is a nightmare. If your SaaS will ever serve multiple clients, design for it in week 1. It costs almost nothing to do it early; it costs everything to retrofit it later.</span>
+      </li>
+      <li>
+        <strong>Skipping the onboarding flow</strong>
+        <span>You understand your product. Your users don't. If they sign up, see a blank dashboard, and don't know what to do, they'll leave and never come back. An empty state with a clear first action is not optional — it's the product.</span>
+      </li>
+      <li>
+        <strong>Deploying without monitoring</strong>
+        <span>I've had clients go live on a Friday with no uptime monitoring and discover on Monday that the server crashed Saturday morning. Set up UptimeRobot (free), configure PM2 to auto-restart on crash, and make sure someone gets an SMS when the site goes down.</span>
+      </li>
+    </ul>
+
+    <div class="related">
+      <p>More from IVANCHOWEB</p>
+      <a href="/blog/automatizacion-n8n/">→ Cómo Automatizar tu Negocio con n8n</a>
+      <a href="/blog/wordpress-desarrollo/">→ WordPress con Divi en 2026</a>
+      <a href="https://ivanchoweb.com/#portafolio">→ See Real Projects</a>
+    </div>
+
+    <section class="faq">
+      <h2>Frequently Asked Questions</h2>
+
+      <div class="faq-item">
+        <div class="faq-q">How long does it really take to build a SaaS MVP?</div>
+        <div class="faq-a">A focused MVP with one core workflow takes 6–10 weeks. The 8-week mark hits the sweet spot: enough time to build something real users can test, short enough that you don't overbuild. Projects that take longer usually suffer from scope creep, not technical complexity.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What is the best tech stack for a SaaS MVP in 2026?</div>
+        <div class="faq-a">For most SaaS MVPs I recommend Node.js + Express on the backend, React + Vite on the frontend, and PostgreSQL as the database. This stack is proven, has a massive hiring pool, and scales without architectural rewrites. Avoid over-engineering with microservices or exotic databases at MVP stage.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">How much does it cost to build a SaaS MVP?</div>
+        <div class="faq-a">A production-ready SaaS MVP built by a senior freelancer typically runs $1,500–$4,000 depending on scope. This covers authentication, a core feature set, admin panel, and deployment. Add $50–$150/month for infrastructure (VPS, database, CDN, email).</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Should I build or buy SaaS infrastructure?</div>
+        <div class="faq-a">Buy commodities (email via Resend, payments via Stripe, auth via a library like Passport.js), build your differentiation. The login screen is not your product — the core workflow is. Every hour you spend on OAuth edge cases is an hour not spent on your actual feature.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What's the biggest mistake when building a SaaS MVP?</div>
+        <div class="faq-a">Building features nobody asked for. I've seen founders spend weeks on multi-language support, dark mode, and export formats before a single user has tried the product. Talk to 5 real potential users first. Build the one thing they'd pay for today. Everything else is noise.</div>
+      </div>
+    </section>
+
+    <div class="cta-box">
+      <h2>Ready to Build Yours?</h2>
+      <p>I've shipped 6 SaaS products across accounting, healthcare, legal, and e-commerce. Tell me what you're building — I'll tell you what it takes and what it costs.</p>
+      <a href="https://ivanchoweb.com/#contacto" class="cta-btn">Let's Build Yours →</a>
+    </div>
+
+  </div>
+</article>
+
+<footer>
+  <div class="footer-logo">IVANCHO<span>WEB</span></div>
+  <p>Full-Stack SaaS Developer · ivan@ivanchoweb.com</p>
+  <p><a href="https://ivanchoweb.com">ivanchoweb.com</a> · <a href="https://www.upwork.com/freelancers/ivanluna">Upwork</a> · <a href="https://www.linkedin.com/in/ivanchoweb">LinkedIn</a></p>
+  <p style="margin-top:16px;font-size:13px;">© 2026 IVANCHOWEB. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
