@@ -83,6 +83,31 @@ async function guardarLead(lead) {
 }
 
 app.use(express.json());
+
+// Block sensitive files from being served as static assets
+const BLOCKED_PATHS = [
+  /^\/.+\.bak/,           // backup HTML files
+  /\.sql$/,               // database dumps
+  /\.pdf$/,               // personal/document files
+  /^\/server\.js$/,       // source code
+  /^\/package(-lock)?\.json$/, // package manifests
+  /^\/node_modules\//,    // dependencies
+  /^\/leads\./,           // lead data files
+  /^\/.env/,              // env files (belt-and-suspenders)
+  /^\/\.git\//,           // git repo
+];
+app.use((req, res, next) => {
+  if (BLOCKED_PATHS.some(pattern => pattern.test(req.path))) {
+    return res.status(404).end();
+  }
+  next();
+});
+
+// Redirect old /sobre-ivan/ and /about/ to homepage
+app.get(['/sobre-ivan', '/sobre-ivan/', '/about', '/about/'], (req, res) => {
+  res.redirect(301, '/');
+});
+
 app.use(express.static(path.join(__dirname)));
 
 app.post('/api/chat', async (req, res) => {

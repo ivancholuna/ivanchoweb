@@ -1,4 +1,13 @@
 User-agent: *
 Allow: /
 Disallow: /api/
+Disallow: /*.bak
+Disallow: /*.sql
+Disallow: /*.pdf
+Disallow: /server.js
+Disallow: /package.json
+Disallow: /package-lock.json
+Disallow: /node_modules/
+Disallow: /leads.sql
+Disallow: /.env
 Sitemap: https://ivanchoweb.com/sitemap.xml
