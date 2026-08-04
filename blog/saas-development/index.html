@@ -25,7 +25,7 @@
         "description": "The exact 8-week process Ivan Luna used to ship ContaPro, DentalPro and LegalPro — stack selection, week-by-week plan, real costs in 2026, and the 5 mistakes that kill MVPs.",
         "url": "https://ivanchoweb.com/blog/saas-development/",
         "datePublished": "2026-07-18",
-        "dateModified": "2026-07-18",
+        "dateModified": "2026-07-26",
         "author": {
           "@type": "Person",
           "name": "Ivan Luna",
@@ -37,6 +37,7 @@
           "name": "IVANCHOWEB",
           "url": "https://ivanchoweb.com"
         },
+        "image": "https://ivanchoweb.com/assets/blog/cover-saas-mvp.webp",
         "mainEntityOfPage": "https://ivanchoweb.com/blog/saas-development/"
       },
       {
@@ -45,8 +46,8 @@
         "jobTitle": "Full-Stack SaaS Developer",
         "url": "https://ivanchoweb.com",
         "sameAs": [
-          "https://www.upwork.com/freelancers/ivanluna",
-          "https://www.linkedin.com/in/ivanchoweb"
+          "https://www.upwork.com/freelancers/~01bbc3829851e3233e",
+          "https://www.instagram.com/ivanchoweb/"
         ]
       },
       {
@@ -100,20 +101,43 @@
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', -apple-system, sans-serif; background: #fff; color: #0A0A0A; line-height: 1.7; }
+    /* DESIGN TOKENS — dark mode */
+    :root { --bg:#fff; --text:#0A0A0A; --text-muted:#525252; --border:#E5E5E5; --surface:#F8F8F8; --nav-bg:rgba(255,255,255,0.88); --indigo:#4F46E5; --indigo-hover:#4338CA; }
+    body.dark { --bg:#0A0A0A; --text:#F0F0F0; --text-muted:#A3A3A3; --border:#2A2A2A; --surface:#111; --nav-bg:rgba(10,10,10,0.92); }
+    body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); transition: background .25s, color .25s; line-height: 1.7; }
     a { color: #4F46E5; text-decoration: none; }
     a:hover { text-decoration: underline; }
+    /* ── NAVBAR ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--nav-bg);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: background .25s, border-color .25s;
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto; padding: 0 24px;
+      display: flex; align-items: center; justify-content: space-between; height: 64px;
+    }
+    .nav-logo-img { height: 40px; width: auto; display: block; transition: height 300ms ease; }
+    .nav-inner { transition: height 300ms ease, padding 300ms ease; }
+    nav.scrolled .nav-logo-img { height: 32px; }
+    nav.scrolled .nav-inner { height: 48px; padding-top: 0; padding-bottom: 0; }
+    .nav-right { display: flex; align-items: center; gap: 28px; }
+    .nav-links { display: flex; gap: 28px; align-items: center; }
+    .nav-links a { font-size: 14px; font-weight: 500; color: var(--text-muted); transition: color .2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+    .nav-controls { display: flex; align-items: center; gap: 8px; }
+    .btn-lang { border: 1px solid var(--border); background: transparent; color: var(--text); font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 100px; cursor: pointer; font-family: inherit; letter-spacing: 0.03em; transition: border-color .2s, color .2s; }
+    .btn-lang:hover { border-color: var(--indigo); color: var(--indigo); }
+    .btn-theme { border: none; background: transparent; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; padding: 4px; border-radius: 6px; transition: color .2s; }
+    .btn-theme:hover { color: var(--text); }
+    .icon-sun, .icon-moon { display: none; }
+    body:not(.dark) .icon-moon { display: block; }
+    body.dark .icon-sun { display: block; }
+    .nav-cta { background: var(--indigo); color: #fff !important; padding: 8px 18px; border-radius: 8px; font-size: 14px; font-weight: 600; transition: background .2s; }
+    .nav-cta:hover { background: var(--indigo-hover) !important; color: #fff !important; }
 
-    /* NAV */
-    nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid #E5E5E5; }
-    .nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 64px; }
-    .nav-logo { font-weight: 700; font-size: 18px; letter-spacing: -0.5px; color: #0A0A0A; text-decoration: none; }
-    .nav-logo span { color: #4F46E5; }
-    .nav-links { display: flex; gap: 32px; align-items: center; }
-    .nav-links a { font-size: 14px; font-weight: 500; color: #525252; transition: color .2s; text-decoration: none; }
-    .nav-links a:hover { color: #0A0A0A; text-decoration: none; }
-    .nav-cta { background: #4F46E5; color: #fff !important; padding: 8px 18px; border-radius: 8px; font-weight: 600 !important; }
-    .nav-cta:hover { background: #4338CA !important; }
 
     /* ARTICLE LAYOUT */
     .article-wrap { max-width: 720px; margin: 0 auto; padding: 56px 24px 80px; }
@@ -138,7 +162,7 @@
     .meta-read { font-size: 13px; color: #525252; }
 
     /* BODY */
-    .article-body { font-size: 17px; color: #1a1a1a; }
+    .article-body { font-size: 17px; color: #1a1a1a; overflow-wrap: break-word; word-break: break-word; }
     .article-body p { margin-bottom: 24px; }
     .article-body h2 { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.3; margin: 48px 0 16px; color: #0A0A0A; }
     .article-body h3 { font-size: 19px; font-weight: 600; margin: 32px 0 12px; color: #0A0A0A; }
@@ -146,7 +170,7 @@
     .article-body li { margin-bottom: 8px; }
     .article-body strong { font-weight: 600; color: #0A0A0A; }
     .article-body code { background: #F5F5F5; border: 1px solid #E5E5E5; border-radius: 4px; padding: 2px 7px; font-size: 14px; font-family: 'SF Mono', 'Fira Code', monospace; color: #4F46E5; }
-    .article-body blockquote { border-left: 3px solid #4F46E5; padding: 12px 20px; background: #F8F8FF; margin: 32px 0; border-radius: 0 8px 8px 0; }
+    .article-body blockquote { border-left: 3px solid #4F46E5; padding: 12px 20px; background: #F8F8F8; margin: 32px 0; border-radius: 0 8px 8px 0; }
     .article-body blockquote p { margin: 0; color: #525252; font-style: italic; }
 
     /* WEEK TABLE */
@@ -190,31 +214,146 @@
     .related p { font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: .5px; color: #525252; margin-bottom: 12px; }
     .related a { display: inline-block; font-size: 15px; font-weight: 500; margin-right: 16px; }
 
-    /* FOOTER */
-    footer { background: #0A0A0A; color: #A3A3A3; padding: 48px 24px; text-align: center; }
-    footer .footer-logo { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 12px; }
-    footer .footer-logo span { color: #6366F1; }
-    footer p { font-size: 14px; margin-bottom: 8px; }
-    footer a { color: #6366F1; text-decoration: none; }
-    footer a:hover { color: #818CF8; }
+    /* ── FOOTER ── */
+    footer { border-top: 1px solid var(--border); background: var(--bg); padding: 32px 24px; margin-top: 80px; transition: background .25s, border-color .25s; }
+    .footer-inner { max-width: 1240px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .footer-copy { font-size: 13px; color: var(--text-muted); }
+    .footer-links { display: flex; gap: 18px; }
+    .footer-links a { font-size: 13px; font-weight: 600; color: var(--text-muted); text-decoration: none; transition: color .2s; }
+    .footer-links a:hover { color: var(--text); }
 
     @media (max-width: 640px) {
-      .nav-links a:not(.nav-cta) { display: none; }
+      body { overflow-x: hidden; }
+      .nav-links { display: none; }
+      .nav-controls .btn-lang { display: none; }
       .cta-box { padding: 32px 20px; }
-      .week-table { font-size: 13px; }
+      .week-table { font-size: 13px; display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
     }
+    figure.article-fig { margin: 36px 0; }
+    figcaption { font-size: 13px; color: #6B7280; margin-top: 8px; text-align: center; font-style: italic; }
+    .article-img { width: 100%; border-radius: 12px; display: block; }
+    ::selection { background: rgba(0,0,0,0.08); color: inherit; }
   </style>
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How long does it really take to build a SaaS MVP?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A focused MVP with one core workflow takes 6–10 weeks. The 8-week mark hits the sweet spot: enough time to build something real users can test, short enough that you don't overbuild. Projects that take longer usually suffer from scope creep, not technical complexity."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the best tech stack for a SaaS MVP in 2026?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "For most SaaS MVPs I recommend Node.js + Express on the backend, React + Vite on the frontend, and PostgreSQL as the database. This stack is proven, has a massive hiring pool, and scales without architectural rewrites. Avoid over-engineering with microservices or exotic databases at MVP stage."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does it cost to build a SaaS MVP?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A production-ready SaaS MVP built by a senior freelancer typically runs $1,500–$4,000 depending on scope. This covers authentication, a core feature set, admin panel, and deployment. Add $50–$150/month for infrastructure (VPS, database, CDN, email)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Should I build or buy SaaS infrastructure?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Buy commodities (email via Resend, payments via Stripe, auth via a library like Passport.js), build your differentiation. The login screen is not your product — the core workflow is. Every hour you spend on OAuth edge cases is an hour not spent on your actual feature."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the biggest mistake when building a SaaS MVP?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Building features nobody asked for. I've seen founders spend weeks on multi-language support, dark mode, and export formats before a single user has tried the product. Talk to 5 real potential users first. Build the one thing they'd pay for today. Everything else is noise."
+      }
+    }
+  ]
+}
+  </script>
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ivanchoweb.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://ivanchoweb.com/blog/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "How to Build a SaaS MVP in 8 Weeks",
+      "item": "https://ivanchoweb.com/blog/saas-development/"
+    }
+  ]
+}
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZY32K4WMRR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ZY32K4WMRR');
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    window.gtag = gtag;
+    window.addEventListener('load', function() {
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'blog_post_view', {
+          post_slug: 'saas-development',
+          site_language: 'en'
+        });
+      }
+    });
+  </script>
 </head>
 <body>
 
 <nav>
   <div class="nav-inner">
-    <a href="https://ivanchoweb.com" class="nav-logo">IVANCHO<span>WEB</span></a>
-    <div class="nav-links">
-      <a href="https://ivanchoweb.com/#servicios">Services</a>
-      <a href="https://ivanchoweb.com/#portafolio">Work</a>
-      <a href="/blog/">Blog</a>
-      <a href="https://ivanchoweb.com/#contacto" class="nav-cta">Let's Talk</a>
+    <a href="https://ivanchoweb.com">
+      <img src="/assets/logo.webp" alt="IVANCHOWEB" class="nav-logo-img" width="auto" height="40" loading="eager" fetchpriority="high">
+    </a>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="https://ivanchoweb.com/#servicios">Services</a>
+        <a href="https://ivanchoweb.com/#portafolio">Work</a>
+        <a href="/blog/" class="active">Blog</a>
+        <a href="/#about">About</a>
+      </div>
+      <div class="nav-controls">
+        <button class="btn-lang" id="btnLang" aria-label="Switch language">EN/ES</button>
+        <button class="btn-theme" id="btnTheme" aria-label="Toggle dark mode">
+          <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+        </button>
+        <a href="https://cal.com/ivancholuna/discovery" target="_blank" class="nav-cta">Let's Talk</a>
+      </div>
     </div>
   </div>
 </nav>
@@ -226,247 +365,279 @@
     <span>›</span>
     <a href="/blog/">Blog</a>
     <span>›</span>
-    How to Build a SaaS MVP in 8 Weeks
+    <span data-en="How to Build a SaaS MVP in 8 Weeks" data-es="Cómo Construir un SaaS MVP en 8 Semanas">How to Build a SaaS MVP in 8 Weeks</span>
   </div>
 
-  <span class="article-tag">SaaS Development</span>
+  <span class="article-tag" data-en="SaaS Development" data-es="Desarrollo SaaS">SaaS Development</span>
 
-  <h1>How to Build a SaaS MVP in 8 Weeks (From a Dev Who's Done It)</h1>
+  <h1 data-en="How to Build a SaaS MVP in 8 Weeks (From a Dev Who&apos;s Done It)" data-es="Cómo Construir un SaaS MVP en 8 Semanas (De un Dev Que Lo Ha Hecho)">How to Build a SaaS MVP in 8 Weeks (From a Dev Who's Done It)</h1>
 
   <div class="article-meta">
     <div class="meta-author">
       <div class="meta-avatar">IL</div>
       <div class="meta-author-info">
         <strong>Ivan Luna</strong>
-        <span>Full-Stack Developer &amp; Accountant, IVANCHOWEB</span>
+        <span data-en="Full-Stack Developer &amp; Accountant, IVANCHOWEB" data-es="Desarrollador Full-Stack &amp; Contador, IVANCHOWEB">Full-Stack Developer &amp; Accountant, IVANCHOWEB</span>
       </div>
     </div>
     <span class="meta-divider">·</span>
     <span class="meta-date">July 18, 2026</span>
     <span class="meta-divider">·</span>
-    <span class="meta-read">12 min read</span>
+    <span class="meta-read" data-en="12 min read" data-es="12 min de lectura">12 min read</span>
   </div>
+  <img loading="eager" fetchpriority="high" width="1200" height="420" src="/assets/blog/SAAS-IN-8-WEEKS.webp" alt="How to Build a SaaS MVP in 8 Weeks" style="width: 100%; max-height: 400px; object-fit: cover; border-radius: 12px; margin: 24px 0; display: block;">
+<div class="article-body">
 
-  <div class="article-body">
+    <p data-en="&lt;strong&gt;Building a SaaS MVP takes 8 weeks when you have a clear process&lt;/strong&gt; — not 6 months, not a year. That&apos;s the timeline I&apos;ve hit repeatedly with ContaPro, DentalPro, and LegalPro: idea to paying users in under two months. The key is knowing what to build in each of those 8 weeks, what to skip entirely, and what order to sequence it all. Below is that exact process." data-es="&lt;strong&gt;Construir un SaaS MVP toma 8 semanas cuando tienes un proceso claro&lt;/strong&gt; — no 6 meses, no un año. Ese es el tiempo que he alcanzado repetidamente con ContaPro, DentalPro y LegalPro: de idea a usuarios pagando en menos de dos meses. La clave es saber qué construir en cada una de esas 8 semanas, qué omitir por completo y en qué orden secuenciarlo todo. A continuación está ese proceso exacto."><strong>Building a SaaS MVP takes 8 weeks when you have a clear process</strong> — not 6 months, not a year. That's the timeline I've hit repeatedly with ContaPro, DentalPro, and LegalPro: idea to paying users in under two months. The key is knowing what to build in each of those 8 weeks, what to skip entirely, and what order to sequence it all. Below is that exact process.</p>
+    <img loading="lazy" decoding="async" width="1200" height="420" src="/assets/blog/SAAS-IN-8-WEEKS-WORKFLOW.webp" alt="SaaS Development Workflow" style="width: 100%; max-height: 400px; object-fit: cover; border-radius: 12px; margin: 24px 0; display: block;">
 
-    <p><strong>You can ship a working SaaS MVP in 8 weeks.</strong> I've done it multiple times — ContaPro, DentalPro, LegalPro — all went from idea to paying users in under two months. The secret isn't speed. It's knowing exactly what to build, what to skip, and what order to do things in. Here's the exact process.</p>
+    <h2 data-en="What Is an MVP and Why Is 8 Weeks the Right Timeframe?" data-es="¿Qué es un MVP y por qué 8 semanas es el tiempo correcto?">¿Qué es un MVP y por qué 8 semanas es el tiempo correcto?</h2>
 
-    <h2>¿Qué es un MVP y por qué 8 semanas es el tiempo correcto?</h2>
+    <p data-en="An MVP — Minimum Viable Product — is the smallest version of your software that delivers real value to a real user. Not a prototype. Not a mockup. Something they can actually log into, use, and pay for." data-es="Un MVP — Producto Mínimo Viable — es la versión más pequeña de tu software que entrega valor real a un usuario real. No un prototipo. No un mockup. Algo en lo que realmente puedan iniciar sesión, usar y pagar.">An MVP — Minimum Viable Product — is the smallest version of your software that delivers real value to a real user. Not a prototype. Not a mockup. Something they can actually log into, use, and pay for.</p>
 
-    <p>An MVP — Minimum Viable Product — is the smallest version of your software that delivers real value to a real user. Not a prototype. Not a mockup. Something they can actually log into, use, and hopefully pay for.</p>
+    <p data-en="The &quot;8 weeks&quot; frame isn&apos;t arbitrary. I arrived at it after building six SaaS products across different industries. Here&apos;s what I found: projects shorter than 6 weeks almost always cut corners on authentication, data integrity, or deployment — which creates expensive technical debt. Projects longer than 10 weeks almost always succumb to scope creep: a feature becomes two features, a two-feature becomes a module, and suddenly you&apos;re 6 months in with nothing to show users." data-es="El marco de &quot;8 semanas&quot; no es arbitrario. Llegué a él después de construir seis productos SaaS en diferentes industrias. Esto es lo que encontré: los proyectos de menos de 6 semanas casi siempre recortan esquinas en autenticación, integridad de datos o despliegue — lo que crea deuda técnica costosa. Los proyectos de más de 10 semanas casi siempre sucumben al scope creep: una función se convierte en dos, dos en un módulo, y de repente llevas 6 meses sin nada que mostrar a los usuarios.">The "8 weeks" frame isn't arbitrary. I arrived at it after building six SaaS products across different industries. Here's what I found: projects shorter than 6 weeks almost always cut corners on authentication, data integrity, or deployment — which creates expensive technical debt. Projects longer than 10 weeks almost always succumb to scope creep: a feature becomes two features, a two-feature becomes a module, and suddenly you're 6 months in with nothing to show users.</p>
 
-    <p>The "8 weeks" frame isn't arbitrary. I arrived at it after building six SaaS products across different industries. Here's what I found: projects shorter than 6 weeks almost always cut corners on authentication, data integrity, or deployment — which creates expensive technical debt. Projects longer than 10 weeks almost always succumb to scope creep: a feature becomes two features, a two-feature becomes a module, and suddenly you're 6 months in with nothing to show users.</p>
-
-    <p>Eight weeks is long enough to build something solid. Short enough to stay focused. That tension is exactly what you want.</p>
+    <p data-en="Eight weeks is long enough to build something solid. Short enough to stay focused. That tension is exactly what you want." data-es="Ocho semanas son suficientes para construir algo sólido. Suficientemente cortas para mantenerse enfocado. Esa tensión es exactamente lo que necesitas.">Eight weeks is long enough to build something solid. Short enough to stay focused. That tension is exactly what you want.</p>
 
     <blockquote>
-      <p>Your MVP should do one thing so well that users forgive everything it doesn't do yet.</p>
+      <p data-en="Your MVP should do one thing so well that users forgive everything it doesn&apos;t do yet." data-es="Tu MVP debe hacer una cosa tan bien que los usuarios perdonen todo lo que aún no hace.">Your MVP should do one thing so well that users forgive everything it doesn't do yet.</p>
     </blockquote>
 
-    <p>The biggest mistake I see founders make is confusing an MVP with a "simple" product. Simple isn't the goal — <em>focused</em> is. ContaPro, my accounting SaaS for Venezuelan businesses, handles a complex tax calculation logic that most generic accounting tools get wrong. That's not simple. But it does <strong>one thing</strong> better than anything else on the market. That's what made it viable.</p>
+    <p data-en="The biggest mistake I see founders make is confusing an MVP with a &quot;simple&quot; product. Simple isn&apos;t the goal — &lt;em&gt;focused&lt;/em&gt; is. ContaPro, my accounting SaaS for Venezuelan businesses, handles a complex tax calculation logic that most generic accounting tools get wrong. That&apos;s not simple. But it does &lt;strong&gt;one thing&lt;/strong&gt; better than anything else on the market. That&apos;s what made it viable." data-es="El mayor error que veo cometer a los fundadores es confundir un MVP con un producto &quot;simple&quot;. Simple no es el objetivo — &lt;em&gt;enfocado&lt;/em&gt; sí lo es. ContaPro, mi SaaS de contabilidad para empresas venezolanas, maneja una lógica de cálculo fiscal compleja que la mayoría de las herramientas genéricas hacen mal. Eso no es simple. Pero hace &lt;strong&gt;una cosa&lt;/strong&gt; mejor que cualquier otra cosa en el mercado. Eso es lo que lo hizo viable.">The biggest mistake I see founders make is confusing an MVP with a "simple" product. Simple isn't the goal — <em>focused</em> is. ContaPro, my accounting SaaS for Venezuelan businesses, handles a complex tax calculation logic that most generic accounting tools get wrong. That's not simple. But it does <strong>one thing</strong> better than anything else on the market. That's what made it viable.</p>
 
-    <h2>¿Qué stack técnico elegir para tu SaaS MVP?</h2>
+    <h2 data-en="Which Tech Stack to Choose for Your SaaS MVP?" data-es="¿Qué stack técnico elegir para tu SaaS MVP?">¿Qué stack técnico elegir para tu SaaS MVP?</h2>
 
-    <p>I've built SaaS products in Node.js, Django, Laravel, and a few other stacks. My honest answer in 2026: <strong>Node.js + React + PostgreSQL</strong> is still the best combination for most MVPs, and here's why I keep coming back to it.</p>
+    <p data-en="I&apos;ve built SaaS products in Node.js, Django, Laravel, and a few other stacks. My honest answer in 2026: &lt;strong&gt;Node.js + React + PostgreSQL&lt;/strong&gt; is still the best combination for most MVPs, and here&apos;s why I keep coming back to it." data-es="He construido productos SaaS en Node.js, Django, Laravel y algunos otros stacks. Mi respuesta honesta en 2026: &lt;strong&gt;Node.js + React + PostgreSQL&lt;/strong&gt; sigue siendo la mejor combinación para la mayoría de los MVPs, y aquí te explico por qué sigo volviendo a ella.">I've built SaaS products in Node.js, Django, Laravel, and a few other stacks. My honest answer in 2026: <strong>Node.js + React + PostgreSQL</strong> is still the best combination for most MVPs, and here's why I keep coming back to it.</p>
 
-    <h3>Backend: Node.js + Express</h3>
-    <p>Fast to write, massive npm ecosystem, easy to hire for, and trivial to deploy. The JavaScript-everywhere model means your backend and frontend developers share context — no mental context-switching between Python types and JS types when debugging a data pipeline. I've used Express for everything from simple REST APIs to complex multi-tenant architectures and it handles both gracefully.</p>
+    <h3 data-en="Backend: Node.js + Express" data-es="Backend: Node.js + Express">Backend: Node.js + Express</h3>
+    <p data-en="Fast to write, massive npm ecosystem, easy to hire for, and trivial to deploy. The JavaScript-everywhere model means your backend and frontend developers share context — no mental context-switching between Python types and JS types when debugging a data pipeline. I&apos;ve used Express for everything from simple REST APIs to complex multi-tenant architectures and it handles both gracefully." data-es="Rápido de escribir, ecosistema npm masivo, fácil de contratar y trivial de desplegar. El modelo JavaScript-en-todas-partes significa que tus desarrolladores de backend y frontend comparten contexto — sin cambio mental entre tipos de Python y tipos de JS al depurar un pipeline de datos. He usado Express para todo, desde simples APIs REST hasta complejas arquitecturas multi-tenant, y maneja ambas con gracia.">Fast to write, massive npm ecosystem, easy to hire for, and trivial to deploy. The JavaScript-everywhere model means your backend and frontend developers share context — no mental context-switching between Python types and JS types when debugging a data pipeline. I've used Express for everything from simple REST APIs to complex multi-tenant architectures and it handles both gracefully.</p>
 
-    <h3>Frontend: React + Vite</h3>
-    <p>React is still king for SaaS dashboards. The component model maps perfectly to the UI patterns you'll build: data tables, modal flows, sidebar navigation. Vite replaced Create React App as my go-to starter — builds are instant, HMR is reliable, and the config is sane. If your MVP is relatively simple, plain React with <code>useContext</code> is enough. Don't reach for Redux until you actually need it.</p>
+    <h3 data-en="Frontend: React + Vite" data-es="Frontend: React + Vite">Frontend: React + Vite</h3>
+    <p data-en="React is still king for SaaS dashboards. The component model maps perfectly to the UI patterns you&apos;ll build: data tables, modal flows, sidebar navigation. Vite replaced Create React App as my go-to starter — builds are instant, HMR is reliable, and the config is sane. If your MVP is relatively simple, plain React with &lt;code&gt;useContext&lt;/code&gt; is enough. Don&apos;t reach for Redux until you actually need it." data-es="React sigue siendo el rey para los dashboards SaaS. El modelo de componentes encaja perfectamente con los patrones de UI que construirás: tablas de datos, flujos modales, navegación lateral. Vite reemplazó a Create React App como mi punto de partida — las compilaciones son instantáneas, el HMR es confiable y la configuración es sensata. Si tu MVP es relativamente simple, React plano con &lt;code&gt;useContext&lt;/code&gt; es suficiente. No uses Redux hasta que realmente lo necesites.">React is still king for SaaS dashboards. The component model maps perfectly to the UI patterns you'll build: data tables, modal flows, sidebar navigation. Vite replaced Create React App as my go-to starter — builds are instant, HMR is reliable, and the config is sane. If your MVP is relatively simple, plain React with <code>useContext</code> is enough. Don't reach for Redux until you actually need it.</p>
 
-    <h3>Database: PostgreSQL</h3>
-    <p>Every time I've seen a SaaS team choose MongoDB for "flexibility", they end up fighting their own schema within 3 months. PostgreSQL gives you relational integrity, JSON columns when you genuinely need flexibility, full-text search, and excellent cloud options (Neon, Supabase, RDS). The constraint that relational databases impose on your data model is a <em>feature</em>, not a bug — it forces you to think about your domain.</p>
+    <h3 data-en="Database: PostgreSQL" data-es="Base de datos: PostgreSQL">Database: PostgreSQL</h3>
+    <p data-en="Every time I&apos;ve seen a SaaS team choose MongoDB for &quot;flexibility&quot;, they end up fighting their own schema within 3 months. PostgreSQL gives you relational integrity, JSON columns when you genuinely need flexibility, full-text search, and excellent cloud options (Neon, Supabase, RDS). The constraint that relational databases impose on your data model is a &lt;em&gt;feature&lt;/em&gt;, not a bug — it forces you to think about your domain." data-es="Cada vez que he visto a un equipo SaaS elegir MongoDB por &quot;flexibilidad&quot;, terminan peleando con su propio esquema en 3 meses. PostgreSQL te da integridad relacional, columnas JSON cuando genuinamente necesitas flexibilidad, búsqueda de texto completo y excelentes opciones en la nube (Neon, Supabase, RDS). La restricción que las bases de datos relacionales imponen en tu modelo de datos es una &lt;em&gt;característica&lt;/em&gt;, no un bug — te obliga a pensar en tu dominio.">Every time I've seen a SaaS team choose MongoDB for "flexibility", they end up fighting their own schema within 3 months. PostgreSQL gives you relational integrity, JSON columns when you genuinely need flexibility, full-text search, and excellent cloud options (Neon, Supabase, RDS). The constraint that relational databases impose on your data model is a <em>feature</em>, not a bug — it forces you to think about your domain.</p>
 
-    <h3>What else goes in the stack?</h3>
+    <h3 data-en="What else goes in the stack?" data-es="¿Qué más va en el stack?">What else goes in the stack?</h3>
     <ul>
-      <li><strong>Auth:</strong> Passport.js with JWT — don't roll your own auth, don't over-engineer with Auth0 at MVP stage</li>
-      <li><strong>Email:</strong> Resend or Postmark — transactional email that actually lands in inboxes</li>
-      <li><strong>Payments:</strong> Stripe — there's no meaningful alternative worth considering</li>
-      <li><strong>Deployment:</strong> A single VPS (I use Oracle Cloud) + Nginx + PM2 — you don't need Kubernetes until you're past $50k MRR</li>
-      <li><strong>File storage:</strong> Cloudflare R2 or AWS S3 — cheap, reliable, and integrates in an afternoon</li>
+      <li data-en="&lt;strong&gt;Auth:&lt;/strong&gt; Passport.js with JWT — don&apos;t roll your own auth, don&apos;t over-engineer with Auth0 at MVP stage" data-es="&lt;strong&gt;Auth:&lt;/strong&gt; Passport.js con JWT — no crees tu propio sistema de auth, no sobre-ingenieres con Auth0 en etapa MVP"><strong>Auth:</strong> Passport.js with JWT — don't roll your own auth, don't over-engineer with Auth0 at MVP stage</li>
+      <li data-en="&lt;strong&gt;Email:&lt;/strong&gt; Resend or Postmark — transactional email that actually lands in inboxes" data-es="&lt;strong&gt;Email:&lt;/strong&gt; Resend o Postmark — correo transaccional que realmente llega a las bandejas de entrada"><strong>Email:</strong> Resend or Postmark — transactional email that actually lands in inboxes</li>
+      <li data-en="&lt;strong&gt;Payments:&lt;/strong&gt; Stripe — there&apos;s no meaningful alternative worth considering" data-es="&lt;strong&gt;Pagos:&lt;/strong&gt; Stripe — no hay alternativa significativa que valga la pena considerar"><strong>Payments:</strong> Stripe — there's no meaningful alternative worth considering</li>
+      <li data-en="&lt;strong&gt;Deployment:&lt;/strong&gt; A single VPS (I use Oracle Cloud) + Nginx + PM2 — you don&apos;t need Kubernetes until you&apos;re past $50k MRR" data-es="&lt;strong&gt;Despliegue:&lt;/strong&gt; Un solo VPS (uso Oracle Cloud) + Nginx + PM2 — no necesitas Kubernetes hasta que superes $50k MRR"><strong>Deployment:</strong> A single VPS (I use Oracle Cloud) + Nginx + PM2 — you don't need Kubernetes until you're past $50k MRR</li>
+      <li data-en="&lt;strong&gt;File storage:&lt;/strong&gt; Cloudflare R2 or AWS S3 — cheap, reliable, and integrates in an afternoon" data-es="&lt;strong&gt;Almacenamiento de archivos:&lt;/strong&gt; Cloudflare R2 o AWS S3 — barato, confiable y se integra en una tarde"><strong>File storage:</strong> Cloudflare R2 or AWS S3 — cheap, reliable, and integrates in an afternoon</li>
     </ul>
 
-    <h2>Las 8 fases de desarrollo — semana por semana</h2>
+    <h2 data-en="The 8 Development Phases — Week by Week" data-es="Las 8 fases de desarrollo — semana por semana">Las 8 fases de desarrollo — semana por semana</h2>
 
-    <p>This is the actual schedule I use. Not a theoretical framework — the literal week-by-week plan I sent to clients before starting ContaPro, DentalPro, and LegalPro.</p>
+    <p data-en="This is the actual schedule I use. Not a theoretical framework — the literal week-by-week plan I sent to clients before starting ContaPro, DentalPro, and LegalPro." data-es="Este es el cronograma real que uso. No un marco teórico — el plan literal semana por semana que envié a los clientes antes de comenzar ContaPro, DentalPro y LegalPro.">This is the actual schedule I use. Not a theoretical framework — the literal week-by-week plan I sent to clients before starting ContaPro, DentalPro, and LegalPro.</p>
 
     <table class="week-table">
       <thead>
         <tr>
-          <th>Week</th>
-          <th>Phase</th>
-          <th>Deliverables</th>
+          <th data-en="Week" data-es="Semana">Week</th>
+          <th data-en="Phase" data-es="Fase">Phase</th>
+          <th data-en="Deliverables" data-es="Entregables">Deliverables</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td class="week-num">Week 1</td>
-          <td><strong>Discovery &amp; Architecture</strong></td>
-          <td>DB schema, API contract, wireframes for 3 core screens, environment setup</td>
+          <td class="week-num" data-en="Week 1" data-es="Semana 1">Week 1</td>
+          <td data-en="&lt;strong&gt;Discovery &amp; Architecture&lt;/strong&gt;" data-es="&lt;strong&gt;Descubrimiento &amp; Arquitectura&lt;/strong&gt;"><strong>Discovery &amp; Architecture</strong></td>
+          <td data-en="DB schema, API contract, wireframes for 3 core screens, environment setup" data-es="Esquema de BD, contrato API, wireframes de 3 pantallas principales, configuración del entorno">DB schema, API contract, wireframes for 3 core screens, environment setup</td>
         </tr>
         <tr>
-          <td class="week-num">Week 2</td>
-          <td><strong>Auth &amp; Tenant Foundation</strong></td>
-          <td>User registration, login, JWT, password reset, multi-tenant data isolation</td>
+          <td class="week-num" data-en="Week 2" data-es="Semana 2">Week 2</td>
+          <td data-en="&lt;strong&gt;Auth &amp; Tenant Foundation&lt;/strong&gt;" data-es="&lt;strong&gt;Auth &amp; Fundación Multi-tenant&lt;/strong&gt;"><strong>Auth &amp; Tenant Foundation</strong></td>
+          <td data-en="User registration, login, JWT, password reset, multi-tenant data isolation" data-es="Registro de usuario, login, JWT, restablecimiento de contraseña, aislamiento de datos multi-tenant">User registration, login, JWT, password reset, multi-tenant data isolation</td>
         </tr>
         <tr>
-          <td class="week-num">Week 3</td>
-          <td><strong>Core Feature — Part 1</strong></td>
-          <td>The primary workflow your users will do every day — first half</td>
+          <td class="week-num" data-en="Week 3" data-es="Semana 3">Week 3</td>
+          <td data-en="&lt;strong&gt;Core Feature — Part 1&lt;/strong&gt;" data-es="&lt;strong&gt;Funcionalidad Principal — Parte 1&lt;/strong&gt;"><strong>Core Feature — Part 1</strong></td>
+          <td data-en="The primary workflow your users will do every day — first half" data-es="El flujo de trabajo principal que tus usuarios harán cada día — primera mitad">The primary workflow your users will do every day — first half</td>
         </tr>
         <tr>
-          <td class="week-num">Week 4</td>
-          <td><strong>Core Feature — Part 2</strong></td>
-          <td>Complete the core workflow, add validation, error states, empty states</td>
+          <td class="week-num" data-en="Week 4" data-es="Semana 4">Week 4</td>
+          <td data-en="&lt;strong&gt;Core Feature — Part 2&lt;/strong&gt;" data-es="&lt;strong&gt;Funcionalidad Principal — Parte 2&lt;/strong&gt;"><strong>Core Feature — Part 2</strong></td>
+          <td data-en="Complete the core workflow, add validation, error states, empty states" data-es="Completar el flujo principal, agregar validación, estados de error, estados vacíos">Complete the core workflow, add validation, error states, empty states</td>
         </tr>
         <tr>
-          <td class="week-num">Week 5</td>
-          <td><strong>Dashboard &amp; Data Layer</strong></td>
-          <td>Main dashboard with real data, filters, pagination, basic reporting</td>
+          <td class="week-num" data-en="Week 5" data-es="Semana 5">Week 5</td>
+          <td data-en="&lt;strong&gt;Dashboard &amp; Data Layer&lt;/strong&gt;" data-es="&lt;strong&gt;Dashboard &amp; Capa de Datos&lt;/strong&gt;"><strong>Dashboard &amp; Data Layer</strong></td>
+          <td data-en="Main dashboard with real data, filters, pagination, basic reporting" data-es="Dashboard principal con datos reales, filtros, paginación, reportes básicos">Main dashboard with real data, filters, pagination, basic reporting</td>
         </tr>
         <tr>
-          <td class="week-num">Week 6</td>
-          <td><strong>Billing &amp; Onboarding</strong></td>
-          <td>Stripe integration, subscription plans, onboarding flow for new users</td>
+          <td class="week-num" data-en="Week 6" data-es="Semana 6">Week 6</td>
+          <td data-en="&lt;strong&gt;Billing &amp; Onboarding&lt;/strong&gt;" data-es="&lt;strong&gt;Facturación &amp; Onboarding&lt;/strong&gt;"><strong>Billing &amp; Onboarding</strong></td>
+          <td data-en="Stripe integration, subscription plans, onboarding flow for new users" data-es="Integración con Stripe, planes de suscripción, flujo de onboarding para nuevos usuarios">Stripe integration, subscription plans, onboarding flow for new users</td>
         </tr>
         <tr>
-          <td class="week-num">Week 7</td>
-          <td><strong>Polish &amp; Edge Cases</strong></td>
-          <td>Mobile responsiveness, loading states, error handling, performance pass</td>
+          <td class="week-num" data-en="Week 7" data-es="Semana 7">Week 7</td>
+          <td data-en="&lt;strong&gt;Polish &amp; Edge Cases&lt;/strong&gt;" data-es="&lt;strong&gt;Pulido &amp; Casos Límite&lt;/strong&gt;"><strong>Polish &amp; Edge Cases</strong></td>
+          <td data-en="Mobile responsiveness, loading states, error handling, performance pass" data-es="Responsividad móvil, estados de carga, manejo de errores, optimización de rendimiento">Mobile responsiveness, loading states, error handling, performance pass</td>
         </tr>
         <tr>
-          <td class="week-num">Week 8</td>
-          <td><strong>Deploy &amp; Launch</strong></td>
-          <td>Production deploy, SSL, monitoring (UptimeRobot), onboard first 5 users</td>
+          <td class="week-num" data-en="Week 8" data-es="Semana 8">Week 8</td>
+          <td data-en="&lt;strong&gt;Deploy &amp; Launch&lt;/strong&gt;" data-es="&lt;strong&gt;Despliegue &amp; Lanzamiento&lt;/strong&gt;"><strong>Deploy &amp; Launch</strong></td>
+          <td data-en="Production deploy, SSL, monitoring (UptimeRobot), onboard first 5 users" data-es="Despliegue en producción, SSL, monitoreo (UptimeRobot), incorporación de los primeros 5 usuarios">Production deploy, SSL, monitoring (UptimeRobot), onboard first 5 users</td>
         </tr>
       </tbody>
     </table>
 
-    <p>A few things worth noting about this schedule: Week 1 looks light but it's actually the most important week. The decisions you make about your database schema in week 1 will haunt you or reward you for the rest of the project. I typically spend 2-3 days just on the schema before writing a single API route.</p>
+    <p data-en="A few things worth noting about this schedule: Week 1 looks light but it&apos;s actually the most important week. The decisions you make about your database schema in week 1 will haunt you or reward you for the rest of the project. I typically spend 2-3 days just on the schema before writing a single API route." data-es="Algunas cosas que vale la pena destacar sobre este cronograma: la Semana 1 parece liviana pero es en realidad la semana más importante. Las decisiones que tomes sobre el esquema de tu base de datos en la semana 1 te perseguirán o te recompensarán durante el resto del proyecto. Generalmente paso 2-3 días solo en el esquema antes de escribir una sola ruta de API.">A few things worth noting about this schedule: Week 1 looks light but it's actually the most important week. The decisions you make about your database schema in week 1 will haunt you or reward you for the rest of the project. I typically spend 2-3 days just on the schema before writing a single API route.</p>
 
-    <p>Week 7 gets underestimated constantly. "Polish" sounds cosmetic, but this is where you discover that your create form breaks on mobile, that an empty table with no data looks broken, and that your error messages say "Internal Server Error" instead of something helpful. These things matter enormously to early users.</p>
+    <p data-en="Week 7 gets underestimated constantly. &quot;Polish&quot; sounds cosmetic, but this is where you discover that your create form breaks on mobile, that an empty table with no data looks broken, and that your error messages say &quot;Internal Server Error&quot; instead of something helpful. These things matter enormously to early users." data-es="La Semana 7 se subestima constantemente. &quot;Pulido&quot; suena cosmético, pero aquí es donde descubres que tu formulario de creación se rompe en móvil, que una tabla vacía sin datos parece rota, y que tus mensajes de error dicen &quot;Internal Server Error&quot; en lugar de algo útil. Estas cosas importan enormemente a los primeros usuarios.">Week 7 gets underestimated constantly. "Polish" sounds cosmetic, but this is where you discover that your create form breaks on mobile, that an empty table with no data looks broken, and that your error messages say "Internal Server Error" instead of something helpful. These things matter enormously to early users.</p>
 
-    <h2>¿Cuánto cuesta construir un SaaS MVP en 2026?</h2>
+    <h2 data-en="How Much Does a SaaS MVP Cost in 2026?" data-es="¿Cuánto cuesta construir un SaaS MVP en 2026?">¿Cuánto cuesta construir un SaaS MVP en 2026?</h2>
 
-    <p>Let's talk numbers. I'll give you the real ranges based on what I charge and what I've seen in the market.</p>
+    <p data-en="Let&apos;s talk numbers. I&apos;ll give you the real ranges based on what I charge and what I&apos;ve seen in the market." data-es="Hablemos de números. Te daré los rangos reales basados en lo que cobro y lo que he visto en el mercado.">Let's talk numbers. I'll give you the real ranges based on what I charge and what I've seen in the market.</p>
 
     <div class="price-grid">
       <div class="price-card">
-        <div class="label">Simple MVP</div>
+        <div class="label" data-en="Simple MVP" data-es="MVP Simple">Simple MVP</div>
         <div class="amount">$1,500–$2,500</div>
-        <div class="desc">Auth + 1 core workflow + basic dashboard. Single tenant.</div>
+        <div class="desc" data-en="Auth + 1 core workflow + basic dashboard. Single tenant." data-es="Auth + 1 flujo principal + dashboard básico. Un solo tenant.">Auth + 1 core workflow + basic dashboard. Single tenant.</div>
       </div>
       <div class="price-card">
-        <div class="label">Standard MVP</div>
+        <div class="label" data-en="Standard MVP" data-es="MVP Estándar">Standard MVP</div>
         <div class="amount">$2,500–$4,000</div>
-        <div class="desc">Multi-tenant, Stripe billing, reports, full onboarding flow.</div>
+        <div class="desc" data-en="Multi-tenant, Stripe billing, reports, full onboarding flow." data-es="Multi-tenant, facturación con Stripe, reportes, flujo de onboarding completo.">Multi-tenant, Stripe billing, reports, full onboarding flow.</div>
       </div>
       <div class="price-card">
-        <div class="label">Complex MVP</div>
+        <div class="label" data-en="Complex MVP" data-es="MVP Complejo">Complex MVP</div>
         <div class="amount">$4,000–$7,000</div>
-        <div class="desc">Integrations (ERP, accounting, external APIs), mobile-first, advanced roles.</div>
+        <div class="desc" data-en="Integrations (ERP, accounting, external APIs), mobile-first, advanced roles." data-es="Integraciones (ERP, contabilidad, APIs externas), mobile-first, roles avanzados.">Integrations (ERP, accounting, external APIs), mobile-first, advanced roles.</div>
       </div>
     </div>
 
-    <p>Beyond development, budget for <strong>monthly infrastructure</strong>: a VPS runs $6–$25/month, a managed PostgreSQL instance on Neon starts at $0 (free tier is generous), Stripe takes 2.9% + $0.30 per transaction, and a transactional email service like Resend costs ~$0–$20/month depending on volume. You can run a real SaaS for under $50/month until you hit meaningful scale.</p>
+    <p data-en="Beyond development, budget for &lt;strong&gt;monthly infrastructure&lt;/strong&gt;: a VPS runs $6–$25/month, a managed PostgreSQL instance on Neon starts at $0 (free tier is generous), Stripe takes 2.9% + $0.30 per transaction, and a transactional email service like Resend costs ~$0–$20/month depending on volume. You can run a real SaaS for under $50/month until you hit meaningful scale." data-es="Más allá del desarrollo, presupuesta para &lt;strong&gt;infraestructura mensual&lt;/strong&gt;: un VPS cuesta $6–$25/mes, una instancia de PostgreSQL gestionada en Neon empieza en $0 (el tier gratuito es generoso), Stripe cobra 2.9% + $0.30 por transacción, y un servicio de correo transaccional como Resend cuesta ~$0–$20/mes dependiendo del volumen. Puedes operar un SaaS real por menos de $50/mes hasta alcanzar una escala significativa.">Beyond development, budget for <strong>monthly infrastructure</strong>: a VPS runs $6–$25/month, a managed PostgreSQL instance on Neon starts at $0 (free tier is generous), Stripe takes 2.9% + $0.30 per transaction, and a transactional email service like Resend costs ~$0–$20/month depending on volume. You can run a real SaaS for under $50/month until you hit meaningful scale.</p>
 
-    <p>What should you <em>not</em> spend money on at MVP stage? A fancy UI kit when plain CSS works. A headless CMS when a markdown file will do. Kubernetes, CDNs, read replicas — all of that can wait until you have users who are actually experiencing the problems those solutions solve.</p>
+    <p data-en="What should you &lt;em&gt;not&lt;/em&gt; spend money on at MVP stage? A fancy UI kit when plain CSS works. A headless CMS when a markdown file will do. Kubernetes, CDNs, read replicas — all of that can wait until you have users who are actually experiencing the problems those solutions solve." data-es="¿En qué &lt;em&gt;no&lt;/em&gt; deberías gastar dinero en la etapa MVP? Un kit de UI elegante cuando el CSS plano funciona. Un CMS headless cuando un archivo markdown bastará. Kubernetes, CDNs, réplicas de lectura — todo eso puede esperar hasta que tengas usuarios que realmente experimenten los problemas que esas soluciones resuelven.">What should you <em>not</em> spend money on at MVP stage? A fancy UI kit when plain CSS works. A headless CMS when a markdown file will do. Kubernetes, CDNs, read replicas — all of that can wait until you have users who are actually experiencing the problems those solutions solve.</p>
 
-    <h2>Caso real: cómo construí ContaPro en semanas</h2>
+    <h2 data-en="Real Case: How I Built ContaPro in Weeks" data-es="Caso real: cómo construí ContaPro en semanas">Caso real: cómo construí ContaPro en semanas</h2>
 
-    <p>ContaPro started with a problem I understood viscerally: Venezuelan businesses deal with a dual-currency accounting system (bolívares and USD) that no off-the-shelf accounting software handles correctly. QuickBooks doesn't know what a "BCV rate" is. Excel spreadsheets break when you have 500 transactions a month.</p>
+    <p data-en="ContaPro started with a problem I understood viscerally: Venezuelan businesses deal with a dual-currency accounting system (bolívares and USD) that no off-the-shelf accounting software handles correctly. QuickBooks doesn&apos;t know what a &quot;BCV rate&quot; is. Excel spreadsheets break when you have 500 transactions a month." data-es="ContaPro comenzó con un problema que entendí visceralmente: las empresas venezolanas lidian con un sistema de contabilidad de doble moneda (bolívares y dólares) que ningún software contable estándar maneja correctamente. QuickBooks no sabe qué es una &quot;tasa BCV&quot;. Las hojas de cálculo de Excel se rompen cuando tienes 500 transacciones al mes.">ContaPro started with a problem I understood viscerally: Venezuelan businesses deal with a dual-currency accounting system (bolívares and USD) that no off-the-shelf accounting software handles correctly. QuickBooks doesn't know what a "BCV rate" is. Excel spreadsheets break when you have 500 transactions a month.</p>
 
-    <p>The first conversation with the client took 45 minutes. I asked three questions: What do you do today that takes too long? What's the one number you need to know every morning? What would you stop doing forever if you could? The answers defined the MVP.</p>
+    <p data-en="The first conversation with the client took 45 minutes. I asked three questions: What do you do today that takes too long? What&apos;s the one number you need to know every morning? What would you stop doing forever if you could? The answers defined the MVP." data-es="La primera conversación con el cliente tomó 45 minutos. Hice tres preguntas: ¿Qué haces hoy que toma demasiado tiempo? ¿Cuál es el único número que necesitas saber cada mañana? ¿Qué dejarías de hacer para siempre si pudieras? Las respuestas definieron el MVP.">The first conversation with the client took 45 minutes. I asked three questions: What do you do today that takes too long? What's the one number you need to know every morning? What would you stop doing forever if you could? The answers defined the MVP.</p>
 
-    <p><strong>Week 1:</strong> I designed a schema with two separate transaction ledgers (one per currency), a daily exchange rate table, and a period-closing mechanism that matches Venezuelan tax reporting requirements. This was the hard part. Everything else was implementation.</p>
+    <p data-en="&lt;strong&gt;Week 1:&lt;/strong&gt; I designed a schema with two separate transaction ledgers (one per currency), a daily exchange rate table, and a period-closing mechanism that matches Venezuelan tax reporting requirements. This was the hard part. Everything else was implementation." data-es="&lt;strong&gt;Semana 1:&lt;/strong&gt; Diseñé un esquema con dos libros de transacciones separados (uno por moneda), una tabla de tasas de cambio diarias y un mecanismo de cierre de período que se ajusta a los requisitos de reporte fiscal venezolano. Esta fue la parte difícil. Todo lo demás fue implementación."><strong>Week 1:</strong> I designed a schema with two separate transaction ledgers (one per currency), a daily exchange rate table, and a period-closing mechanism that matches Venezuelan tax reporting requirements. This was the hard part. Everything else was implementation.</p>
 
-    <p><strong>Weeks 2–4:</strong> Auth, transaction entry form, and the reconciliation engine. The reconciliation logic — matching USD transactions to their bolívar equivalents at the historical rate — was 400 lines of well-tested business logic that became the product's unfair advantage.</p>
+    <p data-en="&lt;strong&gt;Weeks 2–4:&lt;/strong&gt; Auth, transaction entry form, and the reconciliation engine. The reconciliation logic — matching USD transactions to their bolívar equivalents at the historical rate — was 400 lines of well-tested business logic that became the product&apos;s unfair advantage." data-es="&lt;strong&gt;Semanas 2–4:&lt;/strong&gt; Auth, formulario de ingreso de transacciones y el motor de conciliación. La lógica de conciliación — que empareja las transacciones en USD con sus equivalentes en bolívares a la tasa histórica — fueron 400 líneas de lógica de negocio bien probada que se convirtió en la ventaja injusta del producto."><strong>Weeks 2–4:</strong> Auth, transaction entry form, and the reconciliation engine. The reconciliation logic — matching USD transactions to their bolívar equivalents at the historical rate — was 400 lines of well-tested business logic that became the product's unfair advantage.</p>
 
-    <p><strong>Weeks 5–6:</strong> Dashboard showing real-time currency-adjusted P&amp;L, balance sheet, and the daily cash position. Stripe billing with a 30-day trial. Onboarding flow that imported from their existing Excel files.</p>
+    <p data-en="&lt;strong&gt;Weeks 5–6:&lt;/strong&gt; Dashboard showing real-time currency-adjusted P&amp;L, balance sheet, and the daily cash position. Stripe billing with a 30-day trial. Onboarding flow that imported from their existing Excel files." data-es="&lt;strong&gt;Semanas 5–6:&lt;/strong&gt; Dashboard mostrando P&amp;G ajustado por moneda en tiempo real, balance general y posición de caja diaria. Facturación con Stripe con prueba de 30 días. Flujo de onboarding que importaba desde sus archivos Excel existentes."><strong>Weeks 5–6:</strong> Dashboard showing real-time currency-adjusted P&amp;L, balance sheet, and the daily cash position. Stripe billing with a 30-day trial. Onboarding flow that imported from their existing Excel files.</p>
 
-    <p><strong>Weeks 7–8:</strong> Mobile pass (most users check the dashboard on their phones), polish, production deploy to Oracle Cloud, onboarding of the first 3 paying clients.</p>
+    <p data-en="&lt;strong&gt;Weeks 7–8:&lt;/strong&gt; Mobile pass (most users check the dashboard on their phones), polish, production deploy to Oracle Cloud, onboarding of the first 3 paying clients." data-es="&lt;strong&gt;Semanas 7–8:&lt;/strong&gt; Pasada móvil (la mayoría de los usuarios revisan el dashboard en sus teléfonos), pulido, despliegue en producción a Oracle Cloud, incorporación de los primeros 3 clientes pagando."><strong>Weeks 7–8:</strong> Mobile pass (most users check the dashboard on their phones), polish, production deploy to Oracle Cloud, onboarding of the first 3 paying clients.</p>
 
-    <p>The client had paying customers before week 8 ended. Not because we rushed — because we built exactly what they needed and nothing else.</p>
+    <p data-en="The client had paying customers before week 8 ended. Not because we rushed — because we built exactly what they needed and nothing else." data-es="El cliente tenía clientes pagando antes de que terminara la semana 8. No porque nos apresuramos — sino porque construimos exactamente lo que necesitaban y nada más.">The client had paying customers before week 8 ended. Not because we rushed — because we built exactly what they needed and nothing else.</p>
 
-    <h2>Los 5 errores más comunes al construir un MVP</h2>
+    <h2 data-en="The 5 Most Common Mistakes When Building an MVP" data-es="Los 5 errores más comunes al construir un MVP">Los 5 errores más comunes al construir un MVP</h2>
 
-    <p>After building six SaaS products and consulting on dozens more, these are the mistakes I see kill MVPs before they reach users.</p>
+    <p data-en="After building six SaaS products and consulting on dozens more, these are the mistakes I see kill MVPs before they reach users." data-es="Después de construir seis productos SaaS y consultar en decenas más, estos son los errores que veo matar MVPs antes de que lleguen a los usuarios.">After building six SaaS products and consulting on dozens more, these are the mistakes I see kill MVPs before they reach users.</p>
 
     <ul class="mistake-list">
       <li>
-        <strong>Building features nobody asked for</strong>
-        <span>Dark mode, multi-language support, CSV export — all before a single user has tried the product. Validate first. Build second. Always.</span>
+        <strong data-en="Building features nobody asked for" data-es="Construir funcionalidades que nadie pidió">Building features nobody asked for</strong>
+        <span data-en="Dark mode, multi-language support, CSV export — all before a single user has tried the product. Validate first. Build second. Always." data-es="Modo oscuro, soporte multiidioma, exportación CSV — todo antes de que un solo usuario haya probado el producto. Valida primero. Construye después. Siempre.">Dark mode, multi-language support, CSV export — all before a single user has tried the product. Validate first. Build second. Always.</span>
       </li>
       <li>
-        <strong>Choosing the wrong database model</strong>
-        <span>I've seen SaaS products choose MongoDB for "flexibility" and spend months fighting the lack of schema enforcement. Pick PostgreSQL and define your schema properly from day one.</span>
+        <strong data-en="Choosing the wrong database model" data-es="Elegir el modelo de base de datos incorrecto">Choosing the wrong database model</strong>
+        <span data-en="I&apos;ve seen SaaS products choose MongoDB for &quot;flexibility&quot; and spend months fighting the lack of schema enforcement. Pick PostgreSQL and define your schema properly from day one." data-es="He visto productos SaaS elegir MongoDB por &quot;flexibilidad&quot; y pasar meses luchando contra la falta de validación de esquema. Elige PostgreSQL y define tu esquema correctamente desde el primer día.">I've seen SaaS products choose MongoDB for "flexibility" and spend months fighting the lack of schema enforcement. Pick PostgreSQL and define your schema properly from day one.</span>
       </li>
       <li>
-        <strong>Not thinking about multi-tenancy early enough</strong>
-        <span>Adding a <code>tenant_id</code> column to 30 tables after launch is a nightmare. If your SaaS will ever serve multiple clients, design for it in week 1. It costs almost nothing to do it early; it costs everything to retrofit it later.</span>
+        <strong data-en="Not thinking about multi-tenancy early enough" data-es="No pensar en el multi-tenancy con suficiente anticipación">Not thinking about multi-tenancy early enough</strong>
+        <span data-en="Adding a &lt;code&gt;tenant_id&lt;/code&gt; column to 30 tables after launch is a nightmare. If your SaaS will ever serve multiple clients, design for it in week 1. It costs almost nothing to do it early; it costs everything to retrofit it later." data-es="Agregar una columna &lt;code&gt;tenant_id&lt;/code&gt; a 30 tablas después del lanzamiento es una pesadilla. Si tu SaaS alguna vez servirá a múltiples clientes, diseña para ello en la semana 1. Cuesta casi nada hacerlo temprano; cuesta todo retrofitarlo después.">Adding a <code>tenant_id</code> column to 30 tables after launch is a nightmare. If your SaaS will ever serve multiple clients, design for it in week 1. It costs almost nothing to do it early; it costs everything to retrofit it later.</span>
       </li>
       <li>
-        <strong>Skipping the onboarding flow</strong>
-        <span>You understand your product. Your users don't. If they sign up, see a blank dashboard, and don't know what to do, they'll leave and never come back. An empty state with a clear first action is not optional — it's the product.</span>
+        <strong data-en="Skipping the onboarding flow" data-es="Saltarse el flujo de onboarding">Skipping the onboarding flow</strong>
+        <span data-en="You understand your product. Your users don&apos;t. If they sign up, see a blank dashboard, and don&apos;t know what to do, they&apos;ll leave and never come back. An empty state with a clear first action is not optional — it&apos;s the product." data-es="Tú entiendes tu producto. Tus usuarios no. Si se registran, ven un dashboard en blanco y no saben qué hacer, se irán y nunca volverán. Un estado vacío con una primera acción clara no es opcional — es el producto.">You understand your product. Your users don't. If they sign up, see a blank dashboard, and don't know what to do, they'll leave and never come back. An empty state with a clear first action is not optional — it's the product.</span>
       </li>
       <li>
-        <strong>Deploying without monitoring</strong>
-        <span>I've had clients go live on a Friday with no uptime monitoring and discover on Monday that the server crashed Saturday morning. Set up UptimeRobot (free), configure PM2 to auto-restart on crash, and make sure someone gets an SMS when the site goes down.</span>
+        <strong data-en="Deploying without monitoring" data-es="Desplegar sin monitoreo">Deploying without monitoring</strong>
+        <span data-en="I&apos;ve had clients go live on a Friday with no uptime monitoring and discover on Monday that the server crashed Saturday morning. Set up UptimeRobot (free), configure PM2 to auto-restart on crash, and make sure someone gets an SMS when the site goes down." data-es="He tenido clientes que salen en vivo un viernes sin monitoreo de uptime y descubren el lunes que el servidor se cayó el sábado por la mañana. Configura UptimeRobot (gratis), configura PM2 para reiniciarse automáticamente en caso de caída, y asegúrate de que alguien reciba un SMS cuando el sitio caiga.">I've had clients go live on a Friday with no uptime monitoring and discover on Monday that the server crashed Saturday morning. Set up UptimeRobot (free), configure PM2 to auto-restart on crash, and make sure someone gets an SMS when the site goes down.</span>
       </li>
     </ul>
 
     <div class="related">
-      <p>More from IVANCHOWEB</p>
-      <a href="/blog/automatizacion-n8n/">→ Cómo Automatizar tu Negocio con n8n</a>
-      <a href="/blog/wordpress-desarrollo/">→ WordPress con Divi en 2026</a>
-      <a href="https://ivanchoweb.com/#portafolio">→ See Real Projects</a>
+      <p data-en="More from IVANCHOWEB" data-es="Más de IVANCHOWEB">More from IVANCHOWEB</p>
+      <a href="/blog/automatizacion-n8n/" data-en="→ How to Automate Your Business with n8n" data-es="→ Cómo Automatizar tu Negocio con n8n">→ Cómo Automatizar tu Negocio con n8n</a>
+      <a href="/blog/wordpress-desarrollo/" data-en="→ WordPress with Divi in 2026" data-es="→ WordPress con Divi en 2026">→ WordPress con Divi en 2026</a>
+      <a href="https://ivanchoweb.com/#portafolio" data-en="→ See Real Projects" data-es="→ Ver Proyectos Reales">→ See Real Projects</a>
     </div>
 
     <section class="faq">
-      <h2>Frequently Asked Questions</h2>
+      <h2 data-en="Frequently Asked Questions" data-es="Preguntas Frecuentes">Frequently Asked Questions</h2>
 
       <div class="faq-item">
-        <div class="faq-q">How long does it really take to build a SaaS MVP?</div>
-        <div class="faq-a">A focused MVP with one core workflow takes 6–10 weeks. The 8-week mark hits the sweet spot: enough time to build something real users can test, short enough that you don't overbuild. Projects that take longer usually suffer from scope creep, not technical complexity.</div>
+        <div class="faq-q" data-en="How long does it really take to build a SaaS MVP?" data-es="¿Cuánto tiempo tarda realmente construir un SaaS MVP?">How long does it really take to build a SaaS MVP?</div>
+        <div class="faq-a" data-en="A focused MVP with one core workflow takes 6–10 weeks. The 8-week mark hits the sweet spot: enough time to build something real users can test, short enough that you don&apos;t overbuild. Projects that take longer usually suffer from scope creep, not technical complexity." data-es="Un MVP enfocado con un flujo de trabajo principal toma 6–10 semanas. Las 8 semanas son el punto óptimo: tiempo suficiente para construir algo que los usuarios reales puedan probar, suficientemente corto para no sobre-construir. Los proyectos que duran más generalmente sufren de scope creep, no de complejidad técnica.">A focused MVP with one core workflow takes 6–10 weeks. The 8-week mark hits the sweet spot: enough time to build something real users can test, short enough that you don't overbuild. Projects that take longer usually suffer from scope creep, not technical complexity.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">What is the best tech stack for a SaaS MVP in 2026?</div>
-        <div class="faq-a">For most SaaS MVPs I recommend Node.js + Express on the backend, React + Vite on the frontend, and PostgreSQL as the database. This stack is proven, has a massive hiring pool, and scales without architectural rewrites. Avoid over-engineering with microservices or exotic databases at MVP stage.</div>
+        <div class="faq-q" data-en="What is the best tech stack for a SaaS MVP in 2026?" data-es="¿Cuál es el mejor stack técnico para un SaaS MVP en 2026?">What is the best tech stack for a SaaS MVP in 2026?</div>
+        <div class="faq-a" data-en="For most SaaS MVPs I recommend Node.js + Express on the backend, React + Vite on the frontend, and PostgreSQL as the database. This stack is proven, has a massive hiring pool, and scales without architectural rewrites. Avoid over-engineering with microservices or exotic databases at MVP stage." data-es="Para la mayoría de los MVPs SaaS recomiendo Node.js + Express en el backend, React + Vite en el frontend y PostgreSQL como base de datos. Este stack está probado, tiene un enorme pool de contratación y escala sin reescrituras arquitectónicas. Evita la sobre-ingeniería con microservicios o bases de datos exóticas en la etapa MVP.">For most SaaS MVPs I recommend Node.js + Express on the backend, React + Vite on the frontend, and PostgreSQL as the database. This stack is proven, has a massive hiring pool, and scales without architectural rewrites. Avoid over-engineering with microservices or exotic databases at MVP stage.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">How much does it cost to build a SaaS MVP?</div>
-        <div class="faq-a">A production-ready SaaS MVP built by a senior freelancer typically runs $1,500–$4,000 depending on scope. This covers authentication, a core feature set, admin panel, and deployment. Add $50–$150/month for infrastructure (VPS, database, CDN, email).</div>
+        <div class="faq-q" data-en="How much does it cost to build a SaaS MVP?" data-es="¿Cuánto cuesta construir un SaaS MVP?">How much does it cost to build a SaaS MVP?</div>
+        <div class="faq-a" data-en="A production-ready SaaS MVP built by a senior freelancer typically runs $1,500–$4,000 depending on scope. This covers authentication, a core feature set, admin panel, and deployment. Add $50–$150/month for infrastructure (VPS, database, CDN, email)." data-es="Un SaaS MVP listo para producción construido por un freelancer senior típicamente cuesta $1,500–$4,000 dependiendo del alcance. Esto cubre autenticación, un conjunto de funcionalidades principales, panel de administración y despliegue. Agrega $50–$150/mes para infraestructura (VPS, base de datos, CDN, correo).">A production-ready SaaS MVP built by a senior freelancer typically runs $1,500–$4,000 depending on scope. This covers authentication, a core feature set, admin panel, and deployment. Add $50–$150/month for infrastructure (VPS, database, CDN, email).</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">Should I build or buy SaaS infrastructure?</div>
-        <div class="faq-a">Buy commodities (email via Resend, payments via Stripe, auth via a library like Passport.js), build your differentiation. The login screen is not your product — the core workflow is. Every hour you spend on OAuth edge cases is an hour not spent on your actual feature.</div>
+        <div class="faq-q" data-en="Should I build or buy SaaS infrastructure?" data-es="¿Debo construir o comprar la infraestructura SaaS?">Should I build or buy SaaS infrastructure?</div>
+        <div class="faq-a" data-en="Buy commodities (email via Resend, payments via Stripe, auth via a library like Passport.js), build your differentiation. The login screen is not your product — the core workflow is. Every hour you spend on OAuth edge cases is an hour not spent on your actual feature." data-es="Compra los componentes genéricos (correo vía Resend, pagos vía Stripe, auth vía una librería como Passport.js), construye tu diferenciación. La pantalla de login no es tu producto — el flujo de trabajo principal lo es. Cada hora que pasas en casos límite de OAuth es una hora que no pasas en tu funcionalidad real.">Buy commodities (email via Resend, payments via Stripe, auth via a library like Passport.js), build your differentiation. The login screen is not your product — the core workflow is. Every hour you spend on OAuth edge cases is an hour not spent on your actual feature.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">What's the biggest mistake when building a SaaS MVP?</div>
-        <div class="faq-a">Building features nobody asked for. I've seen founders spend weeks on multi-language support, dark mode, and export formats before a single user has tried the product. Talk to 5 real potential users first. Build the one thing they'd pay for today. Everything else is noise.</div>
+        <div class="faq-q" data-en="What&apos;s the biggest mistake when building a SaaS MVP?" data-es="¿Cuál es el mayor error al construir un SaaS MVP?">What's the biggest mistake when building a SaaS MVP?</div>
+        <div class="faq-a" data-en="Building features nobody asked for. I&apos;ve seen founders spend weeks on multi-language support, dark mode, and export formats before a single user has tried the product. Talk to 5 real potential users first. Build the one thing they&apos;d pay for today. Everything else is noise." data-es="Construir funcionalidades que nadie pidió. He visto a fundadores pasar semanas en soporte multiidioma, modo oscuro y formatos de exportación antes de que un solo usuario haya probado el producto. Habla primero con 5 usuarios potenciales reales. Construye la única cosa por la que pagarían hoy. Todo lo demás es ruido.">Building features nobody asked for. I've seen founders spend weeks on multi-language support, dark mode, and export formats before a single user has tried the product. Talk to 5 real potential users first. Build the one thing they'd pay for today. Everything else is noise.</div>
       </div>
     </section>
 
     <div class="cta-box">
-      <h2>Ready to Build Yours?</h2>
-      <p>I've shipped 6 SaaS products across accounting, healthcare, legal, and e-commerce. Tell me what you're building — I'll tell you what it takes and what it costs.</p>
-      <a href="https://ivanchoweb.com/#contacto" class="cta-btn">Let's Build Yours →</a>
+      <h2 data-en="Ready to Build Yours?" data-es="¿Listo para Construir el Tuyo?">Ready to Build Yours?</h2>
+      <p data-en="I&apos;ve shipped 6 SaaS products across accounting, healthcare, legal, and e-commerce. Tell me what you&apos;re building — I&apos;ll tell you what it takes and what it costs." data-es="He entregado 6 productos SaaS en contabilidad, salud, legal y e-commerce. Cuéntame qué estás construyendo — te digo qué requiere y cuánto cuesta.">I've shipped 6 SaaS products across accounting, healthcare, legal, and e-commerce. Tell me what you're building — I'll tell you what it takes and what it costs.</p>
+      <a href="https://ivanchoweb.com/#contacto" class="cta-btn" data-en="Let&apos;s Build Yours →" data-es="Construyamos el Tuyo →">Let's Build Yours →</a>
     </div>
 
   </div>
 </article>
 
 <footer>
-  <div class="footer-logo">IVANCHO<span>WEB</span></div>
-  <p>Full-Stack SaaS Developer · ivan@ivanchoweb.com</p>
-  <p><a href="https://ivanchoweb.com">ivanchoweb.com</a> · <a href="https://www.upwork.com/freelancers/ivanluna">Upwork</a> · <a href="https://www.linkedin.com/in/ivanchoweb">LinkedIn</a></p>
-  <p style="margin-top:16px;font-size:13px;">© 2026 IVANCHOWEB. All rights reserved.</p>
+  <div class="footer-inner">
+    <span class="footer-copy" data-en="© 2026 IVANCHOWEB. All rights reserved." data-es="© 2026 IVANCHOWEB. Todos los derechos reservados.">© 2026 IVANCHOWEB. All rights reserved.</span>
+    <div class="footer-links">
+      <a href="https://www.upwork.com/freelancers/~01bbc3829851e3233e" target="_blank">Upwork</a>
+      <a href="https://www.instagram.com/ivanchoweb/" target="_blank">Instagram</a>
+      <a href="https://github.com/ivancholuna" target="_blank">GitHub</a>
+    </div>
+  </div>
 </footer>
 
+<script>
+(function(){
+  var body = document.body;
+  var saved = localStorage.getItem('iw-theme');
+  var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  if (saved ? saved === 'dark' : prefersDark) body.classList.add('dark');
+  document.getElementById('btnTheme').addEventListener('click', function() {
+    localStorage.setItem('iw-theme', body.classList.toggle('dark') ? 'dark' : 'light');
+  });
+  var btnLang = document.getElementById('btnLang');
+  var lang = localStorage.getItem('iw-blog-lang') || 'en';
+  function applyLang(l) {
+    document.querySelectorAll('[data-en][data-es]').forEach(function(el) {
+      el.innerHTML = el.getAttribute('data-' + l);
+    });
+    btnLang.innerHTML = l === 'en' ? '<strong>EN</strong>/ES' : 'EN/<strong>ES</strong>';
+    localStorage.setItem('iw-blog-lang', l);
+    lang = l;
+  }
+  applyLang(lang);
+  btnLang.addEventListener('click', function() { applyLang(lang === 'en' ? 'es' : 'en'); });
+  // Navbar scroll shrink (matches homepage behaviour)
+  window.addEventListener('scroll', function() {
+    document.querySelector('nav').classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+})();
+</script>
 </body>
 </html>

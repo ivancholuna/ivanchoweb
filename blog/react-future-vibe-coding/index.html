@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>React in 2026: Still Relevant When AI Writes Your Code? | IVANCHOWEB</title>
+  <meta name="description" content="React is still the dominant frontend framework in 2026 — but Claude Code, Cursor and vibe coding are reshaping how it gets written. A practicing SaaS developer's honest take.">
+  <meta name="author" content="Ivan Luna">
+  <meta property="og:site_name" content="IVANCHOWEB">
+  <meta property="og:title" content="React in 2026: Still Relevant When AI Writes Your Code?">
+  <meta property="og:description" content="Claude Code and vibe coding changed how developers write React — but not whether they need to know it. A SaaS builder's honest analysis.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ivanchoweb.com/blog/react-future-vibe-coding/">
+  <meta property="og:image" content="https://ivanchoweb.com/assets/blog/cover-react-future.webp">
+  <link rel="canonical" href="https://ivanchoweb.com/blog/react-future-vibe-coding/">
+  <link rel="alternate" hreflang="en" href="https://ivanchoweb.com/blog/react-future-vibe-coding/">
+  <link rel="alternate" hreflang="es" href="https://ivanchoweb.com/blog/react-futuro-ia/">
+  <link rel="alternate" hreflang="x-default" href="https://ivanchoweb.com/blog/react-future-vibe-coding/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "React in 2026: Still Relevant When AI Writes Your Code?",
+        "description": "React is still the dominant frontend framework in 2026. Claude Code and vibe coding changed how it gets written — not whether developers need to understand it.",
+        "url": "https://ivanchoweb.com/blog/react-future-vibe-coding/",
+        "datePublished": "2026-07-26",
+        "dateModified": "2026-07-26",
+        "inLanguage": "en",
+        "image": "https://ivanchoweb.com/assets/blog/cover-react-future.webp",
+        "author": {
+          "@type": "Person",
+          "name": "Ivan Luna",
+          "jobTitle": "Full-Stack SaaS Developer",
+          "url": "https://ivanchoweb.com/sobre-ivan/"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "IVANCHOWEB",
+          "url": "https://ivanchoweb.com"
+        },
+        "mainEntityOfPage": "https://ivanchoweb.com/blog/react-future-vibe-coding/"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Is React still worth learning in 2026?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. React powers over 40% of production frontend applications globally and remains the framework most AI coding tools generate code for by default. Learning React in 2026 is not about memorizing syntax — it is about understanding the component model, state management patterns, and rendering lifecycle, which AI cannot substitute for you when debugging production systems."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is vibe coding and how does it work?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Vibe coding is the practice of describing software behavior in natural language and letting AI tools — Claude Code, Cursor, GitHub Copilot — generate the actual implementation. Instead of writing every line manually, you describe what a component should do and the AI generates a working first draft. The developer then reviews, corrects and integrates. It speeds up production significantly but requires enough technical knowledge to catch what the AI gets wrong."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Will AI replace React developers?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "AI will replace developers who only write boilerplate React — CRUD screens, static components, basic forms. It will not replace developers who understand system architecture, performance optimization, state synchronization across distributed components, and how React integrates with backends and authentication systems. The ceiling rises; the floor also rises."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What frontend framework should I use for a new project in 2026?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "For most SaaS products and web applications, React with Next.js remains the safest bet in 2026: the largest ecosystem, the most AI-generated code targeting it, the most available developers. Vue.js is a strong alternative for LATAM markets. Svelte is excellent for performance-critical small apps. Only use a framework outside React/Next if you have a specific technical reason."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does Claude Code change how you write React?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Claude Code shifts the bottleneck from typing to thinking. Instead of spending 40 minutes writing a data table component from scratch, you describe it in 2 sentences and review the output in 5 minutes. The time saved goes into architecture decisions, edge case testing, and business logic — the parts AI still does poorly. Net result: a developer using Claude Code ships 3-5x more features per week than one who does not."
+            }
+          }
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ivanchoweb.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://ivanchoweb.com/blog/" },
+          { "@type": "ListItem", "position": 3, "name": "React in 2026: Still Relevant When AI Writes Your Code?", "item": "https://ivanchoweb.com/blog/react-future-vibe-coding/" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    /* DESIGN TOKENS — dark mode */
+    :root { --bg:#fff; --text:#0A0A0A; --text-muted:#525252; --border:#E5E5E5; --surface:#F8F8F8; --nav-bg:rgba(255,255,255,0.88); --indigo:#4F46E5; --indigo-hover:#4338CA; }
+    body.dark { --bg:#0A0A0A; --text:#F0F0F0; --text-muted:#A3A3A3; --border:#2A2A2A; --surface:#111; --nav-bg:rgba(10,10,10,0.92); }
+    body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); transition: background .25s, color .25s; line-height: 1.7; }
+    a { color: #4F46E5; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    nav { position: sticky; top: 0; z-index: 100; background: var(--nav-bg); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); transition: background .25s, border-color .25s; }
+    .nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 64px; transition: height 300ms ease, padding 300ms ease; }
+    .nav-logo-img { height: 40px; width: auto; display: block; transition: height 300ms ease; }
+    nav.scrolled .nav-logo-img { height: 32px; }
+    nav.scrolled .nav-inner { height: 48px; }
+    .nav-right { display: flex; align-items: center; gap: 28px; }
+    .nav-links { display: flex; gap: 28px; align-items: center; }
+    .nav-links a { font-size: 14px; font-weight: 500; color: var(--text-muted); transition: color .2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+    .nav-controls { display: flex; align-items: center; gap: 8px; }
+    .btn-lang { border: 1px solid var(--border); background: transparent; color: var(--text); font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 100px; cursor: pointer; font-family: inherit; letter-spacing: 0.03em; transition: border-color .2s, color .2s; }
+    .btn-lang:hover { border-color: var(--indigo); color: var(--indigo); }
+    .btn-theme { border: none; background: transparent; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; padding: 4px; border-radius: 6px; transition: color .2s; }
+    .btn-theme:hover { color: var(--text); }
+    .icon-sun, .icon-moon { display: none; }
+    body:not(.dark) .icon-moon { display: block; }
+    body.dark .icon-sun { display: block; }
+    .nav-cta { background: var(--indigo); color: #fff !important; padding: 8px 18px; border-radius: 8px; font-size: 14px; font-weight: 600; transition: background .2s; }
+    .nav-cta:hover { background: var(--indigo-hover) !important; color: #fff !important; }
+    .article-wrap { max-width: 720px; margin: 0 auto; padding: 56px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: #A3A3A3; margin-bottom: 32px; }
+    .breadcrumb a { color: #A3A3A3; text-decoration: none; }
+    .breadcrumb a:hover { color: #4F46E5; }
+    .breadcrumb span { margin: 0 6px; }
+    .article-tag { display: inline-block; background: #EEF0FF; color: #4F46E5; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 20px; letter-spacing: .5px; text-transform: uppercase; margin-bottom: 20px; }
+    .article-wrap h1 { font-size: clamp(28px, 4vw, 42px); font-weight: 700; line-height: 1.2; letter-spacing: -1px; margin-bottom: 20px; }
+    .article-meta { display: flex; align-items: center; gap: 16px; padding-bottom: 32px; border-bottom: 1px solid #E5E5E5; margin-bottom: 40px; flex-wrap: wrap; }
+    .meta-author { display: flex; align-items: center; gap: 10px; }
+    .meta-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg,#4F46E5,#7C3AED); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+    .meta-author-info { font-size: 14px; }
+    .meta-author-info strong { display: block; color: #0A0A0A; font-weight: 600; }
+    .meta-author-info span { color: #525252; }
+    .meta-divider { color: #E5E5E5; }
+    .meta-date, .meta-read { font-size: 13px; color: #525252; }
+    .article-body { font-size: 17px; color: #1a1a1a; overflow-wrap: break-word; word-break: break-word; }
+    .article-body p { margin-bottom: 24px; }
+    .article-body h2 { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.3; margin: 48px 0 16px; color: #0A0A0A; }
+    .article-body h3 { font-size: 19px; font-weight: 600; margin: 32px 0 12px; color: #0A0A0A; }
+    .article-body ul, .article-body ol { padding-left: 24px; margin-bottom: 24px; }
+    .article-body li { margin-bottom: 8px; }
+    .article-body strong { font-weight: 600; color: #0A0A0A; }
+    .article-body blockquote { border-left: 3px solid #4F46E5; padding: 12px 20px; background: #F8F8F8; margin: 32px 0; border-radius: 0 8px 8px 0; }
+    .article-body blockquote p { margin: 0; color: #525252; font-style: italic; }
+    .faq { margin: 48px 0 0; }
+    .faq h2 { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 24px; }
+    .faq-item { border: 1px solid #E5E5E5; border-radius: 10px; margin-bottom: 12px; overflow: hidden; }
+    .faq-q { padding: 18px 20px; font-weight: 600; font-size: 16px; display: flex; justify-content: space-between; align-items: center; }
+    .faq-q::after { content: '+'; font-size: 20px; color: #4F46E5; font-weight: 300; }
+    .faq-a { padding: 0 20px 18px; font-size: 15px; color: #525252; line-height: 1.7; }
+    .cta-box { background: linear-gradient(135deg,#4F46E5,#7C3AED); border-radius: 20px; padding: 48px 40px; text-align: center; margin: 64px 0 0; color: #fff; }
+    .cta-box h2 { font-size: 28px; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.5px; }
+    .cta-box p { font-size: 16px; opacity: .85; margin-bottom: 28px; max-width: 460px; margin-left: auto; margin-right: auto; }
+    .cta-btn { display: inline-block; background: #fff; color: #4F46E5; font-weight: 700; font-size: 16px; padding: 14px 32px; border-radius: 10px; transition: transform .2s; }
+    .cta-btn:hover { transform: translateY(-2px); text-decoration: none; }
+    .related { margin: 48px 0; padding: 24px; background: #F8F8F8; border-radius: 12px; }
+    .related p { font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: .5px; color: #525252; margin-bottom: 12px; }
+    .related a { display: block; font-size: 15px; font-weight: 500; margin-bottom: 6px; }
+    footer { background: #0A0A0A; color: #A3A3A3; padding: 48px 24px; text-align: center; }
+    @media (max-width: 640px) {
+      body { overflow-x: hidden; }
+      .nav-links { display: none; }
+      .nav-controls .btn-lang { display: none; }
+      .cta-box { padding: 32px 20px; }
+    }
+    ::selection { background: rgba(0,0,0,0.08); color: inherit; }
+  </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZY32K4WMRR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ZY32K4WMRR');
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    window.gtag = gtag;
+    window.addEventListener('load', function() {
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'blog_post_view', {
+          post_slug: 'react-future-vibe-coding',
+          site_language: 'en'
+        });
+      }
+    });
+  </script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="https://ivanchoweb.com">
+      <img src="/assets/logo.webp" alt="IVANCHOWEB" class="nav-logo-img" width="auto" height="40" loading="eager" fetchpriority="high">
+    </a>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="https://ivanchoweb.com/#servicios">Services</a>
+        <a href="https://ivanchoweb.com/#portafolio">Work</a>
+        <a href="/blog/" class="active">Blog</a>
+        <a href="/#about">About</a>
+      </div>
+      <div class="nav-controls">
+        <button class="btn-lang" id="btnLang" aria-label="Switch language">EN/ES</button>
+        <button class="btn-theme" id="btnTheme" aria-label="Toggle dark mode">
+          <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+        </button>
+        <a href="https://cal.com/ivancholuna/discovery" target="_blank" class="nav-cta">Let's Talk</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<article class="article-wrap">
+
+  <div class="breadcrumb">
+    <a href="https://ivanchoweb.com">Home</a><span>›</span>
+    <a href="/blog/">Blog</a><span>›</span>
+    React in 2026: Still Relevant When AI Writes Your Code?
+  </div>
+
+  <span class="article-tag">Development</span>
+
+  <h1>React in 2026: Still Relevant When AI Writes Your Code?</h1>
+
+  <div class="article-meta">
+    <div class="meta-author">
+      <div class="meta-avatar">IL</div>
+      <div class="meta-author-info">
+        <strong><a href="/#about" style="color:#0A0A0A;">Ivan Luna</a></strong>
+        <span>Full-Stack SaaS Developer, IVANCHOWEB</span>
+      </div>
+    </div>
+    <span class="meta-divider">·</span>
+    <span class="meta-date">July 26, 2026</span>
+    <span class="meta-divider">·</span>
+    <span class="meta-read">11 min read</span>
+  </div>
+
+  <img loading="eager" fetchpriority="high" width="1200" height="420" src="/assets/blog/reat-2026-porta.webp" alt="React in 2026" style="width:100%; max-height:420px; object-fit:cover; border-radius:12px; margin:24px 0;">
+
+  <div class="article-body">
+
+    <p><strong>React is still the most-used frontend framework in production in 2026, powering roughly 40% of web applications globally.</strong> Despite the explosion of AI coding tools — Claude Code, Cursor, GitHub Copilot — that generate frontend code automatically, React has not lost ground. If anything, it has gained it, because these tools generate React by default. The real question is not whether React is relevant. It is what React knowledge means when AI writes the first draft of your components.</p>
+
+    <h2>What Vibe Coding Actually Is</h2>
+
+    <img loading="lazy" decoding="async" width="1200" height="420" src="/assets/blog/reat-2026--int1jpg.webp" alt="React in 2026 - Interior 1" style="width:100%; max-height:420px; object-fit:cover; border-radius:12px; margin:24px 0;">
+
+    <p>The term "vibe coding" was popularized by Andrej Karpathy in early 2025 and quickly became the default description of how a growing number of developers work. The practice: you describe what you want in natural language, the AI generates the code, you review and integrate. You stop thinking in terms of syntax and start thinking in terms of outcomes.</p>
+
+    <p>In practice, this looks like opening Claude Code or Cursor and typing: <em>"Create a React component for a pricing table with three tiers. Each tier has a name, price, feature list, and a CTA button. Use Tailwind for styling. The recommended plan should be highlighted."</em> Thirty seconds later, you have a working 80-line component. You adjust the copy, fix the colors, wire up the click handlers — and ship.</p>
+
+    <p>The tools that define this workflow in 2026:</p>
+    <ul>
+      <li><strong>Claude Code</strong> — Anthropic's CLI agent; best at reasoning through complex codebases and multi-file changes</li>
+      <li><strong>Cursor</strong> — IDE with AI embedded; best for in-file edits with full project context</li>
+      <li><strong>GitHub Copilot</strong> — inline completion; most widely deployed in enterprise teams</li>
+      <li><strong>v0 by Vercel</strong> — generates React/Tailwind UI from text prompts; ideal for prototyping</li>
+    </ul>
+
+    <p>None of these tools replaced the developer. All of them changed what the developer spends time on.</p>
+
+    <h2>React's Real Position in 2026</h2>
+
+    <p>The npm download data tells a clear story. React has been the most downloaded frontend framework for seven consecutive years. In 2026, it still leads by a significant margin over Vue.js (strong in LATAM and Southeast Asia), Angular (dominant in enterprise .NET shops), and Svelte (growing but still a fraction of React's footprint).</p>
+
+    <p>More importantly: Next.js, which extends React with server-side rendering and file-based routing, is the default deployment target for most new web projects. Vercel, the company behind Next.js, processed hundreds of billions of page views in 2025. When a founder says "build me a web app," the industry default answer is still React + Next.js.</p>
+
+    <p>Why has React maintained this position despite competitors with cleaner APIs and less boilerplate? Three reasons:</p>
+    <ol>
+      <li><strong>Ecosystem size.</strong> React has the most libraries, the most Stack Overflow answers, the most community support, and the most available developers for hire.</li>
+      <li><strong>AI training data.</strong> AI coding tools were trained on the internet. The internet has more React code than anything else. The AI is better at React than at anything else — and that advantage compounds.</li>
+      <li><strong>Enterprise inertia.</strong> Large companies do not migrate frontend stacks because a new framework has 15% less boilerplate. React is deeply embedded in production systems that are not being rewritten.</li>
+    </ol>
+
+    <h2>What AI Changes — and What It Does Not</h2>
+
+    <p>Here is an honest breakdown from someone who has shipped five SaaS products using React, and now uses Claude Code daily on all of them.</p>
+
+    <p><strong>What AI handles well:</strong></p>
+    <ul>
+      <li>UI components — forms, tables, modals, cards, navigation bars</li>
+      <li>Boilerplate data fetching with React Query or SWR</li>
+      <li>Responsive layout with Tailwind</li>
+      <li>Converting a Figma design description into a working component</li>
+      <li>Writing unit tests for pure functions</li>
+      <li>Fixing TypeScript type errors in isolated files</li>
+    </ul>
+
+    <p><strong>What AI still does poorly:</strong></p>
+    <ul>
+      <li>Global state architecture decisions (Zustand vs. Context vs. Redux — the choice matters at scale and AI picks the familiar one, not the right one)</li>
+      <li>Performance optimization — identifying why a specific tree is re-rendering 40 times on a scroll event</li>
+      <li>Cross-feature data flow in a large application with 80+ components</li>
+      <li>Integration with non-standard APIs or authentication flows</li>
+      <li>Debugging race conditions in concurrent React renders</li>
+    </ul>
+
+    <p>The pattern is clear: AI is excellent at isolated, well-defined tasks with a clear output. It struggles with tasks that require understanding the full system — how component A affects component B which feeds data to component C that re-triggers a fetch in component A.</p>
+
+    <img loading="lazy" decoding="async" width="1200" height="420" src="/assets/blog/reat-2026-int2.webp" alt="React in 2026 - Interior 2" style="width:100%; max-height:420px; object-fit:cover; border-radius:12px; margin:24px 0;">
+
+    <h2>The Developer Who Wins in This Environment</h2>
+
+    <p>The developers I see thriving in 2026 are not the ones who resist AI tools — and they are also not the ones who outsource all thinking to them. They are the ones who use AI to eliminate the tasks that were never actually interesting: writing the same data table for the fifteenth time, building the same form validation, setting up the same auth flow.</p>
+
+    <blockquote>
+      <p>The leverage is in knowing what to ask for, catching what the AI gets wrong, and making the decisions that require system-level understanding. That knowledge is built by writing React manually first — and then using AI to go faster.</p>
+    </blockquote>
+
+    <p>I would not hand a junior developer Claude Code on day one. The AI generates plausible-looking code that may have subtle bugs — a useEffect dependency array that is almost right, a state update that works in development but causes infinite loops under specific conditions. Catching those bugs requires understanding React's rendering model. You cannot catch what you cannot see.</p>
+
+    <h2>My Take: Five SaaS Products Built With and Without AI</h2>
+
+    <p>Before Claude Code was available, building ContaPro's invoicing dashboard took roughly three weeks of React work — component architecture, state design, data fetching layer, PDF export integration. When I built a comparable module for DentalPro after AI tools matured, the same scope took five days.</p>
+
+    <p>The difference was not that the AI wrote better code. The difference was that I stopped spending time on structure I already knew how to write and focused entirely on the business logic that was specific to that product. The AI handled the familiar patterns; I handled the unfamiliar ones.</p>
+
+    <p>That ratio — AI handles familiar patterns, developer handles novel ones — is where the real productivity gain lives. And to know which is which, you have to understand React well enough to recognize when you are in unfamiliar territory.</p>
+
+    <p>The conclusion: React is not threatened by AI. React is amplified by AI. The framework is fine. What changes is the minimum viable skill level — both the floor (AI makes entry easier) and the ceiling (those who use AI well pull further ahead of those who do not).</p>
+
+    <div class="related">
+      <p>Related reading</p>
+      <a href="/blog/saas-development/">→ How to Build a SaaS MVP in 8 Weeks</a>
+      <a href="/blog/automatizacion-n8n/">→ Business Automation with n8n</a>
+    </div>
+
+    <div class="faq">
+      <h2>Frequently Asked Questions</h2>
+
+      <div class="faq-item">
+        <div class="faq-q">Is React still worth learning in 2026?</div>
+        <div class="faq-a">Yes. React powers over 40% of production frontend applications globally and remains the framework most AI coding tools generate code for by default. Learning React in 2026 is about understanding the component model, state management patterns, and rendering lifecycle — knowledge you need to review and correct AI-generated code in production.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What is vibe coding and how does it work?</div>
+        <div class="faq-a">Vibe coding is the practice of describing software behavior in natural language and letting AI tools — Claude Code, Cursor, GitHub Copilot — generate the implementation. You describe what a component should do, the AI generates a working first draft, and you review, correct and integrate. It significantly speeds up production but requires technical knowledge to catch what the AI gets wrong.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Will AI replace React developers?</div>
+        <div class="faq-a">AI will replace developers who only write boilerplate React — CRUD screens, static components, basic forms. It will not replace developers who understand system architecture, performance optimization, state synchronization across complex component trees, and how React integrates with backends and auth systems. The ceiling rises; the floor also rises.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What frontend framework should I use for a new project in 2026?</div>
+        <div class="faq-a">For most SaaS products, React with Next.js remains the safest choice in 2026: the largest ecosystem, the most AI-generated code targeting it, and the most available developers. Vue.js is a strong alternative for LATAM markets. Only choose a framework outside React/Next.js if you have a specific technical reason.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">How does Claude Code change how you write React?</div>
+        <div class="faq-a">Claude Code shifts the bottleneck from typing to thinking. Instead of spending 40 minutes writing a data table component from scratch, you describe it in two sentences and review the output in five minutes. The time saved goes into architecture decisions, edge case testing, and business logic — the parts AI still handles poorly. A developer using Claude Code ships 3-5x more features per week than one who does not.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cta-box">
+    <h2>Building something with React?</h2>
+    <p>I build SaaS products and MVPs with React and Node.js — from idea to deployed product in weeks, not months.</p>
+    <a href="https://cal.com/ivancholuna/discovery" target="_blank" class="cta-btn">Schedule a Free Call →</a>
+  </div>
+
+</article>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-copy">© 2026 IVANCHOWEB. All rights reserved.</span>
+    <div class="footer-links">
+      <a href="https://www.upwork.com/freelancers/~01bbc3829851e3233e" target="_blank">Upwork</a>
+      <a href="https://www.instagram.com/ivanchoweb/" target="_blank">Instagram</a>
+      <a href="https://github.com/ivancholuna" target="_blank">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var body = document.body;
+  var saved = localStorage.getItem('iw-theme');
+  var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  if (saved ? saved === 'dark' : prefersDark) body.classList.add('dark');
+  document.getElementById('btnTheme').addEventListener('click', function() {
+    localStorage.setItem('iw-theme', body.classList.toggle('dark') ? 'dark' : 'light');
+  });
+  var pageLang = document.documentElement.lang || 'en';
+  var btnLang = document.getElementById('btnLang');
+  btnLang.innerHTML = pageLang === 'en' ? '<strong>EN</strong>/ES' : 'EN/<strong>ES</strong>';
+  btnLang.addEventListener('click', function() {
+    var target = pageLang === 'en' ? 'es' : 'en';
+    localStorage.setItem('iw-blog-lang', target);
+    var alt = document.querySelector('link[hreflang="' + target + '"]');
+    if (alt) window.location.href = alt.getAttribute('href');
+  });
+  // Navbar scroll shrink (matches homepage behaviour)
+  window.addEventListener('scroll', function() {
+    document.querySelector('nav').classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+})();
+</script>
+</body>
+</html>

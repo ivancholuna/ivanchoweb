@@ -39,6 +39,7 @@
           "name": "IVANCHOWEB",
           "url": "https://ivanchoweb.com"
         },
+        "image": "https://ivanchoweb.com/assets/blog/cover-n8n-automatizacion.webp",
         "mainEntityOfPage": "https://ivanchoweb.com/blog/automatizacion-n8n/"
       },
       {
@@ -92,19 +93,32 @@
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', -apple-system, sans-serif; background: #fff; color: #0A0A0A; line-height: 1.7; }
+    /* DESIGN TOKENS — dark mode */
+    :root { --bg:#fff; --text:#0A0A0A; --text-muted:#525252; --border:#E5E5E5; --surface:#F8F8F8; --nav-bg:rgba(255,255,255,0.88); --indigo:#4F46E5; --indigo-hover:#4338CA; }
+    body.dark { --bg:#0A0A0A; --text:#F0F0F0; --text-muted:#A3A3A3; --border:#2A2A2A; --surface:#111; --nav-bg:rgba(10,10,10,0.92); }
+    body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); transition: background .25s, color .25s; line-height: 1.7; }
     a { color: #4F46E5; text-decoration: none; }
     a:hover { text-decoration: underline; }
 
-    nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid #E5E5E5; }
-    .nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 64px; }
-    .nav-logo { font-weight: 700; font-size: 18px; letter-spacing: -0.5px; color: #0A0A0A; text-decoration: none; }
-    .nav-logo span { color: #4F46E5; }
-    .nav-links { display: flex; gap: 32px; align-items: center; }
-    .nav-links a { font-size: 14px; font-weight: 500; color: #525252; transition: color .2s; text-decoration: none; }
-    .nav-links a:hover { color: #0A0A0A; }
-    .nav-cta { background: #4F46E5; color: #fff !important; padding: 8px 18px; border-radius: 8px; font-weight: 600 !important; }
-    .nav-cta:hover { background: #4338CA !important; }
+    nav { position: sticky; top: 0; z-index: 100; background: var(--nav-bg); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); transition: background .25s, border-color .25s; }
+    .nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 64px; transition: height 300ms ease, padding 300ms ease; }
+    .nav-logo-img { height: 40px; width: auto; display: block; transition: height 300ms ease; }
+    nav.scrolled .nav-logo-img { height: 32px; }
+    nav.scrolled .nav-inner { height: 48px; }
+    .nav-right { display: flex; align-items: center; gap: 28px; }
+    .nav-links { display: flex; gap: 28px; align-items: center; }
+    .nav-links a { font-size: 14px; font-weight: 500; color: var(--text-muted); transition: color .2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+    .nav-controls { display: flex; align-items: center; gap: 8px; }
+    .btn-lang { border: 1px solid var(--border); background: transparent; color: var(--text); font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 100px; cursor: pointer; font-family: inherit; letter-spacing: 0.03em; transition: border-color .2s, color .2s; }
+    .btn-lang:hover { border-color: var(--indigo); color: var(--indigo); }
+    .btn-theme { border: none; background: transparent; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; padding: 4px; border-radius: 6px; transition: color .2s; }
+    .btn-theme:hover { color: var(--text); }
+    .icon-sun, .icon-moon { display: none; }
+    body:not(.dark) .icon-moon { display: block; }
+    body.dark .icon-sun { display: block; }
+    .nav-cta { background: var(--indigo); color: #fff !important; padding: 8px 18px; border-radius: 8px; font-size: 14px; font-weight: 600; transition: background .2s; }
+    .nav-cta:hover { background: var(--indigo-hover) !important; color: #fff !important; }
 
     .article-wrap { max-width: 720px; margin: 0 auto; padding: 56px 24px 80px; }
 
@@ -125,7 +139,7 @@
     .meta-date { font-size: 13px; color: #525252; }
     .meta-read { font-size: 13px; color: #525252; }
 
-    .article-body { font-size: 17px; color: #1a1a1a; }
+    .article-body { font-size: 17px; color: #1a1a1a; overflow-wrap: break-word; word-break: break-word; }
     .article-body p { margin-bottom: 24px; }
     .article-body h2 { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.3; margin: 48px 0 16px; color: #0A0A0A; }
     .article-body h3 { font-size: 19px; font-weight: 600; margin: 32px 0 12px; color: #0A0A0A; }
@@ -133,7 +147,7 @@
     .article-body li { margin-bottom: 8px; }
     .article-body strong { font-weight: 600; color: #0A0A0A; }
     .article-body code { background: #F5F5F5; border: 1px solid #E5E5E5; border-radius: 4px; padding: 2px 7px; font-size: 14px; font-family: 'SF Mono', 'Fira Code', monospace; color: #4F46E5; }
-    .article-body blockquote { border-left: 3px solid #4F46E5; padding: 12px 20px; background: #F8F8FF; margin: 32px 0; border-radius: 0 8px 8px 0; }
+    .article-body blockquote { border-left: 3px solid #4F46E5; padding: 12px 20px; background: #F8F8F8; margin: 32px 0; border-radius: 0 8px 8px 0; }
     .article-body blockquote p { margin: 0; color: #525252; font-style: italic; }
 
     .use-case-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin: 24px 0 32px; }
@@ -173,29 +187,139 @@
     .related a { display: inline-block; font-size: 15px; font-weight: 500; margin-right: 16px; }
 
     footer { background: #0A0A0A; color: #A3A3A3; padding: 48px 24px; text-align: center; }
-    footer .footer-logo { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 12px; }
-    footer .footer-logo span { color: #6366F1; }
-    footer p { font-size: 14px; margin-bottom: 8px; }
-    footer a { color: #6366F1; text-decoration: none; }
-    footer a:hover { color: #818CF8; }
 
     @media (max-width: 640px) {
-      .nav-links a:not(.nav-cta) { display: none; }
+      body { overflow-x: hidden; }
+      .nav-links { display: none; }
+      .nav-controls .btn-lang { display: none; }
       .cta-box { padding: 32px 20px; }
-      .comparison-table { font-size: 13px; }
+      .comparison-table { font-size: 13px; display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
     }
+    figure.article-fig { margin: 36px 0; }
+    figcaption { font-size: 13px; color: #6B7280; margin-top: 8px; text-align: center; font-style: italic; }
+    .article-img { width: 100%; border-radius: 12px; display: block; }
+    ::selection { background: rgba(0,0,0,0.08); color: inherit; }
   </style>
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Qué es n8n y en qué se diferencia de Zapier?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "n8n es una herramienta de automatización de flujos de trabajo de código abierto. A diferencia de Zapier, puedes instalarlo en tu propio servidor y no pagas por ejecución. Zapier cobra desde $19/mes para flujos básicos; con n8n self-hosted pagas solo el costo del servidor (~$5-10/mes). Además, n8n permite lógica avanzada: loops, condicionales, transformación de datos con JavaScript y conexión a bases de datos propias."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Necesito saber programar para usar n8n?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No para la mayoría de flujos. n8n tiene más de 400 integraciones visuales — arrastras nodos y los conectas. Donde puede aparecer algo de código es en transformaciones de datos complejas, y ahí puedes usar nodos de JavaScript simples. La curva de aprendizaje es menor que aprender un lenguaje de programación completo."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuánto cuesta implementar n8n para una empresa?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "La instalación en un VPS cuesta entre $5 y $20/mes dependiendo del servidor. Si contratas a un desarrollador para configurarlo y construir tus flujos, presupuesta entre $300 y $1,500 por el setup inicial según la complejidad. Comparado con Zapier que puede costar $300-600/mes para el mismo volumen, el ahorro se paga solo en 2-3 meses."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué automatizaciones son las más útiles para un negocio pequeño?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Las tres que más impacto dan son: (1) notificaciones automáticas cuando entra un pago; (2) sincronización de leads de formularios web directo al CRM o Google Sheets; (3) alertas de inventario bajo. Estas tres juntas pueden liberar entre 5 y 10 horas semanales."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿n8n puede conectarse con WhatsApp?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. n8n se integra con la API oficial de WhatsApp Business (Meta), Twilio para SMS/WhatsApp, y también con herramientas como WATI o MessageBird. Puedes enviar mensajes automatizados cuando ocurre cualquier evento en tu negocio: pago confirmado, pedido despachado, cita agendada, etc."
+      }
+    }
+  ]
+}
+  </script>
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ivanchoweb.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://ivanchoweb.com/blog/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Cómo Automatizar tu Negocio con n8n sin Escribir Código",
+      "item": "https://ivanchoweb.com/blog/automatizacion-n8n/"
+    }
+  ]
+}
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZY32K4WMRR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ZY32K4WMRR');
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    window.gtag = gtag;
+    window.addEventListener('load', function() {
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'blog_post_view', {
+          post_slug: 'automatizacion-n8n',
+          site_language: 'es'
+        });
+      }
+    });
+  </script>
 </head>
 <body>
 
 <nav>
   <div class="nav-inner">
-    <a href="https://ivanchoweb.com" class="nav-logo">IVANCHO<span>WEB</span></a>
-    <div class="nav-links">
-      <a href="https://ivanchoweb.com/#servicios">Services</a>
-      <a href="https://ivanchoweb.com/#portafolio">Work</a>
-      <a href="/blog/">Blog</a>
-      <a href="https://ivanchoweb.com/#contacto" class="nav-cta">Let's Talk</a>
+    <a href="https://ivanchoweb.com">
+      <img src="/assets/logo.webp" alt="IVANCHOWEB" class="nav-logo-img" width="auto" height="40" loading="eager" fetchpriority="high">
+    </a>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="https://ivanchoweb.com/#servicios">Services</a>
+        <a href="https://ivanchoweb.com/#portafolio">Work</a>
+        <a href="/blog/" class="active">Blog</a>
+        <a href="/#about">About</a>
+      </div>
+      <div class="nav-controls">
+        <button class="btn-lang" id="btnLang" aria-label="Switch language">EN/ES</button>
+        <button class="btn-theme" id="btnTheme" aria-label="Toggle dark mode">
+          <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+        </button>
+        <a href="https://cal.com/ivancholuna/discovery" target="_blank" class="nav-cta">Let's Talk</a>
+      </div>
     </div>
   </div>
 </nav>
@@ -207,116 +331,117 @@
     <span>›</span>
     <a href="/blog/">Blog</a>
     <span>›</span>
-    Automatización con n8n
+    <span data-en="Automation with n8n" data-es="Automatización con n8n">Automatización con n8n</span>
   </div>
 
-  <span class="article-tag">Automatización</span>
-  <h1>Cómo Automatizar tu Negocio con n8n sin Escribir Código</h1>
+  <span class="article-tag" data-en="Automation" data-es="Automatización">Automatización</span>
+  <h1 data-en="How to Automate Your Business with n8n Without Writing Code" data-es="Cómo Automatizar tu Negocio con n8n sin Escribir Código">Cómo Automatizar tu Negocio con n8n sin Escribir Código</h1>
 
   <div class="article-meta">
     <div class="meta-author">
       <div class="meta-avatar">IL</div>
       <div class="meta-author-info">
         <strong>Ivan Luna</strong>
-        <span>Full-Stack Developer</span>
+        <span data-en="Full-Stack Developer" data-es="Full-Stack Developer">Full-Stack Developer</span>
       </div>
     </div>
     <span class="meta-divider">|</span>
     <span class="meta-date">26 de julio, 2026</span>
     <span class="meta-divider">|</span>
-    <span class="meta-read">8 min de lectura</span>
+    <span class="meta-read" data-en="8 min read" data-es="8 min de lectura">8 min de lectura</span>
   </div>
+  <img loading="eager" fetchpriority="high" width="1200" height="420" src="/assets/blog/n8n-automation.webp" alt="Automatización con n8n" style="width: 100%; max-height: 400px; object-fit: cover; border-radius: 12px; margin: 24px 0; display: block;">
+<div class="article-body">
 
-  <div class="article-body">
+    <p data-en="n8n is an open-source workflow automation tool that connects your apps and services without writing code. Unlike Zapier or Make, you can install it on your own server — which means zero cost, data under your control, and no execution limits. With n8n you can automate in minutes what currently takes a person hours: syncing forms with your CRM, sending automatic payment notifications, updating inventory across platforms, and dozens more workflows." data-es="&lt;strong&gt;n8n es una herramienta de automatización de flujos de trabajo de código abierto que conecta tus apps y servicios sin escribir código.&lt;/strong&gt; A diferencia de Zapier o Make, puedes instalarlo en tu propio servidor — lo que significa costo cero, datos bajo tu control y sin límites de ejecuciones. Con n8n puedes automatizar en minutos lo que hoy le toma horas a una persona: sincronizar formularios con tu CRM, enviar notificaciones automáticas de pago, actualizar inventario entre plataformas, y decenas de flujos más."><strong>n8n es una herramienta de automatización de flujos de trabajo de código abierto que conecta tus apps y servicios sin escribir código.</strong> A diferencia de Zapier o Make, puedes instalarlo en tu propio servidor — lo que significa costo cero, datos bajo tu control y sin límites de ejecuciones. Con n8n puedes automatizar en minutos lo que hoy le toma horas a una persona: sincronizar formularios con tu CRM, enviar notificaciones automáticas de pago, actualizar inventario entre plataformas, y decenas de flujos más.</p>
+    <img loading="lazy" decoding="async" width="1200" height="420" src="/assets/blog/n8n-laptop.webp" alt="n8n workflow en laptop" style="width: 100%; max-height: 400px; object-fit: cover; border-radius: 12px; margin: 24px 0; display: block;">
 
-    <p>Hay una tarea que repito en casi todos los proyectos de clientes: alguien me muestra su proceso de negocio y me dice <em>"esto lo hace mi asistente manualmente todos los días."</em> Copiar datos de un formulario al CRM. Enviar un email cuando llega un pago. Notificar al equipo cuando baja el inventario.</p>
+    <p data-en="In this article I explain how n8n works, which workflows I build most often for clients, and why I chose it over Zapier two years ago — and haven&apos;t looked back." data-es="En este artículo te explico cómo funciona n8n, qué flujos construyo más seguido para clientes, y por qué lo elegí sobre Zapier hace dos años — y no he mirado atrás.">En este artículo te explico cómo funciona n8n, qué flujos construyo más seguido para clientes, y por qué lo elegí sobre Zapier hace dos años — y no he mirado atrás.</p>
 
-    <p>Con n8n, esas tareas se automatizan una sola vez y nunca más se tocan. En este artículo te explico cómo funciona, qué flujos construyo más seguido para clientes, y por qué dejé de usar Zapier hace dos años.</p>
+    <h2 data-en="What Is n8n and Why It Matters in 2026" data-es="¿Qué es n8n y por qué importa en 2026?">¿Qué es n8n y por qué importa en 2026?</h2>
 
-    <h2>¿Qué es n8n y por qué importa en 2026?</h2>
+    <p data-en="n8n (pronounced &apos;n-eight-n&apos;) is an open-source workflow automation tool. Its premise is simple: you connect services together using visual nodes, define when the workflow runs, and it does the work." data-es="n8n (pronunciado &quot;n-eight-n&quot;) es una herramienta de automatización de flujos de trabajo de código abierto. Su premisa es simple: conectas servicios entre sí mediante nodos visuales, defines cuándo se ejecuta el flujo, y él hace el trabajo.">n8n (pronunciado "n-eight-n") es una herramienta de automatización de flujos de trabajo de código abierto. Su premisa es simple: conectas servicios entre sí mediante nodos visuales, defines cuándo se ejecuta el flujo, y él hace el trabajo.</p>
 
-    <p>n8n (pronunciado "n-eight-n") es una herramienta de automatización de flujos de trabajo de código abierto. Su premisa es simple: conectas servicios entre sí mediante nodos visuales, defines cuándo se ejecuta el flujo, y él hace el trabajo.</p>
-
-    <p>Lo que lo diferencia de Zapier o Make es que <strong>puedes instalarlo en tu propio servidor</strong>. Eso tiene tres consecuencias importantes:</p>
+    <p data-en="What sets it apart from Zapier or Make is that &lt;strong&gt;you can install it on your own server&lt;/strong&gt;. That has three important consequences:" data-es="Lo que lo diferencia de Zapier o Make es que &lt;strong&gt;puedes instalarlo en tu propio servidor&lt;/strong&gt;. Eso tiene tres consecuencias importantes:">Lo que lo diferencia de Zapier o Make es que <strong>puedes instalarlo en tu propio servidor</strong>. Eso tiene tres consecuencias importantes:</p>
 
     <ul>
-      <li>No pagas por ejecución — Zapier cobra $19-$69/mes para volúmenes moderados; con n8n self-hosted pagas solo el VPS (~$10/mes).</li>
-      <li>Tus datos no salen de tu infraestructura — crítico si manejas información de clientes.</li>
-      <li>Puedes usar nodos de código (JavaScript) para lógica avanzada que Zapier no permite.</li>
+      <li data-en="You don&apos;t pay per execution — Zapier charges $19-$69/month for moderate volumes; with self-hosted n8n you only pay for the VPS (~$10/month)." data-es="No pagas por ejecución — Zapier cobra $19-$69/mes para volúmenes moderados; con n8n self-hosted pagas solo el VPS (~$10/mes).">No pagas por ejecución — Zapier cobra $19-$69/mes para volúmenes moderados; con n8n self-hosted pagas solo el VPS (~$10/mes).</li>
+      <li data-en="Your data doesn&apos;t leave your infrastructure — critical if you handle client information." data-es="Tus datos no salen de tu infraestructura — crítico si manejas información de clientes.">Tus datos no salen de tu infraestructura — crítico si manejas información de clientes.</li>
+      <li data-en="You can use code nodes (JavaScript) for advanced logic that Zapier doesn&apos;t allow." data-es="Puedes usar nodos de código (JavaScript) para lógica avanzada que Zapier no permite.">Puedes usar nodos de código (JavaScript) para lógica avanzada que Zapier no permite.</li>
     </ul>
 
     <blockquote>
-      <p>Para un cliente con 5,000 ejecuciones mensuales, el cambio de Zapier a n8n self-hosted redujo el costo de $80/mes a $12/mes. El ROI de la migración fue de un mes.</p>
+      <p data-en="For a client with 5,000 monthly executions, switching from Zapier to self-hosted n8n reduced costs from $80/month to $12/month. The migration ROI was one month." data-es="Para un cliente con 5,000 ejecuciones mensuales, el cambio de Zapier a n8n self-hosted redujo el costo de $80/mes a $12/mes. El ROI de la migración fue de un mes.">Para un cliente con 5,000 ejecuciones mensuales, el cambio de Zapier a n8n self-hosted redujo el costo de $80/mes a $12/mes. El ROI de la migración fue de un mes.</p>
     </blockquote>
 
-    <h2>Los 3 flujos que automatizo en casi todo negocio</h2>
+    <h2 data-en="The 3 Workflows I Automate for Almost Every Business" data-es="Los 3 flujos que automatizo en casi todo negocio">Los 3 flujos que automatizo en casi todo negocio</h2>
 
-    <p>Después de construir más de 30 flujos en n8n para distintos tipos de negocios, estos tres aparecen siempre como los de mayor impacto:</p>
+    <p data-en="After building more than 30 workflows in n8n for different types of businesses, these three always appear as the ones with the greatest impact:" data-es="Después de construir más de 30 flujos en n8n para distintos tipos de negocios, estos tres aparecen siempre como los de mayor impacto:">Después de construir más de 30 flujos en n8n para distintos tipos de negocios, estos tres aparecen siempre como los de mayor impacto:</p>
 
     <div class="use-case-grid">
       <div class="use-case-card">
         <div class="uc-icon">💳</div>
-        <div class="uc-title">Notificación de pagos</div>
-        <div class="uc-desc">Cuando entra un pago (Stripe, PayPal, transferencia), notifica al equipo por WhatsApp o Slack y registra en hoja de cálculo.</div>
+        <div class="uc-title" data-en="Payment Notifications" data-es="Notificación de pagos">Notificación de pagos</div>
+        <div class="uc-desc" data-en="When a payment comes in (Stripe, PayPal, bank transfer), notify the team via WhatsApp or Slack and log it in a spreadsheet." data-es="Cuando entra un pago (Stripe, PayPal, transferencia), notifica al equipo por WhatsApp o Slack y registra en hoja de cálculo.">Cuando entra un pago (Stripe, PayPal, transferencia), notifica al equipo por WhatsApp o Slack y registra en hoja de cálculo.</div>
       </div>
       <div class="use-case-card">
         <div class="uc-icon">📋</div>
-        <div class="uc-title">Captura de leads</div>
-        <div class="uc-desc">Un formulario web envía el lead directo al CRM, crea una tarea en Notion/Trello y manda email de bienvenida — sin intervención humana.</div>
+        <div class="uc-title" data-en="Lead Capture" data-es="Captura de leads">Captura de leads</div>
+        <div class="uc-desc" data-en="A web form sends the lead directly to the CRM, creates a task in Notion/Trello, and sends a welcome email — without human intervention." data-es="Un formulario web envía el lead directo al CRM, crea una tarea en Notion/Trello y manda email de bienvenida — sin intervención humana.">Un formulario web envía el lead directo al CRM, crea una tarea en Notion/Trello y manda email de bienvenida — sin intervención humana.</div>
       </div>
       <div class="use-case-card">
         <div class="uc-icon">📦</div>
-        <div class="uc-title">Alerta de inventario</div>
-        <div class="uc-desc">Cuando un producto baja del mínimo definido, notifica al encargado y puede generar automáticamente la orden al proveedor.</div>
+        <div class="uc-title" data-en="Inventory Alert" data-es="Alerta de inventario">Alerta de inventario</div>
+        <div class="uc-desc" data-en="When a product drops below the defined minimum, it notifies the manager and can automatically generate the purchase order to the supplier." data-es="Cuando un producto baja del mínimo definido, notifica al encargado y puede generar automáticamente la orden al proveedor.">Cuando un producto baja del mínimo definido, notifica al encargado y puede generar automáticamente la orden al proveedor.</div>
       </div>
     </div>
 
-    <h2>n8n vs Zapier vs Make: la comparación real</h2>
+    <h2 data-en="n8n vs Zapier vs Make: The Real Comparison" data-es="n8n vs Zapier vs Make: la comparación real">n8n vs Zapier vs Make: la comparación real</h2>
 
-    <p>Mucha gente llega a n8n después de chocar con los límites de precios de Zapier. Aquí la comparación honesta:</p>
+    <p data-en="Many people come to n8n after hitting Zapier&apos;s pricing limits. Here is the honest comparison:" data-es="Mucha gente llega a n8n después de chocar con los límites de precios de Zapier. Aquí la comparación honesta:">Mucha gente llega a n8n después de chocar con los límites de precios de Zapier. Aquí la comparación honesta:</p>
 
     <table class="comparison-table">
       <thead>
         <tr>
-          <th>Característica</th>
-          <th>n8n (self-hosted)</th>
-          <th>Zapier</th>
-          <th>Make</th>
+          <th data-en="Feature" data-es="Característica">Característica</th>
+          <th data-en="n8n (self-hosted)" data-es="n8n (self-hosted)">n8n (self-hosted)</th>
+          <th data-en="Zapier" data-es="Zapier">Zapier</th>
+          <th data-en="Make" data-es="Make">Make</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>Precio base</td>
-          <td>~$10/mes (VPS)</td>
-          <td>$19/mes</td>
-          <td>$9/mes (1,000 ops)</td>
+          <td data-en="Base price" data-es="Precio base">Precio base</td>
+          <td data-en="~$10/month (VPS)" data-es="~$10/mes (VPS)">~$10/mes (VPS)</td>
+          <td data-en="$19/month" data-es="$19/mes">$19/mes</td>
+          <td data-en="$9/month (1,000 ops)" data-es="$9/mes (1,000 ops)">$9/mes (1,000 ops)</td>
         </tr>
         <tr>
-          <td>Precio a escala</td>
-          <td>Igual (~$10)</td>
-          <td>$49-$299/mes</td>
-          <td>$16-$65/mes</td>
+          <td data-en="Price at scale" data-es="Precio a escala">Precio a escala</td>
+          <td data-en="Same (~$10)" data-es="Igual (~$10)">Igual (~$10)</td>
+          <td data-en="$49-$299/month" data-es="$49-$299/mes">$49-$299/mes</td>
+          <td data-en="$16-$65/month" data-es="$16-$65/mes">$16-$65/mes</td>
         </tr>
         <tr>
-          <td>Código personalizado</td>
+          <td data-en="Custom code" data-es="Código personalizado">Código personalizado</td>
           <td><span class="check">✓ JS nativo</span></td>
           <td><span class="cross">✗ Limitado</span></td>
           <td><span class="cross">✗ Limitado</span></td>
         </tr>
         <tr>
-          <td>Datos en tu servidor</td>
+          <td data-en="Data on your server" data-es="Datos en tu servidor">Datos en tu servidor</td>
           <td><span class="check">✓</span></td>
           <td><span class="cross">✗</span></td>
           <td><span class="cross">✗</span></td>
         </tr>
         <tr>
-          <td>Curva de aprendizaje</td>
-          <td>Media</td>
-          <td>Baja</td>
-          <td>Media</td>
+          <td data-en="Learning curve" data-es="Curva de aprendizaje">Curva de aprendizaje</td>
+          <td data-en="Medium" data-es="Media">Media</td>
+          <td data-en="Low" data-es="Baja">Baja</td>
+          <td data-en="Medium" data-es="Media">Media</td>
         </tr>
         <tr>
-          <td>Integraciones</td>
+          <td data-en="Integrations" data-es="Integraciones">Integraciones</td>
           <td>400+</td>
           <td>6,000+</td>
           <td>1,500+</td>
@@ -324,97 +449,97 @@
       </tbody>
     </table>
 
-    <p>La desventaja de n8n es que tiene menos integraciones listas que Zapier. Pero para el 90% de los casos de negocio (email, CRM, hojas de cálculo, webhooks, bases de datos, WhatsApp) tiene todo lo necesario.</p>
+    <p data-en="n8n&apos;s disadvantage is that it has fewer ready-made integrations than Zapier. But for 90% of business use cases (email, CRM, spreadsheets, webhooks, databases, WhatsApp) it has everything needed." data-es="La desventaja de n8n es que tiene menos integraciones listas que Zapier. Pero para el 90% de los casos de negocio (email, CRM, hojas de cálculo, webhooks, bases de datos, WhatsApp) tiene todo lo necesario.">La desventaja de n8n es que tiene menos integraciones listas que Zapier. Pero para el 90% de los casos de negocio (email, CRM, hojas de cálculo, webhooks, bases de datos, WhatsApp) tiene todo lo necesario.</p>
 
-    <h2>Cómo construir un flujo real: notificación de pago por WhatsApp</h2>
+    <h2 data-en="How to Build a Real Workflow: WhatsApp Payment Notification" data-es="Cómo construir un flujo real: notificación de pago por WhatsApp">Cómo construir un flujo real: notificación de pago por WhatsApp</h2>
 
-    <p>Voy a mostrarte el flujo más sencillo y más útil: cuando entra un pago por Stripe, el dueño del negocio recibe un mensaje de WhatsApp con los detalles.</p>
+    <p data-en="I&apos;m going to show you the simplest and most useful workflow: when a Stripe payment comes in, the business owner receives a WhatsApp message with the details." data-es="Voy a mostrarte el flujo más sencillo y más útil: cuando entra un pago por Stripe, el dueño del negocio recibe un mensaje de WhatsApp con los detalles.">Voy a mostrarte el flujo más sencillo y más útil: cuando entra un pago por Stripe, el dueño del negocio recibe un mensaje de WhatsApp con los detalles.</p>
 
     <ol class="step-list">
       <li>
-        <strong>Trigger: Webhook de Stripe</strong>
-        <span>En n8n creas un nodo "Stripe Trigger" con el evento <code>payment_intent.succeeded</code>. Stripe te da una URL de webhook; la pegas en tu dashboard de Stripe.</span>
+        <strong data-en="Trigger: Stripe Webhook" data-es="Trigger: Webhook de Stripe">Trigger: Webhook de Stripe</strong>
+        <span data-en="In n8n you create a &apos;Stripe Trigger&apos; node with the &lt;code&gt;payment_intent.succeeded&lt;/code&gt; event. Stripe gives you a webhook URL; you paste it into your Stripe dashboard." data-es="En n8n creas un nodo &quot;Stripe Trigger&quot; con el evento &lt;code&gt;payment_intent.succeeded&lt;/code&gt;. Stripe te da una URL de webhook; la pegas en tu dashboard de Stripe.">En n8n creas un nodo "Stripe Trigger" con el evento <code>payment_intent.succeeded</code>. Stripe te da una URL de webhook; la pegas en tu dashboard de Stripe.</span>
       </li>
       <li>
-        <strong>Procesar los datos</strong>
-        <span>Agrega un nodo "Set" para extraer los campos que necesitas: monto, moneda, email del cliente, descripción. Esto formatea los datos antes de enviarlos.</span>
+        <strong data-en="Process the data" data-es="Procesar los datos">Procesar los datos</strong>
+        <span data-en="Add a &apos;Set&apos; node to extract the fields you need: amount, currency, customer email, description. This formats the data before sending." data-es="Agrega un nodo &quot;Set&quot; para extraer los campos que necesitas: monto, moneda, email del cliente, descripción. Esto formatea los datos antes de enviarlos.">Agrega un nodo "Set" para extraer los campos que necesitas: monto, moneda, email del cliente, descripción. Esto formatea los datos antes de enviarlos.</span>
       </li>
       <li>
-        <strong>Enviar por WhatsApp</strong>
-        <span>Usa el nodo de Twilio (o WhatsApp Business API) para armar el mensaje: <em>"Pago recibido: ${{ "{{" }}amount{{ "}}" }} de {{ "{{" }}customer_email{{ "}}" }}"</em> y enviarlo a tu número.</span>
+        <strong data-en="Send via WhatsApp" data-es="Enviar por WhatsApp">Enviar por WhatsApp</strong>
+        <span data-en="Use the Twilio node (or WhatsApp Business API) to compose the message: &lt;em&gt;&apos;Payment received: ${{amount}} from {{customer_email}}&apos;&lt;/em&gt; and send it to your number." data-es="Usa el nodo de Twilio (o WhatsApp Business API) para armar el mensaje: &lt;em&gt;&quot;Pago recibido: ${{ "{{" }}amount{{ "}}" }} de {{ "{{" }}customer_email{{ "}}" }}&quot;&lt;/em&gt; y enviarlo a tu número.">Usa el nodo de Twilio (o WhatsApp Business API) para armar el mensaje: <em>"Pago recibido: ${{ "{{" }}amount{{ "}}" }} de {{ "{{" }}customer_email{{ "}}" }}"</em> y enviarlo a tu número.</span>
       </li>
       <li>
-        <strong>Registrar en Google Sheets</strong>
-        <span>Opcional pero útil: agrega un nodo "Google Sheets" que inserte una fila con la fecha, monto y cliente. Tienes un registro automático sin tocar una hoja.</span>
+        <strong data-en="Log in Google Sheets" data-es="Registrar en Google Sheets">Registrar en Google Sheets</strong>
+        <span data-en="Optional but useful: add a &apos;Google Sheets&apos; node that inserts a row with the date, amount, and client. You get an automatic log without touching a spreadsheet." data-es="Opcional pero útil: agrega un nodo &quot;Google Sheets&quot; que inserte una fila con la fecha, monto y cliente. Tienes un registro automático sin tocar una hoja.">Opcional pero útil: agrega un nodo "Google Sheets" que inserte una fila con la fecha, monto y cliente. Tienes un registro automático sin tocar una hoja.</span>
       </li>
     </ol>
 
-    <p>Tiempo para construir este flujo: 20 minutos la primera vez, 5 minutos si ya tienes n8n instalado. Tiempo que ahorra: depende del volumen de pagos, pero en negocios con 50+ transacciones mensuales, elimina el chequeo manual del dashboard.</p>
+    <p data-en="Time to build this workflow: 20 minutes the first time, 5 minutes if you already have n8n installed. Time saved: depends on payment volume, but for businesses with 50+ monthly transactions, it eliminates manual dashboard checking." data-es="Tiempo para construir este flujo: 20 minutos la primera vez, 5 minutos si ya tienes n8n instalado. Tiempo que ahorra: depende del volumen de pagos, pero en negocios con 50+ transacciones mensuales, elimina el chequeo manual del dashboard.">Tiempo para construir este flujo: 20 minutos la primera vez, 5 minutos si ya tienes n8n instalado. Tiempo que ahorra: depende del volumen de pagos, pero en negocios con 50+ transacciones mensuales, elimina el chequeo manual del dashboard.</p>
 
-    <h2>Casos de uso avanzados que he construido para clientes</h2>
+    <h2 data-en="Advanced Use Cases I&apos;ve Built for Clients" data-es="Casos de uso avanzados que he construido para clientes">Casos de uso avanzados que he construido para clientes</h2>
 
-    <h3>Sincronización bidireccional de inventario</h3>
-    <p>Un cliente con tienda WooCommerce y sistema POS físico tenía el inventario siempre desincronizado. El flujo en n8n escucha los webhooks de ambos sistemas, compara cantidades y actualiza el sistema que quedó atrás. Sin intervención manual, sin discrepancias.</p>
+    <h3 data-en="Bidirectional Inventory Sync" data-es="Sincronización bidireccional de inventario">Sincronización bidireccional de inventario</h3>
+    <p data-en="A client with a WooCommerce store and physical POS system had inventory constantly out of sync. The n8n workflow listens to webhooks from both systems, compares quantities, and updates whichever system fell behind. No manual intervention, no discrepancies." data-es="Un cliente con tienda WooCommerce y sistema POS físico tenía el inventario siempre desincronizado. El flujo en n8n escucha los webhooks de ambos sistemas, compara cantidades y actualiza el sistema que quedó atrás. Sin intervención manual, sin discrepancias.">Un cliente con tienda WooCommerce y sistema POS físico tenía el inventario siempre desincronizado. El flujo en n8n escucha los webhooks de ambos sistemas, compara cantidades y actualiza el sistema que quedó atrás. Sin intervención manual, sin discrepancias.</p>
 
-    <h3>Pipeline de onboarding de clientes</h3>
-    <p>Cuando un cliente firma un contrato en PandaDoc, n8n activa una secuencia de 5 pasos: crea el proyecto en Notion, genera accesos en el sistema interno, envía email de bienvenida personalizado, programa una llamada en Calendly, y notifica al equipo en Slack. Lo que antes tardaba 45 minutos ahora ocurre en 30 segundos.</p>
+    <h3 data-en="Client Onboarding Pipeline" data-es="Pipeline de onboarding de clientes">Pipeline de onboarding de clientes</h3>
+    <p data-en="When a client signs a contract in PandaDoc, n8n activates a 5-step sequence: creates the project in Notion, generates access in the internal system, sends a personalized welcome email, schedules a call in Calendly, and notifies the team in Slack. What used to take 45 minutes now happens in 30 seconds." data-es="Cuando un cliente firma un contrato en PandaDoc, n8n activa una secuencia de 5 pasos: crea el proyecto en Notion, genera accesos en el sistema interno, envía email de bienvenida personalizado, programa una llamada en Calendly, y notifica al equipo en Slack. Lo que antes tardaba 45 minutos ahora ocurre en 30 segundos.">Cuando un cliente firma un contrato en PandaDoc, n8n activa una secuencia de 5 pasos: crea el proyecto en Notion, genera accesos en el sistema interno, envía email de bienvenida personalizado, programa una llamada en Calendly, y notifica al equipo en Slack. Lo que antes tardaba 45 minutos ahora ocurre en 30 segundos.</p>
 
-    <h3>Alertas de soporte crítico</h3>
-    <p>Para una empresa SaaS, configuré n8n para monitorear la base de datos cada 5 minutos. Si algún usuario lleva más de 2 horas sin completar el onboarding, el sistema lo marca como "en riesgo" y alerta al equipo de soporte con contexto completo.</p>
+    <h3 data-en="Critical Support Alerts" data-es="Alertas de soporte crítico">Alertas de soporte crítico</h3>
+    <p data-en="For a SaaS company, I configured n8n to monitor the database every 5 minutes. If any user has been more than 2 hours without completing onboarding, the system marks them as &apos;at risk&apos; and alerts the support team with full context." data-es="Para una empresa SaaS, configuré n8n para monitorear la base de datos cada 5 minutos. Si algún usuario lleva más de 2 horas sin completar el onboarding, el sistema lo marca como &quot;en riesgo&quot; y alerta al equipo de soporte con contexto completo.">Para una empresa SaaS, configuré n8n para monitorear la base de datos cada 5 minutos. Si algún usuario lleva más de 2 horas sin completar el onboarding, el sistema lo marca como "en riesgo" y alerta al equipo de soporte con contexto completo.</p>
 
-    <h2>Cómo instalar n8n en tu servidor</h2>
+    <h2 data-en="How to Install n8n on Your Server" data-es="Cómo instalar n8n en tu servidor">Cómo instalar n8n en tu servidor</h2>
 
-    <p>Si ya tienes un VPS con Ubuntu (cualquier proveedor: DigitalOcean, Vultr, AWS), la instalación es directa:</p>
+    <p data-en="If you already have a VPS with Ubuntu (any provider: DigitalOcean, Vultr, AWS), installation is straightforward:" data-es="Si ya tienes un VPS con Ubuntu (cualquier proveedor: DigitalOcean, Vultr, AWS), la instalación es directa:">Si ya tienes un VPS con Ubuntu (cualquier proveedor: DigitalOcean, Vultr, AWS), la instalación es directa:</p>
 
     <ul>
-      <li>Instala Node.js 20+ y npm</li>
-      <li>Ejecuta <code>npm install -g n8n</code></li>
-      <li>Configura un proceso con PM2 para que corra como servicio</li>
-      <li>Apunta tu dominio y configura nginx como proxy reverso</li>
-      <li>Activa HTTPS con Certbot — n8n necesita HTTPS para recibir webhooks</li>
+      <li data-en="Install Node.js 20+ and npm" data-es="Instala Node.js 20+ y npm">Instala Node.js 20+ y npm</li>
+      <li data-en="Run &lt;code&gt;npm install -g n8n&lt;/code&gt;" data-es="Ejecuta &lt;code&gt;npm install -g n8n&lt;/code&gt;">Ejecuta <code>npm install -g n8n</code></li>
+      <li data-en="Set up a PM2 process to run it as a service" data-es="Configura un proceso con PM2 para que corra como servicio">Configura un proceso con PM2 para que corra como servicio</li>
+      <li data-en="Point your domain and configure nginx as a reverse proxy" data-es="Apunta tu dominio y configura nginx como proxy reverso">Apunta tu dominio y configura nginx como proxy reverso</li>
+      <li data-en="Enable HTTPS with Certbot — n8n needs HTTPS to receive webhooks" data-es="Activa HTTPS con Certbot — n8n necesita HTTPS para recibir webhooks">Activa HTTPS con Certbot — n8n necesita HTTPS para recibir webhooks</li>
     </ul>
 
-    <p>Tiempo total de instalación: 30-60 minutos si tienes experiencia con servidores Linux. Si no, es un buen punto para contratar una hora de ayuda técnica.</p>
+    <p data-en="Total installation time: 30-60 minutes if you have Linux server experience. If not, it&apos;s a good point to hire an hour of technical help." data-es="Tiempo total de instalación: 30-60 minutos si tienes experiencia con servidores Linux. Si no, es un buen punto para contratar una hora de ayuda técnica.">Tiempo total de instalación: 30-60 minutos si tienes experiencia con servidores Linux. Si no, es un buen punto para contratar una hora de ayuda técnica.</p>
 
     <div class="faq">
-      <h2>Preguntas frecuentes</h2>
+      <h2 data-en="Frequently Asked Questions" data-es="Preguntas frecuentes">Preguntas frecuentes</h2>
 
       <div class="faq-item">
-        <div class="faq-q">¿Qué es n8n y en qué se diferencia de Zapier?</div>
-        <div class="faq-a">n8n es una herramienta de automatización de flujos de trabajo de código abierto. A diferencia de Zapier, puedes instalarlo en tu propio servidor y no pagas por ejecución. Zapier cobra desde $19/mes para flujos básicos; con n8n self-hosted pagas solo el costo del servidor (~$5-10/mes). Además, n8n permite lógica avanzada: loops, condicionales, transformación de datos con JavaScript y conexión a bases de datos propias.</div>
+        <div class="faq-q" data-en="What is n8n and how does it differ from Zapier?" data-es="¿Qué es n8n y en qué se diferencia de Zapier?">¿Qué es n8n y en qué se diferencia de Zapier?</div>
+        <div class="faq-a" data-en="n8n is an open-source workflow automation tool. Unlike Zapier, you can install it on your own server and don&apos;t pay per execution. Zapier starts at $19/month for basic workflows; with self-hosted n8n you only pay the server cost (~$5-10/month). Additionally, n8n allows advanced logic: loops, conditionals, data transformation with JavaScript, and connections to your own databases." data-es="n8n es una herramienta de automatización de flujos de trabajo de código abierto. A diferencia de Zapier, puedes instalarlo en tu propio servidor y no pagas por ejecución. Zapier cobra desde $19/mes para flujos básicos; con n8n self-hosted pagas solo el costo del servidor (~$5-10/mes). Además, n8n permite lógica avanzada: loops, condicionales, transformación de datos con JavaScript y conexión a bases de datos propias.">n8n es una herramienta de automatización de flujos de trabajo de código abierto. A diferencia de Zapier, puedes instalarlo en tu propio servidor y no pagas por ejecución. Zapier cobra desde $19/mes para flujos básicos; con n8n self-hosted pagas solo el costo del servidor (~$5-10/mes). Además, n8n permite lógica avanzada: loops, condicionales, transformación de datos con JavaScript y conexión a bases de datos propias.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">¿Necesito saber programar para usar n8n?</div>
-        <div class="faq-a">No para la mayoría de flujos. n8n tiene más de 400 integraciones visuales — arrastras nodos y los conectas. Donde puede aparecer algo de código es en transformaciones de datos complejas, y ahí puedes usar nodos de JavaScript simples. La curva de aprendizaje es menor que aprender un lenguaje de programación completo.</div>
+        <div class="faq-q" data-en="Do I need to know programming to use n8n?" data-es="¿Necesito saber programar para usar n8n?">¿Necesito saber programar para usar n8n?</div>
+        <div class="faq-a" data-en="Not for most workflows. n8n has 400+ visual integrations — you drag nodes and connect them. Where some code might appear is in complex data transformations, and there you can use simple JavaScript nodes. The learning curve is less than learning a full programming language." data-es="No para la mayoría de flujos. n8n tiene más de 400 integraciones visuales — arrastras nodos y los conectas. Donde puede aparecer algo de código es en transformaciones de datos complejas, y ahí puedes usar nodos de JavaScript simples. La curva de aprendizaje es menor que aprender un lenguaje de programación completo.">No para la mayoría de flujos. n8n tiene más de 400 integraciones visuales — arrastras nodos y los conectas. Donde puede aparecer algo de código es en transformaciones de datos complejas, y ahí puedes usar nodos de JavaScript simples. La curva de aprendizaje es menor que aprender un lenguaje de programación completo.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">¿Cuánto cuesta implementar n8n para una empresa?</div>
-        <div class="faq-a">La instalación en un VPS cuesta entre $5 y $20/mes dependiendo del servidor. Si contratas a un desarrollador para configurarlo y construir tus flujos, presupuesta entre $300 y $1,500 por el setup inicial según la complejidad. Comparado con Zapier que puede costar $300-600/mes para el mismo volumen, el ahorro se paga solo en 2-3 meses.</div>
+        <div class="faq-q" data-en="How much does it cost to implement n8n for a company?" data-es="¿Cuánto cuesta implementar n8n para una empresa?">¿Cuánto cuesta implementar n8n para una empresa?</div>
+        <div class="faq-a" data-en="Installation on a VPS costs between $5 and $20/month depending on the server. If you hire a developer to configure it and build your workflows, budget between $300 and $1,500 for the initial setup depending on complexity. Compared to Zapier which can cost $300-600/month for the same volume, the savings pay for themselves in 2-3 months." data-es="La instalación en un VPS cuesta entre $5 y $20/mes dependiendo del servidor. Si contratas a un desarrollador para configurarlo y construir tus flujos, presupuesta entre $300 y $1,500 por el setup inicial según la complejidad. Comparado con Zapier que puede costar $300-600/mes para el mismo volumen, el ahorro se paga solo en 2-3 meses.">La instalación en un VPS cuesta entre $5 y $20/mes dependiendo del servidor. Si contratas a un desarrollador para configurarlo y construir tus flujos, presupuesta entre $300 y $1,500 por el setup inicial según la complejidad. Comparado con Zapier que puede costar $300-600/mes para el mismo volumen, el ahorro se paga solo en 2-3 meses.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">¿Qué automatizaciones son las más útiles para un negocio pequeño?</div>
-        <div class="faq-a">Las tres que más impacto dan son: (1) notificaciones automáticas cuando entra un pago; (2) sincronización de leads de formularios web directo al CRM o Google Sheets; (3) alertas de inventario bajo. Estas tres juntas pueden liberar entre 5 y 10 horas semanales.</div>
+        <div class="faq-q" data-en="What automations are most useful for a small business?" data-es="¿Qué automatizaciones son las más útiles para un negocio pequeño?">¿Qué automatizaciones son las más útiles para un negocio pequeño?</div>
+        <div class="faq-a" data-en="The three with the most impact are: (1) automatic notifications when a payment comes in; (2) syncing web form leads directly to the CRM or Google Sheets; (3) low inventory alerts. These three together can free up 5 to 10 hours per week." data-es="Las tres que más impacto dan son: (1) notificaciones automáticas cuando entra un pago; (2) sincronización de leads de formularios web directo al CRM o Google Sheets; (3) alertas de inventario bajo. Estas tres juntas pueden liberar entre 5 y 10 horas semanales.">Las tres que más impacto dan son: (1) notificaciones automáticas cuando entra un pago; (2) sincronización de leads de formularios web directo al CRM o Google Sheets; (3) alertas de inventario bajo. Estas tres juntas pueden liberar entre 5 y 10 horas semanales.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q">¿n8n puede conectarse con WhatsApp?</div>
-        <div class="faq-a">Sí. n8n se integra con la API oficial de WhatsApp Business (Meta), Twilio para SMS/WhatsApp, y también con herramientas como WATI o MessageBird. Puedes enviar mensajes automatizados cuando ocurre cualquier evento en tu negocio: pago confirmado, pedido despachado, cita agendada, etc.</div>
+        <div class="faq-q" data-en="Can n8n connect with WhatsApp?" data-es="¿n8n puede conectarse con WhatsApp?">¿n8n puede conectarse con WhatsApp?</div>
+        <div class="faq-a" data-en="Yes. n8n integrates with the official WhatsApp Business API (Meta), Twilio for SMS/WhatsApp, and also with tools like WATI or MessageBird. You can send automated messages when any event occurs in your business: payment confirmed, order shipped, appointment booked, etc." data-es="Sí. n8n se integra con la API oficial de WhatsApp Business (Meta), Twilio para SMS/WhatsApp, y también con herramientas como WATI o MessageBird. Puedes enviar mensajes automatizados cuando ocurre cualquier evento en tu negocio: pago confirmado, pedido despachado, cita agendada, etc.">Sí. n8n se integra con la API oficial de WhatsApp Business (Meta), Twilio para SMS/WhatsApp, y también con herramientas como WATI o MessageBird. Puedes enviar mensajes automatizados cuando ocurre cualquier evento en tu negocio: pago confirmado, pedido despachado, cita agendada, etc.</div>
       </div>
     </div>
 
     <div class="related">
-      <p>Artículos relacionados</p>
-      <a href="/blog/saas-development/">Cómo construir un SaaS MVP en 8 semanas</a>
-      <a href="/blog/wordpress-desarrollo/">WordPress + Divi en 2026: ¿vale la pena?</a>
+      <p data-en="Related Articles" data-es="Artículos relacionados">Artículos relacionados</p>
+      <a href="/blog/saas-development/" data-en="How to Build a SaaS MVP in 8 Weeks" data-es="Cómo construir un SaaS MVP en 8 semanas">Cómo construir un SaaS MVP en 8 semanas</a>
+      <a href="/blog/wordpress-desarrollo/" data-en="WordPress + Divi in 2026: Is It Worth It?" data-es="WordPress + Divi en 2026: ¿vale la pena?">WordPress + Divi en 2026: ¿vale la pena?</a>
     </div>
 
     <div class="cta-box">
-      <h2>¿Quieres automatizar procesos en tu negocio?</h2>
-      <p>Te ayudo a identificar qué automatizar primero y a construir los flujos en n8n — instalado en tu servidor, sin costos de suscripción.</p>
-      <a href="https://ivanchoweb.com/#contacto" class="cta-btn">Hablemos de tu proyecto</a>
+      <h2 data-en="Want to automate processes in your business?" data-es="¿Quieres automatizar procesos en tu negocio?">¿Quieres automatizar procesos en tu negocio?</h2>
+      <p data-en="I help you identify what to automate first and build the workflows in n8n — installed on your server, no subscription costs." data-es="Te ayudo a identificar qué automatizar primero y a construir los flujos en n8n — instalado en tu servidor, sin costos de suscripción.">Te ayudo a identificar qué automatizar primero y a construir los flujos en n8n — instalado en tu servidor, sin costos de suscripción.</p>
+      <a href="https://ivanchoweb.com/#contacto" class="cta-btn" data-en="Let&apos;s Talk About Your Project" data-es="Hablemos de tu proyecto">Hablemos de tu proyecto</a>
     </div>
 
   </div>
@@ -422,11 +547,45 @@
 </article>
 
 <footer>
-  <div class="footer-logo">IVANCHO<span>WEB</span></div>
-  <p>Full-Stack Developer · Automatización n8n · ivan@ivanchoweb.com</p>
-  <p><a href="https://ivanchoweb.com">ivanchoweb.com</a> · <a href="https://www.upwork.com/freelancers/ivanluna">Upwork</a> · <a href="https://www.linkedin.com/in/ivanchoweb">LinkedIn</a></p>
-  <p style="margin-top:16px;font-size:13px;">© 2026 IVANCHOWEB. All rights reserved.</p>
+  <div class="footer-inner">
+    <span class="footer-copy">© 2026 IVANCHOWEB. All rights reserved.</span>
+    <div class="footer-links">
+      <a href="https://www.upwork.com/freelancers/~01bbc3829851e3233e" target="_blank">Upwork</a>
+      <a href="https://www.instagram.com/ivanchoweb/" target="_blank">Instagram</a>
+      <a href="https://github.com/ivancholuna" target="_blank">GitHub</a>
+    </div>
+  </div>
 </footer>
+
+
+<script>
+(function(){
+  var body = document.body;
+  var saved = localStorage.getItem('iw-theme');
+  var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  if (saved ? saved === 'dark' : prefersDark) body.classList.add('dark');
+  document.getElementById('btnTheme').addEventListener('click', function() {
+    var dark = body.classList.toggle('dark');
+    localStorage.setItem('iw-theme', dark ? 'dark' : 'light');
+  });
+  var btnLang = document.getElementById('btnLang');
+  var lang = localStorage.getItem('iw-blog-lang') || 'es';
+  function applyLang(l) {
+    document.querySelectorAll('[data-en][data-es]').forEach(function(el) {
+      el.innerHTML = el.getAttribute('data-' + l);
+    });
+    btnLang.innerHTML = l === 'en' ? '<strong>EN</strong>/ES' : 'EN/<strong>ES</strong>';
+    localStorage.setItem('iw-blog-lang', l);
+    lang = l;
+  }
+  applyLang(lang);
+  btnLang.addEventListener('click', function() { applyLang(lang === 'en' ? 'es' : 'en'); });
+  // Navbar scroll shrink (matches homepage behaviour)
+  window.addEventListener('scroll', function() {
+    document.querySelector('nav').classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+})();
+</script>
 
 </body>
 </html>
