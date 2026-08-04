@@ -26,121 +26,370 @@
       "jobTitle": "Full-Stack SaaS Developer",
       "url": "https://ivanchoweb.com",
       "sameAs": [
-        "https://www.upwork.com/freelancers/ivanluna",
-        "https://www.linkedin.com/in/ivanchoweb"
+        "https://www.upwork.com/freelancers/~01bbc3829851e3233e",
+        "https://www.instagram.com/ivanchoweb/",
+        "https://github.com/ivancholuna"
       ]
     }
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ivanchoweb.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://ivanchoweb.com/blog/" }
+    ]
+  }
+  </script>
   <style>
+    /* ── DESIGN TOKENS ── */
+    :root {
+      --bg: #fff;
+      --surface: #F8F8F8;
+      --card-bg: #fff;
+      --text: #0A0A0A;
+      --muted: #525252;
+      --border: #E5E5E5;
+      --nav-bg: rgba(255,255,255,0.88);
+      --indigo: #4F46E5;
+      --indigo-hover: #4338CA;
+    }
+    body.dark {
+      --bg: #0A0A0A;
+      --surface: #111;
+      --card-bg: #161616;
+      --text: #F0F0F0;
+      --muted: #A3A3A3;
+      --border: #2A2A2A;
+      --nav-bg: rgba(10,10,10,0.92);
+    }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', -apple-system, sans-serif; background: #fff; color: #0A0A0A; line-height: 1.6; }
+    body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; transition: background .25s, color .25s; }
     a { color: inherit; text-decoration: none; }
 
-    /* NAV */
-    nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid #E5E5E5; }
-    .nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 64px; }
-    .nav-logo { font-weight: 700; font-size: 18px; letter-spacing: -0.5px; color: #0A0A0A; }
-    .nav-logo span { color: #4F46E5; }
-    .nav-links { display: flex; gap: 32px; align-items: center; }
-    .nav-links a { font-size: 14px; font-weight: 500; color: #525252; transition: color .2s; }
-    .nav-links a:hover, .nav-links a.active { color: #0A0A0A; }
-    .nav-cta { background: #4F46E5; color: #fff !important; padding: 8px 18px; border-radius: 8px; font-weight: 600 !important; transition: background .2s !important; }
-    .nav-cta:hover { background: #4338CA !important; color: #fff !important; }
+    /* ── NAVBAR ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--nav-bg);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: background .25s, border-color .25s;
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto; padding: 0 24px;
+      display: flex; align-items: center; justify-content: space-between; height: 64px;
+    }
+    .nav-logo-img { height: 60px; width: auto; display: block; transition: height 300ms ease; }
+    .nav-inner { transition: height 300ms ease, padding 300ms ease; }
+    nav.scrolled .nav-logo-img { height: 36px; }
+    nav.scrolled .nav-inner { height: 48px; padding-top: 0; padding-bottom: 0; }
+    .nav-right { display: flex; align-items: center; gap: 28px; }
+    .nav-links { display: flex; gap: 28px; align-items: center; }
+    .nav-links a { font-size: 14px; font-weight: 500; color: var(--muted); transition: color .2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+    .nav-controls { display: flex; align-items: center; gap: 8px; }
+    /* EN/ES pill */
+    .btn-lang {
+      border: 1px solid var(--border); background: transparent; color: var(--text);
+      font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 100px;
+      cursor: pointer; font-family: inherit; letter-spacing: 0.03em;
+      transition: border-color .2s, color .2s;
+    }
+    .btn-lang:hover { border-color: var(--indigo); color: var(--indigo); }
+    /* Dark/light icon */
+    .btn-theme {
+      border: none; background: transparent; color: var(--muted);
+      cursor: pointer; display: flex; align-items: center; padding: 4px;
+      border-radius: 6px; transition: color .2s;
+    }
+    .btn-theme:hover { color: var(--text); }
+    .icon-sun, .icon-moon { display: none; }
+    body:not(.dark) .icon-moon { display: block; }
+    body.dark .icon-sun { display: block; }
+    /* CTA */
+    .nav-cta {
+      background: var(--indigo); color: #fff !important;
+      padding: 8px 18px; border-radius: 8px; font-size: 14px; font-weight: 600;
+      transition: background .2s;
+    }
+    .nav-cta:hover { background: var(--indigo-hover) !important; color: #fff !important; }
 
-    /* HERO */
-    .blog-hero { background: #F8F8F8; border-bottom: 1px solid #E5E5E5; padding: 72px 24px 56px; text-align: center; }
-    .blog-hero h1 { font-size: clamp(32px, 5vw, 52px); font-weight: 700; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 16px; }
-    .blog-hero p { font-size: 18px; color: #525252; max-width: 560px; margin: 0 auto; }
+    /* ── HERO ── */
+    .blog-hero {
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 72px 24px 56px; text-align: center;
+      transition: background .25s, border-color .25s;
+    }
+    .blog-hero h1 { font-size: clamp(32px,5vw,52px); font-weight: 700; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 16px; }
+    .blog-hero p { font-size: 18px; color: var(--muted); max-width: 560px; margin: 0 auto; }
 
-    /* GRID */
-    .blog-grid { max-width: 1100px; margin: 64px auto; padding: 0 24px; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 32px; }
+    /* ── GRID ── */
+    .blog-grid { max-width: 1100px; margin: 64px auto; padding: 0 24px; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px,1fr)); gap: 32px; }
 
-    /* CARD */
-    .card { border: 1px solid #E5E5E5; border-radius: 16px; overflow: hidden; transition: box-shadow .2s, transform .2s; }
-    .card:hover { box-shadow: 0 8px 32px rgba(79,70,229,0.12); transform: translateY(-2px); }
-    .card-tag-bar { padding: 24px 24px 0; }
-    .card-tag { display: inline-block; background: #EEF0FF; color: #4F46E5; font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 20px; letter-spacing: .5px; text-transform: uppercase; }
-    .card-body { padding: 16px 24px 24px; }
-    .card-body h2 { font-size: 20px; font-weight: 700; line-height: 1.3; margin-bottom: 10px; letter-spacing: -0.3px; }
-    .card-body p { font-size: 15px; color: #525252; margin-bottom: 20px; }
+    /* ── CARD ── */
+    .card {
+      border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+      background: var(--card-bg); cursor: pointer;
+      transition: box-shadow .2s, transform .2s, border-color .25s, background .25s;
+    }
+    .card:hover { box-shadow: 0 8px 32px rgba(79,70,229,0.14); transform: translateY(-2px); }
+    .card-accent-indigo { border-top: 4px solid #4F46E5; }
+    .card-accent-teal   { border-top: 4px solid #0D9488; }
+    .card-accent-orange { border-top: 4px solid #F59E0B; }
+    .card-accent-red    { border-top: 4px solid #EF4444; }
+    .card-accent-green  { border-top: 4px solid #059669; }
+    .card-cover { width: 100%; height: 200px; object-fit: cover; object-position: center; display: block; border-radius: 12px 12px 0 0; }
+
+    /* ── CATEGORY BADGE ── */
+    .card-tag-bar { padding: 24px 20px 0; display: flex; align-items: center; justify-content: space-between; }
+    .card-tag {
+      display: inline-block;
+      background: #EEF0FF; color: #4F46E5;
+      font-size: 11px; font-weight: 700;
+      padding: 4px 10px; border-radius: 20px;
+      letter-spacing: .5px; text-transform: uppercase;
+    }
+
+    /* ── CARD BODY ── */
+    .card-body { padding: 14px 20px 22px; }
+    .card-body h2 { font-size: 19px; font-weight: 700; line-height: 1.3; margin-bottom: 10px; letter-spacing: -0.3px; }
+    .card-body p { font-size: 14px; color: var(--muted); margin-bottom: 18px; }
     .card-meta { display: flex; align-items: center; justify-content: space-between; }
-    .card-author { font-size: 13px; color: #525252; }
-    .card-author strong { color: #0A0A0A; }
-    .card-read { font-size: 13px; font-weight: 600; color: #4F46E5; display: flex; align-items: center; gap: 6px; }
-    .card-read:hover { color: #4338CA; }
-    .card-placeholder .card-body h2 { color: #A3A3A3; }
-    .card-placeholder .card-body p { color: #D4D4D4; }
-    .card-placeholder .card-read { color: #D4D4D4; }
-    .soon-badge { display: inline-block; background: #F5F5F5; color: #A3A3A3; font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; letter-spacing: .5px; }
+    .card-author { font-size: 13px; color: var(--muted); }
+    .card-author strong { color: var(--text); }
+    .card-read { font-size: 13px; font-weight: 600; color: var(--indigo); display: flex; align-items: center; gap: 6px; }
+    .card-read:hover { color: var(--indigo-hover); }
 
-    /* FOOTER */
-    footer { background: #0A0A0A; color: #A3A3A3; padding: 48px 24px; text-align: center; margin-top: 80px; }
-    footer .footer-logo { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 12px; }
-    footer .footer-logo span { color: #6366F1; }
-    footer p { font-size: 14px; margin-bottom: 8px; }
-    footer a { color: #6366F1; }
-    footer a:hover { color: #818CF8; }
+    /* ── FOOTER ── */
+    footer { border-top: 1px solid var(--border); background: var(--bg); padding: 32px 24px; margin-top: 80px; transition: background .25s, border-color .25s; }
+    .footer-inner { max-width: 1240px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .footer-copy { font-size: 13px; color: var(--muted); }
+    .footer-links { display: flex; gap: 18px; }
+    .footer-links a { font-size: 13px; font-weight: 600; color: var(--muted); text-decoration: none; transition: color .2s; }
+    .footer-links a:hover { color: var(--text); }
 
     @media (max-width: 640px) {
-      .nav-links { gap: 16px; }
-      .nav-links a:not(.nav-cta) { display: none; }
+      .nav-links { display: none; }
+      .nav-controls .btn-lang { display: none; }
     }
   </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZY32K4WMRR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ZY32K4WMRR');
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    window.gtag = gtag;
+    window.addEventListener('load', function() {
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'blog_post_view', {
+          post_slug: 'index.html',
+          site_language: 'en'
+        });
+      }
+    });
+  </script>
 </head>
 <body>
 
 <nav>
   <div class="nav-inner">
-    <a href="https://ivanchoweb.com" class="nav-logo">IVANCHO<span>WEB</span></a>
-    <div class="nav-links">
-      <a href="https://ivanchoweb.com/#servicios">Services</a>
-      <a href="https://ivanchoweb.com/#portafolio">Work</a>
-      <a href="https://ivanchoweb.com/blog/" class="active">Blog</a>
-      <a href="https://ivanchoweb.com/#contacto" class="nav-cta">Let's Talk</a>
+    <a href="https://ivanchoweb.com">
+      <img src="/assets/logo.webp" alt="IVANCHOWEB" class="nav-logo-img" width="auto" height="40" loading="eager" fetchpriority="high">
+    </a>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="https://ivanchoweb.com/#servicios">Services</a>
+        <a href="https://ivanchoweb.com/#portafolio">Work</a>
+        <a href="/blog/" class="active">Blog</a>
+        <a href="/#about">About</a>
+      </div>
+      <div class="nav-controls">
+        <button class="btn-lang" id="btnLang" aria-label="Switch language">EN/ES</button>
+        <button class="btn-theme" id="btnTheme" aria-label="Toggle dark mode">
+          <!-- Moon — shown in light mode -->
+          <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <!-- Sun — shown in dark mode -->
+          <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>
+          </svg>
+        </button>
+        <a href="https://cal.com/ivancholuna/discovery" target="_blank" class="nav-cta">Let's Talk</a>
+      </div>
     </div>
   </div>
 </nav>
 
 <div class="blog-hero">
-  <h1>Build. Ship. Scale.</h1>
-  <p>Practical articles on SaaS development, automation, and WordPress — written by a developer who ships real products.</p>
+  <h1 id="heroTitle">Build. Ship. Scale.</h1>
+  <p id="heroSub">Practical articles on SaaS development, automation, and WordPress — written by a developer who ships real products.</p>
 </div>
 
 <div class="blog-grid">
 
-  <div class="card">
-    <div class="card-tag-bar"><span class="card-tag">SaaS Development</span></div>
+  <!-- SaaS MVP — bilingual -->
+  <div class="card card-accent-indigo" data-href="/blog/saas-development/" data-bilingual>
+    <img loading="eager" fetchpriority="high" width="1200" height="420" src="/assets/blog/SAAS-IN-8-WEEKS.webp" alt="SaaS MVP" style="width:100%; height:200px; object-fit:cover; border-radius:12px 12px 0 0;">
+    <div class="card-tag-bar">
+      <span class="card-tag" data-en="SaaS Development" data-es="Desarrollo SaaS">SaaS Development</span>
+    </div>
     <div class="card-body">
-      <h2>How to Build a SaaS MVP in 8 Weeks</h2>
-      <p>From stack selection to launch — the exact process I used to ship ContaPro, DentalPro, and LegalPro. Week-by-week breakdown, real costs, and the mistakes to avoid.</p>
+      <h2
+        data-en="How to Build a SaaS MVP in 8 Weeks"
+        data-es="Cómo Crear un MVP SaaS en 8 Semanas">
+        How to Build a SaaS MVP in 8 Weeks
+      </h2>
+      <p
+        data-en="From stack selection to launch — the exact process I used to ship ContaPro, DentalPro, and LegalPro. Week-by-week breakdown, real costs, and the mistakes to avoid."
+        data-es="Del stack a producción — el proceso exacto que usé para lanzar ContaPro, DentalPro y LegalPro. Semana a semana, costos reales y errores a evitar.">
+        From stack selection to launch — the exact process I used to ship ContaPro, DentalPro, and LegalPro. Week-by-week breakdown, real costs, and the mistakes to avoid.
+      </p>
       <div class="card-meta">
-        <span class="card-author">By <strong>Ivan Luna</strong> · 12 min read</span>
-        <a href="/blog/saas-development/" class="card-read">Read →</a>
+        <span class="card-author">By <strong>Ivan Luna</strong> · <span class="card-readtime" data-en="12 min read" data-es="12 min de lectura">12 min read</span></span>
+        <a href="/blog/saas-development/" class="card-read"
+           data-en-href="/blog/saas-development/" data-en-text="Read →"
+           data-es-href="/blog/saas-development/" data-es-text="Leer →">Read →</a>
       </div>
     </div>
   </div>
 
-  <div class="card card-placeholder">
-    <div class="card-tag-bar"><span class="card-tag" style="background:#F5F5F5;color:#A3A3A3;">Automatización</span></div>
+  <!-- n8n Automation — bilingual -->
+  <div class="card card-accent-teal" data-href="/blog/automatizacion-n8n/" data-bilingual>
+    <img loading="lazy" decoding="async" width="1200" height="420" src="/assets/blog/n8n-automation.webp" alt="n8n automation" style="width:100%; height:200px; object-fit:cover; border-radius:12px 12px 0 0;">
+    <div class="card-tag-bar">
+      <span class="card-tag" style="background:#F0FDFA;color:#0D9488;" data-en="Automatización" data-es="Automatización">Automatización</span>
+    </div>
     <div class="card-body">
-      <h2>Cómo Automatizar tu Negocio con n8n sin Escribir Código</h2>
-      <p>Flujos reales que he construido para clientes: desde sincronización de inventario hasta notificaciones automáticas de pagos. Con ejemplos descargables.</p>
+      <h2
+        data-en="How to Automate Your Business with n8n Without Writing Code"
+        data-es="Cómo Automatizar tu Negocio con n8n sin Escribir Código">
+        How to Automate Your Business with n8n Without Writing Code
+      </h2>
+      <p
+        data-en="Flujos reales que he construido para clientes: desde sincronización de inventario hasta notificaciones automáticas de pagos. Con ejemplos descargables."
+        data-es="Flujos reales que he construido para clientes: desde sincronización de inventario hasta notificaciones automáticas de pagos. Con ejemplos descargables.">
+        Flujos reales que he construido para clientes: desde sincronización de inventario hasta notificaciones automáticas de pagos. Con ejemplos descargables.
+      </p>
       <div class="card-meta">
-        <span class="card-author">By <strong>Ivan Luna</strong></span>
-        <span class="soon-badge">Próximamente</span>
+        <span class="card-author">By <strong>Ivan Luna</strong> · <span class="card-readtime" data-en="10 min read" data-es="10 min de lectura">10 min read</span></span>
+        <a href="/blog/automatizacion-n8n/" class="card-read"
+           data-en-href="/blog/automatizacion-n8n/" data-en-text="Read →"
+           data-es-href="/blog/automatizacion-n8n/" data-es-text="Leer →">Read →</a>
       </div>
     </div>
   </div>
 
-  <div class="card card-placeholder">
-    <div class="card-tag-bar"><span class="card-tag" style="background:#F5F5F5;color:#A3A3A3;">WordPress</span></div>
+  <!-- WordPress Divi — bilingual -->
+  <div class="card card-accent-orange" data-href="/blog/wordpress-desarrollo/" data-bilingual>
+    <img loading="lazy" decoding="async" width="1200" height="420" src="/assets/blog/worpress---ivi.webp" alt="WordPress Divi" style="width:100%; height:200px; object-fit:cover; border-radius:12px 12px 0 0;">
+    <div class="card-tag-bar">
+      <span class="card-tag" style="background:#FFFBEB;color:#D97706;" data-en="WordPress" data-es="WordPress">WordPress</span>
+    </div>
     <div class="card-body">
-      <h2>WordPress con Divi en 2026: ¿Sigue Valiendo la Pena?</h2>
-      <p>Después de construir docenas de sitios con Divi, aquí está mi análisis honesto: cuándo usarlo, cuándo no, y cómo entregarlo en menos de una semana.</p>
+      <h2
+        data-en="WordPress with Divi in 2026: Is It Still Worth It?"
+        data-es="WordPress con Divi en 2026: ¿Sigue Valiendo la Pena?">
+        WordPress with Divi in 2026: Is It Still Worth It?
+      </h2>
+      <p
+        data-en="Después de construir docenas de sitios con Divi, aquí está mi análisis honesto: cuándo usarlo, cuándo no, y cómo entregarlo en menos de una semana."
+        data-es="Después de construir docenas de sitios con Divi, aquí está mi análisis honesto: cuándo usarlo, cuándo no, y cómo entregarlo en menos de una semana.">
+        Después de construir docenas de sitios con Divi, aquí está mi análisis honesto: cuándo usarlo, cuándo no, y cómo entregarlo en menos de una semana.
+      </p>
       <div class="card-meta">
-        <span class="card-author">By <strong>Ivan Luna</strong></span>
-        <span class="soon-badge">Próximamente</span>
+        <span class="card-author">By <strong>Ivan Luna</strong> · <span class="card-readtime" data-en="8 min read" data-es="8 min de lectura">8 min read</span></span>
+        <a href="/blog/wordpress-desarrollo/" class="card-read"
+           data-en-href="/blog/wordpress-desarrollo/" data-en-text="Read →"
+           data-es-href="/blog/wordpress-desarrollo/" data-es-text="Leer →">Read →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- React — EN/ES bilingual -->
+  <div class="card card-accent-indigo" data-bilingual>
+    <img loading="lazy" decoding="async" width="1200" height="420" src="/assets/blog/reat-2026-porta.webp" alt="React in 2026" style="width:100%; height:200px; object-fit:cover; border-radius:12px 12px 0 0;">
+    <div class="card-tag-bar">
+      <span class="card-tag" data-en="Development" data-es="Desarrollo">Development</span>
+    </div>
+    <div class="card-body">
+      <h2
+        data-en="React in 2026: Still Relevant When AI Writes Your Code?"
+        data-es="React en 2026: ¿Sigue Siendo Relevante en la Era del Vibe Coding?">
+        React in 2026: Still Relevant When AI Writes Your Code?
+      </h2>
+      <p
+        data-en="Vibe coding is reshaping how we build. But does that mean React is obsolete? A developer who has shipped 5 SaaS products with Claude Code gives an honest verdict."
+        data-es="El vibe coding está cambiando cómo construimos software. ¿Significa eso que React quedó obsoleto? Un desarrollador que ha enviado 5 productos SaaS con Claude Code da su veredicto.">
+        Vibe coding is reshaping how we build. But does that mean React is obsolete? A developer who has shipped 5 SaaS products with Claude Code gives an honest verdict.
+      </p>
+      <div class="card-meta">
+        <span class="card-author">By <strong>Ivan Luna</strong> · <span class="card-readtime" data-en="11 min read" data-es="11 min de lectura">11 min read</span></span>
+        <a href="/blog/react-future-vibe-coding/" class="card-read"
+           data-en-href="/blog/react-future-vibe-coding/" data-en-text="Read →"
+           data-es-href="/blog/react-futuro-ia/" data-es-text="Leer →">Read →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Larry Ellison — EN/ES bilingual -->
+  <div class="card card-accent-red" data-bilingual>
+    <img loading="lazy" decoding="async" width="1200" height="420" src="/assets/blog/larry-ellison-porta.webp" alt="Larry Ellison Oracle" style="width:100%; height:200px; object-fit:cover; border-radius:12px 12px 0 0;">
+    <div class="card-tag-bar">
+      <span class="card-tag" style="background:#FEF2F2;color:#EF4444;" data-en="Business" data-es="Negocios">Business</span>
+    </div>
+    <div class="card-body">
+      <h2
+        data-en="Larry Ellison: The Quotes, Mindset and Stories That Built Oracle's $400B Empire"
+        data-es="Larry Ellison: Las Frases, la Mentalidad y las Vivencias que Construyeron el Imperio de Oracle">
+        Larry Ellison: The Quotes, Mindset and Stories That Built Oracle's $400B Empire
+      </h2>
+      <p
+        data-en="From $2,000 and a rented office to the world's second-richest person. The business philosophy, near-bankruptcy story, and lessons behind Oracle's relentless rise."
+        data-es="De $2,000 y una oficina rentada a la segunda persona más rica del mundo. La filosofía empresarial, la historia de la quiebra evitada, y las lecciones detrás del ascenso imparable de Oracle.">
+        From $2,000 and a rented office to the world's second-richest person. The business philosophy, near-bankruptcy story, and lessons behind Oracle's relentless rise.
+      </p>
+      <div class="card-meta">
+        <span class="card-author">By <strong>Ivan Luna</strong> · <span class="card-readtime" data-en="12 min read" data-es="12 min de lectura">12 min read</span></span>
+        <a href="/blog/larry-ellison-lessons/" class="card-read"
+           data-en-href="/blog/larry-ellison-lessons/" data-en-text="Read →"
+           data-es-href="/blog/larry-ellison-lecciones/" data-es-text="Leer →">Read →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Accountants / Contadores — EN/ES bilingual -->
+  <div class="card card-accent-green" data-bilingual>
+    <img loading="lazy" decoding="async" width="1200" height="420" src="/assets/blog/future-porta.webp" alt="Future of Accountants AI" style="width:100%; height:200px; object-fit:cover; border-radius:12px 12px 0 0;">
+    <div class="card-tag-bar">
+      <span class="card-tag" style="background:#F0FDF4;color:#059669;" data-en="Accounting + AI" data-es="Contaduría + IA">Accounting + AI</span>
+    </div>
+    <div class="card-body">
+      <h2
+        data-en="The Future of Accountants: What AI Automates and What It Cannot Replace"
+        data-es="El Futuro de los Contadores: Cómo la IA Transforma una Profesión Estructurada">
+        The Future of Accountants: What AI Automates and What It Cannot Replace
+      </h2>
+      <p
+        data-en="AI is transforming accounting — but not eliminating accountants. A CPA who builds accounting software explains what actually changes, and what the profession looks like in 2030."
+        data-es="La IA está automatizando la contabilidad rutinaria, pero no está reemplazando a los contadores. Un CPA que construye software contable explica lo que realmente cambia — y lo que no puede reemplazarse.">
+        AI is transforming accounting — but not eliminating accountants. A CPA who builds accounting software explains what actually changes, and what the profession looks like in 2030.
+      </p>
+      <div class="card-meta">
+        <span class="card-author">By <strong>Ivan Luna, CPA</strong> · <span class="card-readtime" data-en="13 min read" data-es="13 min de lectura">13 min read</span></span>
+        <a href="/blog/accountants-ai-future/" class="card-read"
+           data-en-href="/blog/accountants-ai-future/" data-en-text="Read →"
+           data-es-href="/blog/contadores-futuro-ia/" data-es-text="Leer →">Read →</a>
       </div>
     </div>
   </div>
@@ -148,11 +397,101 @@
 </div>
 
 <footer>
-  <div class="footer-logo">IVANCHO<span>WEB</span></div>
-  <p>Full-Stack SaaS Developer · ivan@ivanchoweb.com</p>
-  <p><a href="https://ivanchoweb.com">ivanchoweb.com</a> · <a href="https://www.upwork.com/freelancers/ivanluna">Upwork</a> · <a href="https://www.linkedin.com/in/ivanchoweb">LinkedIn</a></p>
-  <p style="margin-top:16px;font-size:13px;">© 2026 IVANCHOWEB. All rights reserved.</p>
+  <div class="footer-inner">
+    <span class="footer-copy">© 2026 IVANCHOWEB. All rights reserved.</span>
+    <div class="footer-links">
+      <a href="https://www.upwork.com/freelancers/~01bbc3829851e3233e" target="_blank">Upwork</a>
+      <a href="https://www.instagram.com/ivanchoweb/" target="_blank">Instagram</a>
+      <a href="https://github.com/ivancholuna" target="_blank">GitHub</a>
+    </div>
+  </div>
 </footer>
+
+<script>
+(function () {
+  // ── DARK MODE ──
+  var body = document.body;
+  var btnTheme = document.getElementById('btnTheme');
+
+  function applyTheme(dark) {
+    body.classList.toggle('dark', dark);
+    localStorage.setItem('iw-theme', dark ? 'dark' : 'light');
+  }
+
+  var savedTheme = localStorage.getItem('iw-theme');
+  var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  applyTheme(savedTheme ? savedTheme === 'dark' : prefersDark);
+
+  btnTheme.addEventListener('click', function () {
+    applyTheme(!body.classList.contains('dark'));
+  });
+
+  // ── PAGE-LEVEL EN/ES TOGGLE ──
+  var btnLang = document.getElementById('btnLang');
+  var heroTitle = document.getElementById('heroTitle');
+  var heroSub = document.getElementById('heroSub');
+  var pageLang = localStorage.getItem('iw-blog-lang') || 'en';
+
+  var heroText = {
+    en: { title: 'Build. Ship. Scale.', sub: 'Practical articles on SaaS development, automation, and WordPress — written by a developer who ships real products.' },
+    es: { title: 'Construye. Lanza. Escala.', sub: 'Artículos prácticos sobre desarrollo SaaS, automatización y WordPress — escritos por un desarrollador que lanza productos reales.' }
+  };
+
+  function applyLang(lang) {
+    pageLang = lang;
+    localStorage.setItem('iw-blog-lang', lang);
+    heroTitle.textContent = heroText[lang].title;
+    heroSub.textContent = heroText[lang].sub;
+    // Sync all bilingual cards to the selected page language
+    document.querySelectorAll('[data-bilingual]').forEach(function (card) {
+      switchCardLang(card, lang);
+    });
+  }
+
+  btnLang.addEventListener('click', function () {
+    applyLang(pageLang === 'en' ? 'es' : 'en');
+  });
+
+  // ── BILINGUAL CARD TOGGLE ──
+  function switchCardLang(card, lang) {
+    var img = card.querySelector('.card-cover');
+    if (img && img.dataset[lang + 'Src']) {
+      img.src = img.dataset[lang + 'Src'];
+      img.alt = img.dataset[lang + 'Alt'];
+    }
+    var tag = card.querySelector('.card-tag');
+    tag.textContent = tag.dataset[lang];
+    var h2 = card.querySelector('h2');
+    h2.textContent = h2.dataset[lang];
+    var p = card.querySelector('.card-body > p');
+    p.textContent = p.dataset[lang];
+    var readtime = card.querySelector('.card-readtime');
+    readtime.textContent = readtime.dataset[lang];
+    var link = card.querySelector('.card-read');
+    link.href = link.dataset[lang + 'Href'];
+    link.textContent = link.dataset[lang + 'Text'];
+  }
+
+  // Apply saved page language on load
+  if (pageLang === 'es') applyLang('es');
+
+  // ── CLICKABLE CARDS ──
+  document.querySelectorAll('.card').forEach(function (card) {
+    card.addEventListener('click', function (e) {
+      // Let lang-toggle and real <a> links handle their own clicks
+      if (e.target.closest('.lang-toggle')) return;
+      if (e.target.closest('a')) return;
+      // Navigate to the current Read link href
+      var link = card.querySelector('.card-read');
+      if (link && link.href) window.location.href = link.href;
+    });
+  });
+  // Navbar scroll shrink (matches homepage behaviour)
+  window.addEventListener('scroll', function() {
+    document.querySelector('nav').classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+})();
+</script>
 
 </body>
 </html>
