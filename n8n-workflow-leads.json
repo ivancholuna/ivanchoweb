@@ -1,0 +1,396 @@
+{
+  "name": "Lead Capture & Follow-up — ivanchoweb",
+  "nodes": [
+    {
+      "id": "node-webhook",
+      "name": "Nuevo Lead",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [200, 300],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "nuevo-lead",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "webhookId": "nuevo-lead"
+    },
+    {
+      "id": "node-validate",
+      "name": "Validar Datos",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [420, 300],
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": false, "leftValue": "", "typeValidation": "loose" },
+          "conditions": [
+            {
+              "id": "cond-nombre",
+              "leftValue": "={{ $json.nombre }}",
+              "rightValue": "",
+              "operator": { "type": "string", "operation": "notEmpty" }
+            },
+            {
+              "id": "cond-contacto",
+              "leftValue": "={{ $json.contacto }}",
+              "rightValue": "",
+              "operator": { "type": "string", "operation": "notEmpty" }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "node-error",
+      "name": "Error: Datos Incompletos",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [640, 160],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ error: 'nombre y contacto son requeridos' }) }}",
+        "options": { "responseCode": 400 }
+      }
+    },
+    {
+      "id": "node-set",
+      "name": "Guardar Datos Lead",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [640, 360],
+      "parameters": {
+        "mode": "manual",
+        "duplicateItem": false,
+        "assignments": {
+          "assignments": [
+            { "id": "a1", "name": "lead_id", "value": "={{ $json.id }}", "type": "number" },
+            { "id": "a2", "name": "nombre", "value": "={{ $json.nombre }}", "type": "string" },
+            { "id": "a3", "name": "contacto", "value": "={{ $json.contacto }}", "type": "string" },
+            { "id": "a4", "name": "origen", "value": "={{ $json.origen }}", "type": "string" },
+            { "id": "a5", "name": "tipo_proyecto", "value": "={{ $json.tipo_proyecto }}", "type": "string" },
+            { "id": "a6", "name": "presupuesto_estimado", "value": "={{ $json.presupuesto_estimado }}", "type": "string" },
+            { "id": "a7", "name": "resumen", "value": "={{ $json.resumen }}", "type": "string" }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "node-telegram-new",
+      "name": "Telegram: Nuevo Lead",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [860, 360],
+      "parameters": {
+        "chatId": "951511379",
+        "text": "=🚀 *Nuevo lead — ivanchoweb.com*\n\n👤 *Nombre:* {{ $json.nombre }}\n📞 *Contacto:* {{ $json.contacto }}\n📍 *Origen:* {{ $json.origen }}\n💼 *Proyecto:* {{ $json.tipo_proyecto }}\n💰 *Presupuesto:* {{ $json.presupuesto_estimado }}\n\n📝 {{ $json.resumen }}\n\n🆔 Lead ID: {{ $json.lead_id }}",
+        "additionalFields": { "parse_mode": "Markdown" }
+      },
+      "credentials": {
+        "telegramApi": { "id": "REEMPLAZAR_CON_ID_CREDENCIAL_TELEGRAM", "name": "Telegram account" }
+      }
+    },
+    {
+      "id": "node-respond-ok",
+      "name": "OK: Lead Recibido",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1080, 360],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ ok: true }) }}",
+        "options": { "responseCode": 200 }
+      }
+    },
+    {
+      "id": "node-wait-1h",
+      "name": "Esperar 1 hora",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [1300, 360],
+      "parameters": { "resume": "timeInterval", "amount": 1, "unit": "hours" }
+    },
+    {
+      "id": "node-check-1h",
+      "name": "Verificar Estado (+1h)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1520, 360],
+      "parameters": {
+        "method": "GET",
+        "url": "=http://localhost:3007/api/leads/{{ $('Guardar Datos Lead').item.json.lead_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [{ "name": "x-api-key", "value": "{N8N_INTERNAL_API_KEY}" }]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "node-if-1h",
+      "name": "¿Sigue nuevo? (+1h)",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1740, 360],
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": false, "leftValue": "", "typeValidation": "loose" },
+          "conditions": [
+            {
+              "id": "cond-1h",
+              "leftValue": "={{ $json.estado }}",
+              "rightValue": "nuevo",
+              "operator": { "type": "string", "operation": "equals" }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "node-end-1h",
+      "name": "Fin: Atendido en <1h",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [1960, 220]
+    },
+    {
+      "id": "node-telegram-1h",
+      "name": "Telegram: Recordatorio +1h",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [1960, 460],
+      "parameters": {
+        "chatId": "951511379",
+        "text": "=⏰ *Recordatorio +1h*\n\n👤 {{ $('Guardar Datos Lead').item.json.nombre }}\n📞 {{ $('Guardar Datos Lead').item.json.contacto }}\n🆔 Lead ID: {{ $('Guardar Datos Lead').item.json.lead_id }}\n\nEste lead aún no ha sido contactado.",
+        "additionalFields": { "parse_mode": "Markdown" }
+      },
+      "credentials": {
+        "telegramApi": { "id": "REEMPLAZAR_CON_ID_CREDENCIAL_TELEGRAM", "name": "Telegram account" }
+      }
+    },
+    {
+      "id": "node-wait-24h",
+      "name": "Esperar 23h más (total 24h)",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [2180, 460],
+      "parameters": { "resume": "timeInterval", "amount": 23, "unit": "hours" }
+    },
+    {
+      "id": "node-check-24h",
+      "name": "Verificar Estado (+24h)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2400, 460],
+      "parameters": {
+        "method": "GET",
+        "url": "=http://localhost:3007/api/leads/{{ $('Guardar Datos Lead').item.json.lead_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [{ "name": "x-api-key", "value": "{N8N_INTERNAL_API_KEY}" }]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "node-if-24h",
+      "name": "¿Sigue nuevo? (+24h)",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [2620, 460],
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": false, "leftValue": "", "typeValidation": "loose" },
+          "conditions": [
+            {
+              "id": "cond-24h",
+              "leftValue": "={{ $json.estado }}",
+              "rightValue": "nuevo",
+              "operator": { "type": "string", "operation": "equals" }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "node-end-24h",
+      "name": "Fin: Atendido en <24h",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [2840, 320]
+    },
+    {
+      "id": "node-telegram-24h",
+      "name": "Telegram: Recordatorio +24h",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [2840, 560],
+      "parameters": {
+        "chatId": "951511379",
+        "text": "=⚠️ *Recordatorio +24h*\n\n👤 {{ $('Guardar Datos Lead').item.json.nombre }}\n📞 {{ $('Guardar Datos Lead').item.json.contacto }}\n🆔 Lead ID: {{ $('Guardar Datos Lead').item.json.lead_id }}\n\nLlevas 24h sin contactar este lead.",
+        "additionalFields": { "parse_mode": "Markdown" }
+      },
+      "credentials": {
+        "telegramApi": { "id": "REEMPLAZAR_CON_ID_CREDENCIAL_TELEGRAM", "name": "Telegram account" }
+      }
+    },
+    {
+      "id": "node-wait-72h",
+      "name": "Esperar 48h más (total 72h)",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [3060, 560],
+      "parameters": { "resume": "timeInterval", "amount": 48, "unit": "hours" }
+    },
+    {
+      "id": "node-check-72h",
+      "name": "Verificar Estado (+72h)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [3280, 560],
+      "parameters": {
+        "method": "GET",
+        "url": "=http://localhost:3007/api/leads/{{ $('Guardar Datos Lead').item.json.lead_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [{ "name": "x-api-key", "value": "{N8N_INTERNAL_API_KEY}" }]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "node-if-72h",
+      "name": "¿Sigue nuevo? (+72h)",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [3500, 560],
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": false, "leftValue": "", "typeValidation": "loose" },
+          "conditions": [
+            {
+              "id": "cond-72h",
+              "leftValue": "={{ $json.estado }}",
+              "rightValue": "nuevo",
+              "operator": { "type": "string", "operation": "equals" }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "node-end-72h",
+      "name": "Fin: Atendido en <72h",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [3720, 420]
+    },
+    {
+      "id": "node-mark-frio",
+      "name": "Marcar como Frío",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [3720, 680],
+      "parameters": {
+        "method": "PATCH",
+        "url": "=http://localhost:3007/api/leads/{{ $('Guardar Datos Lead').item.json.lead_id }}/estado",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [{ "name": "x-api-key", "value": "{N8N_INTERNAL_API_KEY}" }]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={ \"estado\": \"frio\" }",
+        "options": {}
+      }
+    },
+    {
+      "id": "node-telegram-frio",
+      "name": "Telegram: Lead Marcado Frío",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [3940, 680],
+      "parameters": {
+        "chatId": "951511379",
+        "text": "=❄️ *Lead marcado como frío*\n\n👤 {{ $('Guardar Datos Lead').item.json.nombre }}\n📞 {{ $('Guardar Datos Lead').item.json.contacto }}\n🆔 Lead ID: {{ $('Guardar Datos Lead').item.json.lead_id }}\n\nSin respuesta en 72h. Estado actualizado a FRÍO.",
+        "additionalFields": { "parse_mode": "Markdown" }
+      },
+      "credentials": {
+        "telegramApi": { "id": "REEMPLAZAR_CON_ID_CREDENCIAL_TELEGRAM", "name": "Telegram account" }
+      }
+    }
+  ],
+  "connections": {
+    "Nuevo Lead": {
+      "main": [[{ "node": "Validar Datos", "type": "main", "index": 0 }]]
+    },
+    "Validar Datos": {
+      "main": [
+        [{ "node": "Error: Datos Incompletos", "type": "main", "index": 0 }],
+        [{ "node": "Guardar Datos Lead", "type": "main", "index": 0 }]
+      ]
+    },
+    "Guardar Datos Lead": {
+      "main": [[{ "node": "Telegram: Nuevo Lead", "type": "main", "index": 0 }]]
+    },
+    "Telegram: Nuevo Lead": {
+      "main": [[{ "node": "OK: Lead Recibido", "type": "main", "index": 0 }]]
+    },
+    "OK: Lead Recibido": {
+      "main": [[{ "node": "Esperar 1 hora", "type": "main", "index": 0 }]]
+    },
+    "Esperar 1 hora": {
+      "main": [[{ "node": "Verificar Estado (+1h)", "type": "main", "index": 0 }]]
+    },
+    "Verificar Estado (+1h)": {
+      "main": [[{ "node": "¿Sigue nuevo? (+1h)", "type": "main", "index": 0 }]]
+    },
+    "¿Sigue nuevo? (+1h)": {
+      "main": [
+        [{ "node": "Fin: Atendido en <1h", "type": "main", "index": 0 }],
+        [{ "node": "Telegram: Recordatorio +1h", "type": "main", "index": 0 }]
+      ]
+    },
+    "Telegram: Recordatorio +1h": {
+      "main": [[{ "node": "Esperar 23h más (total 24h)", "type": "main", "index": 0 }]]
+    },
+    "Esperar 23h más (total 24h)": {
+      "main": [[{ "node": "Verificar Estado (+24h)", "type": "main", "index": 0 }]]
+    },
+    "Verificar Estado (+24h)": {
+      "main": [[{ "node": "¿Sigue nuevo? (+24h)", "type": "main", "index": 0 }]]
+    },
+    "¿Sigue nuevo? (+24h)": {
+      "main": [
+        [{ "node": "Fin: Atendido en <24h", "type": "main", "index": 0 }],
+        [{ "node": "Telegram: Recordatorio +24h", "type": "main", "index": 0 }]
+      ]
+    },
+    "Telegram: Recordatorio +24h": {
+      "main": [[{ "node": "Esperar 48h más (total 72h)", "type": "main", "index": 0 }]]
+    },
+    "Esperar 48h más (total 72h)": {
+      "main": [[{ "node": "Verificar Estado (+72h)", "type": "main", "index": 0 }]]
+    },
+    "Verificar Estado (+72h)": {
+      "main": [[{ "node": "¿Sigue nuevo? (+72h)", "type": "main", "index": 0 }]]
+    },
+    "¿Sigue nuevo? (+72h)": {
+      "main": [
+        [{ "node": "Fin: Atendido en <72h", "type": "main", "index": 0 }],
+        [{ "node": "Marcar como Frío", "type": "main", "index": 0 }]
+      ]
+    },
+    "Marcar como Frío": {
+      "main": [[{ "node": "Telegram: Lead Marcado Frío", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "tags": []
+}

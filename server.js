@@ -72,13 +72,38 @@ function notificarTelegram(lead) {
 
 async function guardarLead(lead) {
   try {
-    await db.query(
-      `INSERT INTO leads (nombre, email, tipo_proyecto, presupuesto_estimado, resumen)
-       VALUES ($1, $2, $3, $4, $5)`,
-      [lead.nombre, lead.email, lead.tipo_proyecto, lead.presupuesto_estimado, lead.resumen]
+    const result = await db.query(
+      `INSERT INTO leads (nombre, email, contacto, tipo_proyecto, presupuesto_estimado, resumen, origen, mensaje_inicial, estado)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, 'nuevo') RETURNING id`,
+      [lead.nombre, lead.email, lead.contacto || lead.email,
+       lead.tipo_proyecto, lead.presupuesto_estimado, lead.resumen,
+       lead.origen || 'chat_widget', lead.mensaje_inicial || null]
     );
+    return result.rows[0].id;
   } catch (err) {
     console.error('DB lead error:', err.message);
+    return null;
+  }
+}
+
+async function dispararWebhookN8n(leadId, lead) {
+  const webhookUrl = process.env.N8N_WEBHOOK_URL;
+  if (!webhookUrl) return;
+  try {
+    await fetch(webhookUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id: leadId, nombre: lead.nombre,
+        contacto: lead.contacto || lead.email, email: lead.email,
+        origen: lead.origen || 'chat_widget',
+        tipo_proyecto: lead.tipo_proyecto,
+        presupuesto_estimado: lead.presupuesto_estimado,
+        resumen: lead.resumen, mensaje_inicial: lead.mensaje_inicial || null
+      })
+    });
+  } catch (err) {
+    console.error('n8n webhook error:', err.message);
   }
 }
 
@@ -109,6 +134,52 @@ app.get(['/sobre-ivan', '/sobre-ivan/', '/about', '/about/'], (req, res) => {
 });
 
 app.use(express.static(path.join(__dirname)));
+
+// Contact form endpoint
+app.post('/api/contact', async (req, res) => {
+  const { nombre, contacto, mensaje } = req.body;
+  if (!nombre || !contacto) {
+    return res.status(400).json({ error: 'nombre y contacto son requeridos' });
+  }
+  const lead = {
+    nombre, email: contacto.includes('@') ? contacto : null, contacto,
+    tipo_proyecto: 'consulta_directa', presupuesto_estimado: 'por definir',
+    resumen: mensaje || '(sin mensaje)', origen: 'form', mensaje_inicial: mensaje || null
+  };
+  const leadId = await guardarLead(lead);
+  notificarTelegram(lead);
+  if (leadId) dispararWebhookN8n(leadId, lead);
+  res.json({ ok: true, message: '¡Gracias! Me pondré en contacto pronto.' });
+});
+
+// Internal API para n8n (requiere x-api-key)
+const N8N_API_KEY = process.env.N8N_INTERNAL_API_KEY || '';
+function requireApiKey(req, res, next) {
+  if (N8N_API_KEY && req.headers['x-api-key'] !== N8N_API_KEY) return res.status(401).end();
+  next();
+}
+
+app.get('/api/leads/:id', requireApiKey, async (req, res) => {
+  try {
+    const { rows } = await db.query(
+      'SELECT id, estado, nombre, contacto, origen FROM leads WHERE id = $1', [req.params.id]
+    );
+    if (!rows.length) return res.status(404).json({ error: 'not found' });
+    res.json(rows[0]);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+const ESTADOS_VALIDOS = ['nuevo','contactado','calificado','cerrado','perdido','frio'];
+app.patch('/api/leads/:id/estado', requireApiKey, async (req, res) => {
+  const { estado } = req.body;
+  if (!ESTADOS_VALIDOS.includes(estado)) return res.status(400).json({ error: 'estado inválido' });
+  try {
+    await db.query(
+      'UPDATE leads SET estado = $1, fecha_ultimo_contacto = NOW() WHERE id = $2', [estado, req.params.id]
+    );
+    res.json({ ok: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
 
 app.post('/api/chat', async (req, res) => {
   const { messages, model = 'claude-sonnet-4-6', max_tokens = 600 } = req.body;
@@ -148,8 +219,9 @@ app.post('/api/chat', async (req, res) => {
           presupuesto_estimado: parsed.presupuesto,
           resumen: parsed.resumen
         };
-        await guardarLead(lead);
+        const leadId = await guardarLead(lead);
         notificarTelegram(lead);
+        if (leadId) dispararWebhookN8n(leadId, lead);
       } catch (e) {
         console.error('Lead parse error:', e.message);
       }
