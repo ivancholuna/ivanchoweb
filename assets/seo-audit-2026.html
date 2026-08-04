@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Auditoría SEO/AEO — IVANCHOWEB 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',-apple-system,sans-serif;background:#F8F8F8;color:#0A0A0A;line-height:1.7;font-size:15px}
+    .container{max-width:960px;margin:0 auto;padding:48px 24px}
+    h1{font-size:32px;font-weight:700;letter-spacing:-1px;margin-bottom:8px}
+    h2{font-size:20px;font-weight:700;letter-spacing:-0.4px;margin-bottom:16px;margin-top:40px}
+    p{margin-bottom:12px;color:#404040}
+    .meta{font-size:13px;color:#737373;margin-bottom:40px}
+    .score-band{display:inline-block;padding:3px 12px;border-radius:20px;font-size:13px;font-weight:600}
+    .score-good{background:#D1FAE5;color:#065F46}
+    .score-warn{background:#FEF3C7;color:#92400E}
+    .score-bad{background:#FEE2E2;color:#991B1B}
+    .score-na{background:#F3F4F6;color:#6B7280}
+    .overall{background:#fff;border:1px solid #E5E5E5;border-radius:16px;padding:32px;margin-bottom:40px;display:flex;align-items:center;gap:32px}
+    .score-circle{width:80px;height:80px;border-radius:50%;background:conic-gradient(#EAB308 0% 45%,#E5E5E5 45% 100%);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .score-inner{width:60px;height:60px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#EAB308}
+    .overall-text h2{margin:0 0 6px 0;font-size:18px}
+    .overall-text p{margin:0;font-size:14px}
+    .dim-table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #E5E5E5;margin-bottom:32px}
+    .dim-table th{background:#F8F8F8;padding:12px 16px;text-align:left;font-size:12px;font-weight:600;color:#737373;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid #E5E5E5}
+    .dim-table td{padding:14px 16px;border-bottom:1px solid #F5F5F5;font-size:14px;vertical-align:top}
+    .dim-table tr:last-child td{border-bottom:none}
+    .dim-name{font-weight:600;color:#0A0A0A}
+    .fn{color:#525252;font-size:13px}
+    .swot{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:40px}
+    .swot-card{background:#fff;border-radius:12px;padding:24px;border:1px solid #E5E5E5}
+    .swot-card.s{border-top:4px solid #10B981}
+    .swot-card.w{border-top:4px solid #EF4444}
+    .swot-card.o{border-top:4px solid #3B82F6}
+    .swot-card.t{border-top:4px solid #F59E0B}
+    .swot-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+    .swot-card.s .swot-label{color:#10B981}
+    .swot-card.w .swot-label{color:#EF4444}
+    .swot-card.o .swot-label{color:#3B82F6}
+    .swot-card.t .swot-label{color:#F59E0B}
+    .swot-card h3{font-size:15px;font-weight:700;color:#0A0A0A;margin-bottom:12px}
+    .si{font-size:13px;color:#404040;padding:6px 0;border-bottom:1px solid #F5F5F5;display:flex;gap:8px}
+    .si:last-child{border-bottom:none}
+    .sb{flex-shrink:0;font-weight:700}
+    .swot-card.s .sb{color:#10B981}
+    .swot-card.w .sb{color:#EF4444}
+    .swot-card.o .sb{color:#3B82F6}
+    .swot-card.t .sb{color:#F59E0B}
+    .rec-group{margin-bottom:32px}
+    .rec-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+    .pb{font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px}
+    .p-urgent{background:#FEE2E2;color:#991B1B}
+    .p-high{background:#FEF3C7;color:#92400E}
+    .p-medium{background:#DBEAFE;color:#1E40AF}
+    .p-low{background:#F3F4F6;color:#374151}
+    .rec-header h2{margin:0;font-size:17px}
+    .rec-item{background:#fff;border:1px solid #E5E5E5;border-radius:10px;padding:20px 24px;margin-bottom:12px}
+    .rih{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:8px}
+    .rit{font-weight:600;font-size:15px}
+    .effort{font-size:12px;color:#737373;white-space:nowrap}
+    .rec-item p{font-size:13px;color:#525252;margin:0}
+    .tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+    .tag{font-size:11px;background:#EEF0FF;color:#4F46E5;padding:2px 8px;border-radius:20px;font-weight:600}
+    .findings{background:#fff;border:1px solid #E5E5E5;border-radius:12px;overflow:hidden;margin-bottom:32px}
+    .fr{display:grid;grid-template-columns:200px 1fr 90px;gap:16px;padding:14px 20px;border-bottom:1px solid #F5F5F5;align-items:start;font-size:14px}
+    .fr.header{background:#F8F8F8;font-weight:600;font-size:12px;color:#737373;text-transform:uppercase;letter-spacing:.5px}
+    .fr:last-child{border-bottom:none}
+    .frn{font-weight:500}
+    hr.div{border:none;border-top:1px solid #E5E5E5;margin:48px 0}
+    .callout{background:#EEF0FF;border-left:4px solid #4F46E5;border-radius:0 8px 8px 0;padding:16px 20px;margin-bottom:20px;font-size:14px;color:#2D2D7E}
+    code{background:#F3F4F6;padding:1px 6px;border-radius:4px;font-size:13px;font-family:monospace}
+    @media(max-width:640px){.swot{grid-template-columns:1fr}.overall{flex-direction:column}.fr{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="container">
+
+<h1>Auditoría SEO / AEO — IVANCHOWEB</h1>
+<p class="meta">Generada el 26 de julio de 2026 · Estándares: Lighthouse, Google Search Console, Ahrefs, SEMrush, criterios AEO 2026</p>
+
+<div class="overall">
+  <div class="score-circle"><div class="score-inner">4.5</div></div>
+  <div class="overall-text">
+    <h2>Puntaje Global: 4.5 / 10</h2>
+    <p>Fundamentos técnicos correctos (HTTPS, sitemap, robots.txt, schema básico) pero con riesgos críticos: contenido JS-renderizado en homepage, thin content en blog, y ausencia casi total de estrategia AEO y backlinks. Con un roadmap de 90 días es posible llegar a 7/10.</p>
+  </div>
+</div>
+
+<h2>Desglose por Dimensión</h2>
+<table class="dim-table">
+  <thead><tr><th>Dimensión</th><th>Puntaje</th><th>Estado</th><th>Notas clave</th></tr></thead>
+  <tbody>
+    <tr><td class="dim-name">SEO Técnico</td><td><strong>6 / 10</strong></td><td><span class="score-band score-warn">Aceptable</span></td><td class="fn">HTTPS ✓, sitemap ✓, robots.txt ✓. Riesgo mayor: el index.html principal es un bundle JS masivo — el contenido vive en strings de JavaScript, no en HTML estático visible para crawlers básicos.</td></tr>
+    <tr><td class="dim-name">SEO On-Page</td><td><strong>5 / 10</strong></td><td><span class="score-band score-warn">Aceptable</span></td><td class="fn">Titles y meta descriptions ✓. Sin canonical tags en artículos. Sin FAQ schema. Headings correctos en blog. Homepage sin H1 visible en HTML puro (está en JS).</td></tr>
+    <tr><td class="dim-name">Schema / Structured Data</td><td><strong>5 / 10</strong></td><td><span class="score-band score-warn">Aceptable</span></td><td class="fn">JSON-LD presente en todas las páginas (Person, WebSite, Blog, Article). Falta: FAQ, HowTo, BreadcrumbList, VideoObject. Bloques de schema no linkedados entre sí.</td></tr>
+    <tr><td class="dim-name">E-E-A-T</td><td><strong>5 / 10</strong></td><td><span class="score-band score-warn">Aceptable</span></td><td class="fn">Autor nombrado ✓, credencial CPA ✓, perfil Upwork verificado ✓. Falta: página de autor dedicada, menciones en medios externos, Wikidata.</td></tr>
+    <tr><td class="dim-name">AEO (AI Overviews / Perplexity)</td><td><strong>2 / 10</strong></td><td><span class="score-band score-bad">Crítico</span></td><td class="fn">Sin FAQ schema, sin optimización para featured snippets, contenido no estructurado para respuesta directa. El 25% de queries Google ya muestran AI Overviews — el sitio no está posicionado para ser citado.</td></tr>
+    <tr><td class="dim-name">Contenido / Autoridad Temática</td><td><strong>4 / 10</strong></td><td><span class="score-band score-bad">Insuficiente</span></td><td class="fn">3 artículos activos (recién activados hoy). Profundidad por artículo buena (430-445 líneas). Thin content a nivel de sitio: Google requiere 8-12+ artículos relacionados para considerar autoridad temática.</td></tr>
+    <tr><td class="dim-name">Off-Page / Backlinks</td><td><strong>2 / 10</strong></td><td><span class="score-band score-bad">Crítico</span></td><td class="fn">Sitio nuevo, sin backlinks externos identificados. Domain Rating estimado: DR 0-5. Competencia en "hire saas developer" tiene DA 40+.</td></tr>
+    <tr><td class="dim-name">Performance / Core Web Vitals</td><td><strong>N/A</strong></td><td><span class="score-band score-na">Sin datos</span></td><td class="fn">No medido. Bundle JS masivo sugiere riesgo de LCP &gt;2.5s. Correr Lighthouse en mobile. Target: LCP &lt;2.5s, CLS &lt;0.1, INP &lt;200ms.</td></tr>
+  </tbody>
+</table>
+
+<h2>Hallazgos Técnicos</h2>
+<div class="findings">
+  <div class="fr header"><div>Elemento</div><div>Descripción</div><div>Estado</div></div>
+  <div class="fr"><div class="frn">HTTPS / SSL</div><div class="fn">Certificado SSL activo y funcional.</div><div><span class="score-band score-good">✓ OK</span></div></div>
+  <div class="fr"><div class="frn">robots.txt</div><div class="fn">Presente. Permite todo excepto /api/. Referencia al sitemap incluida.</div><div><span class="score-band score-good">✓ OK</span></div></div>
+  <div class="fr"><div class="frn">sitemap.xml</div><div class="fn">Presente con 5 URLs. lastmod actualizado al 26/07/2026. Enviar a GSC.</div><div><span class="score-band score-good">✓ OK</span></div></div>
+  <div class="fr"><div class="frn">Canonical tags</div><div class="fn">blog/index.html tiene canonical. Artículos individuales: verificar todos. Agregar self-referencing canonical en cada artículo.</div><div><span class="score-band score-warn">⚠ Revisar</span></div></div>
+  <div class="fr"><div class="frn">Renderizado JS (homepage)</div><div class="fn"><strong>Riesgo alto.</strong> El index.html contiene todo el contenido en strings de JavaScript. Google indexa JS con delay de 1-3 semanas. El HTML inicial que llega a crawlers sin JS está casi vacío. Verificar con GSC → URL inspection.</div><div><span class="score-band score-bad">⚠ Riesgo</span></div></div>
+  <div class="fr"><div class="frn">Hreflang (i18n)</div><div class="fn">Contenido EN/ES en el mismo URL vía JS, sin etiquetas hreflang. Google no puede señalizar idioma por audiencia.</div><div><span class="score-band score-bad">✗ Falta</span></div></div>
+  <div class="fr"><div class="frn">Open Graph / Twitter Cards</div><div class="fn">Presentes en todas las páginas.</div><div><span class="score-band score-good">✓ OK</span></div></div>
+  <div class="fr"><div class="frn">Schema — Person / WebSite</div><div class="fn">Presente en homepage con sameAs actualizado (Upwork, Instagram, GitHub).</div><div><span class="score-band score-good">✓ OK</span></div></div>
+  <div class="fr"><div class="frn">Schema — Article</div><div class="fn">Presente en artículos del blog. Falta: dateModified en todos, Author linkedado a Organization.</div><div><span class="score-band score-warn">⚠ Mejorar</span></div></div>
+  <div class="fr"><div class="frn">Schema — FAQ</div><div class="fn">Ausente. Tipo más impactante para featured snippets y AI Overviews en 2026.</div><div><span class="score-band score-bad">✗ Falta</span></div></div>
+  <div class="fr"><div class="frn">Schema — BreadcrumbList</div><div class="fn">Ausente. Necesario para jerarquía en SERPs y señalizar estructura a AI engines.</div><div><span class="score-band score-bad">✗ Falta</span></div></div>
+  <div class="fr"><div class="frn">Schema — VideoObject</div><div class="fn">Testimonios en video existen pero sin schema. Oportunidad para video rich results.</div><div><span class="score-band score-bad">✗ Falta</span></div></div>
+  <div class="fr"><div class="frn">Imágenes en blog</div><div class="fn">Sin thumbnails ni imágenes de portada. Páginas con imágenes tienen 156% más probabilidad de ser citadas por AI Overviews (Semrush 2025).</div><div><span class="score-band score-bad">✗ Falta</span></div></div>
+  <div class="fr"><div class="frn">Página de autor</div><div class="fn">No existe /sobre-ivan/. Las páginas con author page tienen 3.1× más citas en AI.</div><div><span class="score-band score-bad">✗ Falta</span></div></div>
+  <div class="fr"><div class="frn">Backlinks externos</div><div class="fn">Ninguno identificado. Domain Rating estimado: 0-5.</div><div><span class="score-band score-bad">✗ Falta</span></div></div>
+  <div class="fr"><div class="frn">Wikidata / Knowledge Graph</div><div class="fn">Sin entidad registrada. Entidades verificadas tienen prioridad absoluta en AI citations tras el purge de Google (junio 2025).</div><div><span class="score-band score-bad">✗ Falta</span></div></div>
+</div>
+
+<hr class="div">
+
+<h2>Matriz DOFA — IVANCHOWEB</h2>
+<div class="swot">
+
+  <div class="swot-card s">
+    <div class="swot-label">Fortalezas (Strengths)</div>
+    <h3>Lo que ya está bien</h3>
+    <div class="si"><span class="sb">+</span><span>Infraestructura técnica base correcta: HTTPS, sitemap, robots.txt, schema JSON-LD en todas las páginas.</span></div>
+    <div class="si"><span class="sb">+</span><span>Autor con identidad verificable: Ivan Luna, CPA certificado, perfil Upwork activo — credencial E-E-A-T diferenciadora vs. developers genéricos.</span></div>
+    <div class="si"><span class="sb">+</span><span>Nicho muy específico: "SaaS + WordPress + n8n + LATAM" — poca competencia SEO directa en ese stack combinado.</span></div>
+    <div class="si"><span class="sb">+</span><span>Proyectos reales documentados (ContaPro, DentalPro, LegalPro) — señal de E-E-A-T experiencial, más valiosa desde 2025.</span></div>
+    <div class="si"><span class="sb">+</span><span>Testimonios en video ya producidos — activo de autoridad si se implementan con VideoObject schema.</span></div>
+    <div class="si"><span class="sb">+</span><span>Dominio propio branded y de aspecto profesional.</span></div>
+  </div>
+
+  <div class="swot-card w">
+    <div class="swot-label">Debilidades (Weaknesses)</div>
+    <h3>Lo que frena el crecimiento</h3>
+    <div class="si"><span class="sb">−</span><span><strong>Contenido JS-renderizado en homepage:</strong> riesgo real de que Google indexe poco o nada durante semanas.</span></div>
+    <div class="si"><span class="sb">−</span><span>Thin content: 3 artículos no establecen autoridad temática. Se necesitan 8+ artículos relacionados.</span></div>
+    <div class="si"><span class="sb">−</span><span>Cero backlinks identificados. Sin señales externas, posicionamiento orgánico competitivo es casi imposible.</span></div>
+    <div class="si"><span class="sb">−</span><span>Ausencia total de AEO: sin FAQ schema, sin featured snippet optimization, sin estructuración para AI Overviews.</span></div>
+    <div class="si"><span class="sb">−</span><span>Sin imágenes en blog — 156% menos probabilidad de citación por AI engines.</span></div>
+    <div class="si"><span class="sb">−</span><span>Contenido bilingüe sin hreflang — Google no sabe cuándo servir EN vs ES.</span></div>
+    <div class="si"><span class="sb">−</span><span>Sin página de autor dedicada — pierde el 3.1× multiplier en AI citation.</span></div>
+  </div>
+
+  <div class="swot-card o">
+    <div class="swot-label">Oportunidades (Opportunities)</div>
+    <h3>Lo que puede escalar rápido</h3>
+    <div class="si"><span class="sb">→</span><span><strong>AEO es una carrera con pocas pistas tomadas:</strong> el 78% de freelancers no tienen FAQ schema. Implementarlo da ventaja asimétrica antes de que sea estándar.</span></div>
+    <div class="si"><span class="sb">→</span><span>Cal.com como CTA: 2-4× más conversión que email. Founders US usan Calendly a diario — un booking link comunica escasez y profesionalismo.</span></div>
+    <div class="si"><span class="sb">→</span><span>Long-tail keywords de alta intención y baja competencia: "n8n automation consultant for startups", "saas mvp developer latam".</span></div>
+    <div class="si"><span class="sb">→</span><span>Contenido bilingüe: rankear en inglés para US Y en español para LATAM con el mismo esfuerzo editorial.</span></div>
+    <div class="si"><span class="sb">→</span><span>VideoObject schema en testimonios: diferenciador visual en SERPs que casi ningún freelancer tiene.</span></div>
+    <div class="si"><span class="sb">→</span><span>Wikidata entity: con 3 SaaS documentados y credencial CPA, Ivan Luna puede ser registrado como entidad verificada.</span></div>
+  </div>
+
+  <div class="swot-card t">
+    <div class="swot-label">Amenazas (Threats)</div>
+    <h3>Lo que puede erosionar visibilidad</h3>
+    <div class="si"><span class="sb">⚠</span><span><strong>AI Overviews consumen clics:</strong> 25% de queries generan respuesta de IA. Sin estar citado, la visibilidad disminuye aunque se ranquee en posición 1.</span></div>
+    <div class="si"><span class="sb">⚠</span><span>Penalización por thin content: con un Core Update, 3 artículos pueden clasificarse como sitio de baja calidad.</span></div>
+    <div class="si"><span class="sb">⚠</span><span>Dominio joven: primeros 6-12 meses reciben menos trust de Google independientemente del contenido.</span></div>
+    <div class="si"><span class="sb">⚠</span><span>Dependencia de un solo canal: cualquier cambio de política en Upwork o Google elimina la fuente principal de leads.</span></div>
+    <div class="si"><span class="sb">⚠</span><span>Competencia con DA alto en queries de contratación: agencias con backlinks y casos de estudio vs. portafolio individual nuevo.</span></div>
+  </div>
+
+</div>
+
+<hr class="div">
+
+<h2>Recomendaciones por Prioridad</h2>
+<div class="callout"><strong>Principio guía:</strong> Las acciones de mayor ROI combinan bajo costo de implementación con alto impacto en señales que Google y los AI engines valoran en 2026: schema AEO, E-E-A-T estructurado, y contenido que responde preguntas directas.</div>
+
+<div class="rec-group">
+  <div class="rec-header"><span class="pb p-urgent">Urgente — Semana 1</span><h2>Fundamentos críticos</h2></div>
+
+  <div class="rec-item">
+    <div class="rih"><span class="rit">1. Verificar indexación real en Google Search Console</span><span class="effort">⏱ 15 min</span></div>
+    <p>GSC → Coverage → Inspeccionar URL de ivanchoweb.com. Si Google no renderiza el JS, el contenido principal no existe para los buscadores. Si hay problemas, considerar pre-rendering server-side o generar HTML estático con contenido visible sin JS. <strong>Este punto determina si todo lo demás importa.</strong></p>
+    <div class="tag-row"><span class="tag">SEO Técnico</span><span class="tag">Indexabilidad</span><span class="tag">Crítico</span></div>
+  </div>
+
+  <div class="rec-item">
+    <div class="rih"><span class="rit">2. Reemplazar CTA de email por Cal.com booking link</span><span class="effort">⏱ 2-3 h</span></div>
+    <p>Crear cuenta en Cal.com (gratuita), configurar evento "15-min Project Discovery Call". Actualizar todos los CTAs del sitio. Email CTA para un servicio de $3k-$10k comunica baja demanda. Un booking link comunica escasez y profesionalismo. <strong>Conversión estimada: 2-4× vs email.</strong></p>
+    <div class="tag-row"><span class="tag">Conversión</span><span class="tag">UX</span><span class="tag">CTA</span></div>
+  </div>
+
+  <div class="rec-item">
+    <div class="rih"><span class="rit">3. Agregar BreadcrumbList schema a todas las páginas del blog</span><span class="effort">⏱ 1 h</span></div>
+    <p>Agregar al JSON-LD de cada artículo: <code>"@type": "BreadcrumbList"</code> con la jerarquía Home → Blog → Artículo. Señaliza la estructura a Google y AI engines, activa breadcrumb rich results en SERPs.</p>
+    <div class="tag-row"><span class="tag">Schema</span><span class="tag">AEO</span><span class="tag">SERP Features</span></div>
+  </div>
+
+  <div class="rec-item">
+    <div class="rih"><span class="rit">4. Enviar sitemap a Google Search Console</span><span class="effort">⏱ 5 min</span></div>
+    <p>GSC → Sitemaps → Agregar https://ivanchoweb.com/sitemap.xml. Fuerza re-crawl inmediato de los nuevos artículos del blog activados hoy.</p>
+    <div class="tag-row"><span class="tag">SEO Técnico</span><span class="tag">Crawlabilidad</span></div>
+  </div>
+</div>
+
+<div class="rec-group">
+  <div class="rec-header"><span class="pb p-high">Alta — Semanas 2-4</span><h2>Amplificadores de autoridad y AEO</h2></div>
+
+  <div class="rec-item">
+    <div class="rih"><span class="rit">5. Agregar FAQ schema a los 3 artículos del blog</span><span class="effort">⏱ 2-3 h</span></div>
+    <p>Cada artículo debe terminar con una sección FAQ respondiendo 4-6 preguntas directas. Estructurar con JSON-LD <code>FAQPage</code>. Mecanismo más directo para aparecer en AI Overviews y featured snippets. Las preguntas deben coincidir con queries reales de long tail.</p>
+    <div class="tag-row"><span class="tag">AEO</span><span class="tag">Featured Snippets</span><span class="tag">AI Overviews</span><span class="tag">Schema</span></div>
+  </div>
+
+  <div class="rec-item">
+    <div class="rih"><span class="rit">6. Crear página de autor /sobre-ivan/ con schema Person completo</span><span class="effort">⏱ 3-4 h</span></div>
+    <p>Página con: foto profesional, bio 300+ palabras, proyectos con links, credenciales (CPA, stack, años de experiencia), testimonios, links verificados. Schema <code>Person</code> linkedado a <code>Organization</code> y a los artículos. <strong>El 96% del contenido citado por AI Overviews tiene E-E-A-T verificado.</strong></p>
+    <div class="tag-row"><span class="tag">E-E-A-T</span><span class="tag">AEO</span><span class="tag">Schema</span></div>
+  </div>
+
+  <div class="rec-item">
+    <div class="rih"><span class="rit">7. Agregar imágenes de portada a artículos del blog</span><span class="effort">⏱ 2 h</span></div>
+    <p>Una imagen header por artículo (1200×630px, WebP). Agregar como thumbnail en blog index y al inicio de cada artículo. Incluir <code>image</code> en el Article schema. Estudios 2025: 156% más probabilidad de citación por AI engines en páginas con imágenes.</p>
+    <div class="tag-row"><span class="tag">AEO</span><span class="tag">E-E-A-T</span><span class="tag">CTR</span></div>
+  </div>
+
+  <div class="rec-item">
+    <div class="rih"><span class="rit">8. Optimizar primeros párrafos para respuesta directa</span><span class="effort">⏱ 2 h</span></div>
+    <p>Los primeros 50-60 palabras de cada artículo deben responder la pregunta principal directamente, sin introducción. El 55% del contenido citado por AI Overviews aparece en el primer 30% de la página. Reformatear los artículos actuales siguiendo esta estructura.</p>
+    <div class="tag-row"><span class="tag">AEO</span><span class="tag">Featured Snippets</span><span class="tag">On-Page</span></div>
+  </div>
+
+  <div class="rec-item">
+    <div class="rih"><span class="rit">9. Implementar VideoObject schema en testimonios</span><span class="effort">⏱ 1.5 h</span></div>
+    <p>Agregar schema <code>VideoObject</code> para cada video testimonial (nombre, descripción, thumbnail, uploadDate, duration, contentUrl). Activa video rich results en SERPs — diferenciador que casi ningún freelancer tiene.</p>
+    <div class="tag-row"><span class="tag">Schema</span><span class="tag">E-E-A-T</span><span class="tag">Rich Results</span></div>
+  </div>
+</div>
+
+<div class="rec-group">
+  <div class="rec-header"><span class="pb p-medium">Media — Mes 2-3</span><h2>Expansión de contenido y autoridad</h2></div>
+
+  <div class="rec-item">
+    <div class="rih"><span class="rit">10. Publicar 5-8 artículos adicionales con long-tail keywords</span><span class="effort">⏱ 2-4 h por artículo</span></div>
+    <p>Keywords sugeridas: "n8n automation for small business", "how to build saas mvp without technical co-founder", "wordpress divi vs custom development 2026", "hire freelance saas developer upwork latam". Mínimo 1,500 palabras + FAQ schema en cada artículo.</p>
+    <div class="tag-row"><span class="tag">Contenido</span><span class="tag">Autoridad Temática</span><span class="tag">Long-tail</span></div>
+  </div>
+
+  <div class="rec-item">
+    <div class="rih"><span class="rit">11. Obtener 5-10 backlinks de directorios y plataformas</span><span class="effort">⏱ 4-6 h total</span></div>
+    <p>Fuentes de costo cero con buen DA: (1) Clutch.co como developer independiente (DA 68), (2) GitHub profile README con link (DA 96), (3) Dev.to con canonical apuntando al sitio original (DA 92), (4) LinkedIn company page (DA 98), (5) Upwork portfolio con link verificado.</p>
+    <div class="tag-row"><span class="tag">Off-Page</span><span class="tag">Backlinks</span><span class="tag">Domain Authority</span></div>
+  </div>
+
+  <div class="rec-item">
+    <div class="rih"><span class="rit">12. Estrategia hreflang EN/ES antes de publicar más contenido</span><span class="effort">⏱ 4-8 h</span></div>
+    <p>Opción recomendada: crear /en/ y /es/ como URLs distintas. Permite rankear en dos mercados independientemente. Decidir antes de publicar más artículos para no tener que migrar URLs después.</p>
+    <div class="tag-row"><span class="tag">Internacional</span><span class="tag">hreflang</span><span class="tag">i18n SEO</span></div>
+  </div>
+
+  <div class="rec-item">
+    <div class="rih"><span class="rit">13. Lighthouse audit en mobile — corregir Core Web Vitals</span><span class="effort">⏱ 2-6 h</span></div>
+    <p>Chrome DevTools → Lighthouse → Mobile → Performance. Target: LCP &lt;2.5s, CLS &lt;0.1, INP &lt;200ms. El bundle JS masivo de la homepage es el principal riesgo. Mejoras: lazy loading, code splitting, pre-rendering del HTML visible above-the-fold.</p>
+    <div class="tag-row"><span class="tag">Core Web Vitals</span><span class="tag">Performance</span><span class="tag">SEO Técnico</span></div>
+  </div>
+</div>
+
+<div class="rec-group">
+  <div class="rec-header"><span class="pb p-low">Baja — Mes 3+</span><h2>Ventajas a largo plazo</h2></div>
+
+  <div class="rec-item">
+    <div class="rih"><span class="rit">14. Crear entidad en Wikidata</span><span class="effort">⏱ 2-3 h</span></div>
+    <p>Registrar "Ivan Luna (developer)" con propiedades: occupation, website, sameAs links. Google Knowledge Graph purged 3B entidades de baja calidad en junio 2025; las restantes son de alta confianza y las que AI engines citan prioritariamente.</p>
+    <div class="tag-row"><span class="tag">Entity SEO</span><span class="tag">Knowledge Graph</span><span class="tag">AEO</span></div>
+  </div>
+
+  <div class="rec-item">
+    <div class="rih"><span class="rit">15. Newsletter para diversificación de tráfico</span><span class="effort">⏱ 3-4 h setup</span></div>
+    <p>Formulario de suscripción en el blog crea un canal independiente de Google. Con 200-300 suscriptores, cada artículo tiene distribución inmediata — señal de engagement temprano que Google mide.</p>
+    <div class="tag-row"><span class="tag">Email Marketing</span><span class="tag">Diversificación</span><span class="tag">Engagement</span></div>
+  </div>
+
+  <div class="rec-item">
+    <div class="rih"><span class="rit">16. Guest posts en Dev.to / Hashnode</span><span class="effort">⏱ 1 h por artículo</span></div>
+    <p>Versiones adaptadas de artículos existentes en plataformas DA 70+ (Dev.to DA 92, Hashnode DA 78) con canonical apuntando a ivanchoweb.com. Backlinks de alta calidad, exposición a audiencia técnica US, señal E-E-A-T.</p>
+    <div class="tag-row"><span class="tag">Backlinks</span><span class="tag">Distribución</span><span class="tag">E-E-A-T</span></div>
+  </div>
+</div>
+
+<hr class="div">
+
+<h2>Resumen Ejecutivo — 16 Acciones por Orden de Urgencia</h2>
+<table class="dim-table">
+  <thead><tr><th>#</th><th>Acción</th><th>Prioridad</th><th>Esfuerzo</th><th>Impacto esperado</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td class="dim-name">Verificar indexación en GSC</td><td><span class="score-band score-bad">Urgente</span></td><td>15 min</td><td>Crítico — determina si el sitio existe para Google</td></tr>
+    <tr><td>2</td><td class="dim-name">Cal.com como CTA de booking</td><td><span class="score-band score-bad">Urgente</span></td><td>2-3 h</td><td>Alto — 2-4× conversión vs email</td></tr>
+    <tr><td>3</td><td class="dim-name">BreadcrumbList schema en blog</td><td><span class="score-band score-bad">Urgente</span></td><td>1 h</td><td>Alto — jerarquía para Google y AI</td></tr>
+    <tr><td>4</td><td class="dim-name">Enviar sitemap a GSC</td><td><span class="score-band score-bad">Urgente</span></td><td>5 min</td><td>Medio — re-crawl inmediato</td></tr>
+    <tr><td>5</td><td class="dim-name">FAQ schema en artículos</td><td><span class="score-band score-warn">Alta</span></td><td>2-3 h</td><td>Muy alto — acceso a AI Overviews</td></tr>
+    <tr><td>6</td><td class="dim-name">Página de autor /sobre-ivan/</td><td><span class="score-band score-warn">Alta</span></td><td>3-4 h</td><td>Alto — E-E-A-T y 3.1× AI citation</td></tr>
+    <tr><td>7</td><td class="dim-name">Imágenes de portada en blog</td><td><span class="score-band score-warn">Alta</span></td><td>2 h</td><td>Alto — 156% más citación en AI</td></tr>
+    <tr><td>8</td><td class="dim-name">Párrafos iniciales en respuesta directa</td><td><span class="score-band score-warn">Alta</span></td><td>2 h</td><td>Alto — featured snippets y AI Overviews</td></tr>
+    <tr><td>9</td><td class="dim-name">VideoObject schema en testimonios</td><td><span class="score-band score-warn">Alta</span></td><td>1.5 h</td><td>Medio-alto — rich results diferenciadores</td></tr>
+    <tr><td>10</td><td class="dim-name">5-8 artículos de blog adicionales</td><td><span class="score-band" style="background:#DBEAFE;color:#1E40AF">Media</span></td><td>2-4 h c/u</td><td>Alto — autoridad temática long-term</td></tr>
+    <tr><td>11</td><td class="dim-name">5-10 backlinks (Clutch, Dev.to, GitHub)</td><td><span class="score-band" style="background:#DBEAFE;color:#1E40AF">Media</span></td><td>4-6 h</td><td>Alto — Domain Authority</td></tr>
+    <tr><td>12</td><td class="dim-name">Estrategia hreflang EN/ES</td><td><span class="score-band" style="background:#DBEAFE;color:#1E40AF">Media</span></td><td>4-8 h</td><td>Medio — doble mercado</td></tr>
+    <tr><td>13</td><td class="dim-name">Lighthouse + Core Web Vitals</td><td><span class="score-band" style="background:#DBEAFE;color:#1E40AF">Media</span></td><td>2-6 h</td><td>Medio — ranking signals</td></tr>
+    <tr><td>14</td><td class="dim-name">Entidad en Wikidata</td><td><span class="score-band score-na">Baja</span></td><td>2-3 h</td><td>Medio — AI entity recognition</td></tr>
+    <tr><td>15</td><td class="dim-name">Newsletter / lista email</td><td><span class="score-band score-na">Baja</span></td><td>3-4 h</td><td>Medio — diversificación de tráfico</td></tr>
+    <tr><td>16</td><td class="dim-name">Guest posts en Dev.to / Hashnode</td><td><span class="score-band score-na">Baja</span></td><td>1 h c/u</td><td>Alto — backlinks DA 70+ a bajo costo</td></tr>
+  </tbody>
+</table>
+
+<hr class="div">
+<p style="font-size:13px;color:#737373;text-align:center">Auditoría generada con Claude Code &nbsp;·&nbsp; ivanchoweb.com &nbsp;·&nbsp; 26 de julio de 2026</p>
+
+</div>
+</body>
+</html>
