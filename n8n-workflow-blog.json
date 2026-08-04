@@ -1,0 +1,483 @@
+{
+  "name": "Blog Content Automation \u2014 ivanchoweb",
+  "nodes": [
+    {
+      "id": "node-trigger",
+      "name": "Generar Art\u00edculo",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        300
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "node-topics",
+      "name": "Obtener T\u00f3picos Publicados",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        300
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "http://localhost:3007/api/blog/topics",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "{N8N_INTERNAL_API_KEY}"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "node-gen-es",
+      "name": "Claude: Generar ES",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        300
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "{ANTHROPIC_API_KEY}"
+            },
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({\n  model: 'claude-sonnet-4-6',\n  max_tokens: 4000,\n  system: 'Eres el asistente de contenido de IVANCHOWEB (ivanchoweb.com), el portafolio de Ivan Luna, desarrollador full-stack freelancer. Ivan construy\u00f3: DentalPro (SaaS odontol\u00f3gico), LegalPro (SaaS legal), ContaPro (SaaS contable), StoreFlow (SaaS e-commerce). Stack: Node.js, React, PostgreSQL, n8n, WordPress/Divi, Claude API. Sirve clientes US en Upwork. REGLAS: genera contenido \u00daNICO que NO repita los \u00e1ngulos ya publicados. Responde SOLO con JSON v\u00e1lido, sin markdown ni texto adicional.',\n  messages: [{\n    role: 'user',\n    content: '\u00c1ngulos ya publicados: ' + JSON.stringify($json.published?.map(p => p.titulo_en) ?? []) + '\\n\\nGenera un art\u00edculo de blog EN ESPA\u00d1OL para ivanchoweb.com con un \u00e1ngulo nuevo. Pilares disponibles: caso de estudio DentalPro, caso de estudio LegalPro, freelancing en Upwork como desarrollador LATAM, costos reales de un SaaS en producci\u00f3n, c\u00f3mo n8n reemplaza Zapier, IA en negocios latinoamericanos, WordPress vs SaaS cu\u00e1ndo elegir cada uno, automatizaci\u00f3n de leads con n8n.\\n\\nResponde SOLO con este JSON (sin markdown):\\n{\\n  \"slug\": \"slug-en-ingles-del-articulo\",\\n  \"pilar_tematico\": \"nombre del pilar\",\\n  \"tag_en\": \"Tag en ingl\u00e9s (ej: Case Study)\",\\n  \"tag_es\": \"Tag en espa\u00f1ol (ej: Caso de Estudio)\",\\n  \"tag_color\": \"uno de: indigo, teal, orange, red, green\",\\n  \"read_time_mins\": 9,\\n  \"titulo_es\": \"T\u00edtulo en espa\u00f1ol\",\\n  \"meta_description_es\": \"Meta description en espa\u00f1ol, 150-160 caracteres\",\\n  \"cuerpo_es\": \"HTML completo del cuerpo del art\u00edculo en espa\u00f1ol. Incluye p\u00e1rrafo introductorio fuerte, 4-6 secciones H2, listas, blockquotes, conclusi\u00f3n. M\u00ednimo 1200 palabras. Solo etiquetas HTML: p, h2, h3, ul, li, strong, em, blockquote, code. NO incluir el H1 ni el CTA final (van autom\u00e1ticamente).\",\\n  \"titulo_en\": \"Title in English\",\\n  \"meta_description_en\": \"Meta description in English, 150-160 chars\",\\n  \"cuerpo_en\": \"Full HTML body in English. Same structure as cuerpo_es but adapted (not literal translation) for US audience tone. Minimum 1200 words.\"\n}'\n  }]\n}) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "node-parse",
+      "name": "Parsear Respuesta Claude",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        300
+      ],
+      "parameters": {
+        "jsCode": "const raw = $input.first().json;\nconst text = raw.content?.[0]?.text || '';\n// Extraer JSON limpio\nconst match = text.match(/\\{[\\s\\S]*\\}/);\nif (!match) throw new Error('Claude no devolvi\u00f3 JSON v\u00e1lido: ' + text.substring(0, 200));\nconst post = JSON.parse(match[0]);\n// Validar campos m\u00ednimos\nif (!post.slug || !post.titulo_es || !post.titulo_en) {\n  throw new Error('Faltan campos requeridos en la respuesta de Claude');\n}\nreturn [{ json: post }];"
+      }
+    },
+    {
+      "id": "node-save-draft",
+      "name": "Guardar Borrador",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        880,
+        300
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:3007/api/blog/draft",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "{N8N_INTERNAL_API_KEY}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({\n  ...$json,\n  n8n_execution_id: $execution.id\n}) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "node-telegram",
+      "name": "Telegram: Solicitar Aprobaci\u00f3n",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1100,
+        300
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "951511379",
+        "text": "=\ud83d\udcdd <b>Nuevo borrador de blog listo para revisi\u00f3n</b>\n\n\ud83c\udd94 Post ID: <b>{{ $('Guardar Borrador').first().json.id }}</b>\n\ud83d\udccc Pilar: {{ $('Parsear Respuesta Claude').first().json.pilar_tematico }}\n\n\ud83c\uddea\ud83c\uddf8 <b>ES:</b> {{ $('Parsear Respuesta Claude').first().json.titulo_es }}\n<i>{{ $('Parsear Respuesta Claude').first().json.meta_description_es }}</i>\n\n\ud83c\uddfa\ud83c\uddf8 <b>EN:</b> {{ $('Parsear Respuesta Claude').first().json.titulo_en }}\n<i>{{ $('Parsear Respuesta Claude').first().json.meta_description_en }}</i>\n\n\ud83d\udd17 Slug: /blog/{{ $('Parsear Respuesta Claude').first().json.slug }}/\n\n\u2705 Para aprobar:\nhttps://n8n.ivanchoweb.com/webhook/blog-aprobar?id={{ $('Guardar Borrador').first().json.id }}&token={N8N_INTERNAL_API_KEY}\n\n\u274c Para rechazar:\nhttps://n8n.ivanchoweb.com/webhook/blog-rechazar?id={{ $('Guardar Borrador').first().json.id }}&token={N8N_INTERNAL_API_KEY}",
+        "additionalFields": {
+          "parse_mode": "HTML",
+          "disable_web_page_preview": true
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "id": "902b9894-0d8d-4dc1-a4ab-30104da7e944",
+          "name": "Telegram IVANCHOWEB"
+        }
+      }
+    },
+    {
+      "id": "node-webhook-approve",
+      "name": "Webhook: Aprobar",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        600
+      ],
+      "webhookId": "blog-aprobar",
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "blog-aprobar",
+        "responseMode": "responseNode",
+        "options": {}
+      }
+    },
+    {
+      "id": "node-webhook-reject",
+      "name": "Webhook: Rechazar",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        800
+      ],
+      "webhookId": "blog-rechazar",
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "blog-rechazar",
+        "responseMode": "responseNode",
+        "options": {}
+      }
+    },
+    {
+      "id": "node-get-post-approve",
+      "name": "Obtener Post (aprobar)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        600
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "=http://localhost:3007/api/leads/{{ $json.query.id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "{N8N_INTERNAL_API_KEY}"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "node-publish",
+      "name": "Publicar Post",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        600
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:3007/api/blog/publish",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "{N8N_INTERNAL_API_KEY}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({ id: $('Webhook: Aprobar').first().json.query.id }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "node-telegram-published",
+      "name": "Telegram: Publicado",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        660,
+        600
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "951511379",
+        "text": "=\u2705 <b>Art\u00edculo publicado en ivanchoweb.com</b>\n\n{{ $json.url }}",
+        "additionalFields": {
+          "parse_mode": "HTML",
+          "disable_web_page_preview": false
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "id": "902b9894-0d8d-4dc1-a4ab-30104da7e944",
+          "name": "Telegram IVANCHOWEB"
+        }
+      }
+    },
+    {
+      "id": "node-respond-approve",
+      "name": "Responder Aprobaci\u00f3n",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        880,
+        600
+      ],
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "\u2705 Post aprobado y publicado en ivanchoweb.com",
+        "options": {
+          "responseCode": 200
+        }
+      }
+    },
+    {
+      "id": "node-reject",
+      "name": "Marcar Rechazado",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        800
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:3007/api/blog/reject",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "{N8N_INTERNAL_API_KEY}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({ id: $json.query.id }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "node-telegram-rejected",
+      "name": "Telegram: Rechazado",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        440,
+        800
+      ],
+      "parameters": {
+        "resource": "message",
+        "operation": "sendMessage",
+        "chatId": "951511379",
+        "text": "\u274c <b>Borrador rechazado</b>\n\nEl post ha sido marcado como rechazado. Puedes generar uno nuevo desde n8n.",
+        "additionalFields": {
+          "parse_mode": "HTML"
+        }
+      },
+      "credentials": {
+        "telegramApi": {
+          "id": "902b9894-0d8d-4dc1-a4ab-30104da7e944",
+          "name": "Telegram IVANCHOWEB"
+        }
+      }
+    },
+    {
+      "id": "node-respond-reject",
+      "name": "Responder Rechazo",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        660,
+        800
+      ],
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "\u274c Borrador rechazado correctamente.",
+        "options": {
+          "responseCode": 200
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Generar Art\u00edculo": {
+      "main": [
+        [
+          {
+            "node": "Obtener T\u00f3picos Publicados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener T\u00f3picos Publicados": {
+      "main": [
+        [
+          {
+            "node": "Claude: Generar ES",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude: Generar ES": {
+      "main": [
+        [
+          {
+            "node": "Parsear Respuesta Claude",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parsear Respuesta Claude": {
+      "main": [
+        [
+          {
+            "node": "Guardar Borrador",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardar Borrador": {
+      "main": [
+        [
+          {
+            "node": "Telegram: Solicitar Aprobaci\u00f3n",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook: Aprobar": {
+      "main": [
+        [
+          {
+            "node": "Publicar Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Publicar Post": {
+      "main": [
+        [
+          {
+            "node": "Telegram: Publicado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram: Publicado": {
+      "main": [
+        [
+          {
+            "node": "Responder Aprobaci\u00f3n",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook: Rechazar": {
+      "main": [
+        [
+          {
+            "node": "Marcar Rechazado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Marcar Rechazado": {
+      "main": [
+        [
+          {
+            "node": "Telegram: Rechazado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram: Rechazado": {
+      "main": [
+        [
+          {
+            "node": "Responder Rechazo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": [],
+  "id": "e28655e8-3ae6-4a2c-8487-1067fe00c572",
+  "versionId": "bf02dca4-1c69-4645-bf33-bdd22794f175"
+}

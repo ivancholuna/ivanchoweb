@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const https = require('https');
 const { Pool } = require('pg');
+const { publishPost } = require('./blog-generator');
 
 const app = express();
 const PORT = process.env.PORT || 3007;
@@ -233,6 +234,76 @@ app.post('/api/chat', async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+});
+
+// ── BLOG CMS (protegido con API key) ────────────────────────────────────────
+
+// Tópicos publicados — para que n8n evite repetir ángulos
+app.get('/api/blog/topics', requireApiKey, async (req, res) => {
+  try {
+    const { rows } = await db.query(
+      "SELECT slug, pilar_tematico, titulo_en FROM blog_posts WHERE estado = 'publicado' ORDER BY fecha_publicacion DESC"
+    );
+    res.json({ published: rows });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// Guardar borrador (llamado por n8n tras generar con Claude)
+app.post('/api/blog/draft', requireApiKey, async (req, res) => {
+  const { slug, pilar_tematico, titulo_es, meta_description_es, cuerpo_es,
+          titulo_en, meta_description_en, cuerpo_en,
+          tag_en, tag_es, tag_color, read_time_mins, n8n_execution_id } = req.body;
+  if (!slug || !titulo_es || !titulo_en) {
+    return res.status(400).json({ error: 'slug, titulo_es y titulo_en son requeridos' });
+  }
+  try {
+    const { rows } = await db.query(
+      `INSERT INTO blog_posts
+        (slug, pilar_tematico, titulo_es, meta_description_es, cuerpo_es,
+         titulo_en, meta_description_en, cuerpo_en,
+         tag_en, tag_es, tag_color, read_time_mins, n8n_execution_id, estado)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,'pendiente_aprobacion')
+       ON CONFLICT (slug) DO UPDATE SET
+         titulo_es=$3, meta_description_es=$4, cuerpo_es=$5,
+         titulo_en=$6, meta_description_en=$7, cuerpo_en=$8,
+         tag_en=$9, tag_es=$10, tag_color=$11, read_time_mins=$12,
+         n8n_execution_id=$13, estado='pendiente_aprobacion'
+       RETURNING id`,
+      [slug, pilar_tematico, titulo_es, meta_description_es, cuerpo_es,
+       titulo_en, meta_description_en, cuerpo_en,
+       tag_en || 'Development', tag_es || 'Desarrollo',
+       tag_color || 'indigo', read_time_mins || 8, n8n_execution_id]
+    );
+    res.json({ ok: true, id: rows[0].id });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// Publicar post aprobado — genera HTML y actualiza índice
+app.post('/api/blog/publish', requireApiKey, async (req, res) => {
+  const { id } = req.body;
+  if (!id) return res.status(400).json({ error: 'id es requerido' });
+  try {
+    const { rows } = await db.query('SELECT * FROM blog_posts WHERE id=$1', [id]);
+    if (!rows.length) return res.status(404).json({ error: 'post no encontrado' });
+    const post = rows[0];
+    post.fecha_publicacion = new Date();
+    publishPost(post);
+    await db.query(
+      "UPDATE blog_posts SET estado='publicado', fecha_publicacion=NOW(), aprobado_at=NOW() WHERE id=$1",
+      [id]
+    );
+    res.json({ ok: true, url: `https://ivanchoweb.com/blog/${post.slug}/` });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// Rechazar borrador
+app.post('/api/blog/reject', requireApiKey, async (req, res) => {
+  const { id } = req.body;
+  if (!id) return res.status(400).json({ error: 'id es requerido' });
+  try {
+    await db.query("UPDATE blog_posts SET estado='rechazado' WHERE id=$1", [id]);
+    res.json({ ok: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
 app.listen(PORT, () => console.log(`ivanchoweb running on port ${PORT}`));
